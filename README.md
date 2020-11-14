@@ -1,0 +1,2 @@
+# WebPlatform
+Platforma generala

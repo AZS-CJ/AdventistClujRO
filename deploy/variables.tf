@@ -3,7 +3,9 @@ variable "website_name" {
     default = "adventistclujro"
 }
 
-variable "environment_name" {
-  type = string
-  default = "azscluj"
+variable "environments" {
+  default = {
+     "test" = 1
+     "prod" = 1
+    }
 }

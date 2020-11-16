@@ -13,15 +13,21 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "EnvironmentResource" {
-  name     = "${var.website_name}-${var.environment_name}-RG"
+resource "azurerm_resource_group" "common" {
+  name     = "common-rg"
   location = "Germany West Central"
 }
 
-resource "azurerm_app_service_plan" "WebSitesServicePlan" {
-  name                = "${var.website_name}-ServicePlan-${var.environment_name}"
-  location            = azurerm_resource_group.EnvironmentResource.location
-  resource_group_name = azurerm_resource_group.EnvironmentResource.name
+resource "azurerm_resource_group" "website" {
+  for_each = var.environments
+  name     = "${var.website_name}-${each.key}-rg"
+  location = "Germany West Central"
+}
+
+resource "azurerm_app_service_plan" "web-sites-service-plan" {  
+  name                = "${var.website_name}-ServicePlan"
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
 
   kind                = "linux"
   reserved            = true
@@ -32,33 +38,12 @@ resource "azurerm_app_service_plan" "WebSitesServicePlan" {
   }
 }
 
-resource "azurerm_app_service" "WebSiteappServiceTest" {
-  name                = "${var.website_name}-test"
-  location            = azurerm_resource_group.EnvironmentResource.location
-  resource_group_name = azurerm_resource_group.EnvironmentResource.name
-  app_service_plan_id = azurerm_app_service_plan.WebSitesServicePlan.id
-
-  site_config {
-    scm_type                 = "None"
-    linux_fx_version         = "NODE|12.9"
-  }
-
-  app_settings = {
-    "SOME_KEY" = "some-value"
-  }
-
-  connection_string {
-    name  = "Database"
-    type  = "Custom"
-    value = "NoConnectionStringNeededYet"
-  }
-}
-
-resource "azurerm_app_service" "WebSiteappServiceProd" {
-  name                = "${var.website_name}-prod"
-  location            = azurerm_resource_group.EnvironmentResource.location
-  resource_group_name = azurerm_resource_group.EnvironmentResource.name
-  app_service_plan_id = azurerm_app_service_plan.WebSitesServicePlan.id
+resource "azurerm_app_service" "app_service" {
+  for_each = var.environments
+  name                = "${var.website_name}-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
 
   site_config {
     scm_type                 = "None"

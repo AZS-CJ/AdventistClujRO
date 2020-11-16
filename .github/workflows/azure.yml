@@ -24,21 +24,24 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - name: npm install, build, and test
+    - name: Install yarn
+      run: /
+        npm install -g yarn
+    - name: Build frontend
       working-directory: './frontend'
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
-        npm install
-        npm run build --if-present
-        npm run test --if-present
-    - name: copy react static files to backend
+        yarn install
+        yarn run build --if-present
+        yarn run test --if-present
+    - name: Build backend with static files
       working-directory: '.'
       run: |
         cp ./frontend/build/* ./backend/build
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+        yarn install
+        yarn run build --if-present
+        yarn run test --if-present
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:

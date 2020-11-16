@@ -33,15 +33,14 @@ jobs:
         # Build and test the project, then
         # deploy to Azure Web App.
         yarn install
-        yarn run build --if-present
-        yarn run test --if-present
+        yarn run build
+        yarn run test
     - name: Build backend with static files
       working-directory: '.'
       run: |
         cp ./frontend/build/* ./backend/build
         yarn install
-        yarn run build --if-present
-        yarn run test --if-present
+        yarn run build
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:

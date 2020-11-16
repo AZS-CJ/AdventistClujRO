@@ -24,7 +24,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODE_VERSION }}
-    - name: Install yarn
+    - name: Yarn install frontend
       run: |
         npm install -g yarn
     - name: Build frontend
@@ -35,13 +35,18 @@ jobs:
         yarn install
         yarn run build
         yarn run test
-    - name: Build backend with static files
+    - name: Copy static files
       working-directory: '.'
       run: |
         mkdir -p ./backend/build
         cp -r ./frontend/build/* ./backend/build
         yarn install
         yarn run build
+    - name: Yarn install backend
+      working-directory: './backend'
+      run: |
+        yarn install
+        yarn run build      
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:

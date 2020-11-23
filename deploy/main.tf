@@ -24,6 +24,14 @@ resource "azurerm_resource_group" "website" {
   location = "Germany West Central"
 }
 
+resource "azurerm_application_insights" "example" {
+  for_each            = var.environments
+  name                = "appinsights-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  application_type    = "Node.JS"
+}
+
 resource "azurerm_app_service_plan" "web-sites-service-plan" {
   name                = "${var.website_name}-ServicePlan"
   location            = azurerm_resource_group.common.location

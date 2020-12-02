@@ -26,6 +26,7 @@ module.exports = {
     'prettier/prettier': 'error',
     'unified-signatures': 0,
     'no-unnecessary-type-assertion': 0,
-    '@typescript-eslint/no-namespace': 'off'
+    '@typescript-eslint/no-namespace': 'off',
+    'no-console': 'error'
   }
 }

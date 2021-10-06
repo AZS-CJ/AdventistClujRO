@@ -1,11 +1,11 @@
-# terraform {
-#   backend "azurerm" {
-#     resource_group_name   = "tstate"
-#     storage_account_name  = "tstate09762"
-#     container_name        = "tstate"
-#     key                   = "terraform.tfstate"
-#   }
-# }
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "common-rg"
+    storage_account_name = "adventistclujstorage"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
+}
 
 provider "azurerm" {
   # Whilst version is optional, we /strongly recommend/ using it to pin the version of the Provider being used
@@ -24,13 +24,21 @@ resource "azurerm_resource_group" "website" {
   location = "Germany West Central"
 }
 
-resource "azurerm_app_service_plan" "web-sites-service-plan" {  
+resource "azurerm_application_insights" "example" {
+  for_each            = var.environments
+  name                = "appinsights-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  application_type    = "Node.JS"
+}
+
+resource "azurerm_app_service_plan" "web-sites-service-plan" {
   name                = "${var.website_name}-ServicePlan"
   location            = azurerm_resource_group.common.location
   resource_group_name = azurerm_resource_group.common.name
 
-  kind                = "linux"
-  reserved            = true
+  kind     = "linux"
+  reserved = true
 
   sku {
     tier = "Basic"
@@ -39,15 +47,15 @@ resource "azurerm_app_service_plan" "web-sites-service-plan" {
 }
 
 resource "azurerm_app_service" "app_service" {
-  for_each = var.environments
+  for_each            = var.environments
   name                = "${var.website_name}-${each.key}"
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
   app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
 
   site_config {
-    scm_type                 = "None"
-    linux_fx_version         = "NODE|12.9"
+    scm_type         = "None"
+    linux_fx_version = "NODE|12.9"
   }
 
   app_settings = {

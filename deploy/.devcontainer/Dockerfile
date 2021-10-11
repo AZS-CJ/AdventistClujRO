@@ -20,9 +20,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # [Option] Install Azure CLI
 ARG INSTALL_AZURE_CLI="true"
 # [Option] Install Docker CLI
-ARG INSTALL_DOCKER="true"
+ARG INSTALL_DOCKER="false"
 # [Option] Install Node.js
-ARG INSTALL_NODE="true"
+ARG INSTALL_NODE="false"
 ARG NODE_VERSION="lts/*"
 ENV NVM_DIR=/usr/local/share/nvm
 ENV NVM_SYMLINK_CURRENT=true \
@@ -37,8 +37,8 @@ RUN if [ "${INSTALL_AZURE_CLI}" = "true" ]; then bash /tmp/library-scripts/azcli
     && rm -rf /var/lib/apt/lists/*
 
 # Install Terraform, tflint
-ARG TERRAFORM_VERSION=0.13.5
-ARG TFLINT_VERSION=0.19.0
+ARG TERRAFORM_VERSION=1.0.8
+ARG TFLINT_VERSION=0.32.1
 RUN bash /tmp/library-scripts/terraform-debian.sh "${TERRAFORM_VERSION}" "${TFLINT_VERSION}" \
     && rm -rf /tmp/library-scripts
 

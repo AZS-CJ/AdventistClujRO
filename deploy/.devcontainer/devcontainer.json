@@ -3,8 +3,8 @@
 	"build": {
 		"dockerfile": "Dockerfile",
 		"args": { 
-			"TERRAFORM_VERSION": "0.12.29",
-			"TFLINT_VERSION": "0.18.0",
+			"TERRAFORM_VERSION": "1.0.8",
+			"TFLINT_VERSION": "0.32.1",
 			"INSTALL_AZURE_CLI": "true",
 			"INSTALL_DOCKER": "false",
 			"INSTALL_NODE": "false",

@@ -9,7 +9,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "2.80.0"
+      version = "2.82.0"
     }
   }
 }
@@ -32,9 +32,20 @@ resource "azurerm_resource_group" "website" {
 resource "azurerm_application_insights" "example" {
   for_each            = var.environments
   name                = "appinsights-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
   application_type    = "Node.JS"
+}
+
+resource "azurerm_mysql_flexible_server" "cms-db" {
+  name                   = "cms-db"
+  resource_group_name    = azurerm_resource_group.common.name
+  location               = azurerm_resource_group.common.location
+  administrator_login    = "psqladmin"
+  administrator_password = "H@Sh1CoR3!"
+  backup_retention_days  = 7
+  sku_name               = "Standard_Basic"
+  version                = "8.0.21"
 }
 
 resource "azurerm_app_service_plan" "web-sites-service-plan" {

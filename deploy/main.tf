@@ -32,8 +32,8 @@ resource "azurerm_resource_group" "website" {
 resource "azurerm_application_insights" "example" {
   for_each            = var.environments
   name                = "appinsights-${each.key}"
-  location            = azurerm_resource_group.common.location
-  resource_group_name = azurerm_resource_group.common.name
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
   application_type    = "Node.JS"
 }
 
@@ -44,7 +44,7 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
   administrator_login    = "psqladmin"
   administrator_password = "H@Sh1CoR3!"
   backup_retention_days  = 7
-  sku_name               = "Standard_Basic"
+  sku_name               = "B_Standard_B1s"
   version                = "8.0.21"
 }
 

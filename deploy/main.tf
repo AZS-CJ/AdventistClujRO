@@ -24,31 +24,12 @@ resource "azurerm_resource_group" "common" {
   location = "Germany West Central"
 }
 
-resource "azurerm_user_assigned_identity" "assigned-identity-acr-pull" {
-  resource_group_name = azurerm_resource_group.common.name
-  location            = azurerm_resource_group.common.location
-  name                = "User-ACR-pull"
-}
-
 resource "azurerm_container_registry" "acr" {
   name                = "azscjacr"
   resource_group_name = azurerm_resource_group.common.name
   location            = azurerm_resource_group.common.location
   sku                 = "Basic"
   admin_enabled       = true
-
-  identity {
-    type = "UserAssigned"
-    identity_ids = [
-      azurerm_user_assigned_identity.assigned-identity-acr-pull.id
-    ]
-  }
-}
-
-resource "azurerm_role_assignment" "acr-pull" {
-  role_definition_name = "AcrPull"
-  scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_user_assigned_identity.assigned-identity-acr-pull.principal_id
 }
 
 resource "azurerm_resource_group" "website" {
@@ -124,17 +105,23 @@ resource "azurerm_app_service" "strapi" {
   app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
 
   identity {
-    type         = "SystemAssigned, UserAssigned"
-    identity_ids = [resource.azurerm_user_assigned_identity.assigned-identity-acr-pull.principal_id]
+    type = "SystemAssigned"
   }
 
   site_config {
-    scm_type                            = "VSTSRM"
-    linux_fx_version                    = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1404504103"
-    acr_user_managed_identity_client_id = azurerm_user_assigned_identity.assigned-identity-acr-pull.principal_id
+    scm_type                             = "VSTSRM"
+    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1404504103"
+    acr_use_managed_identity_credentials = true
   }
 
   app_settings = {
     "SOME_KEY" = "some-value"
   }
+}
+
+resource "azurerm_role_assignment" "acr" {
+  for_each             = azurerm_app_service.strapi
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = each.value.identity[0].principal_id
 }

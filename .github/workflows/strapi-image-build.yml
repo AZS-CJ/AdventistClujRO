@@ -22,7 +22,7 @@ jobs:
       - name: docker build
         working-directory: ./cms
         run: |
-          docker build -t azscjstrapi:${{ github.run_id }} .
+          docker build -t azscjacr.azurecr.io/azscjstrapi:${{ github.run_id }} .
           
       - name: docker push
         run: |

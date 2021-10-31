@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Strapi Image Build
 
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
       - name: docker build
         working-directory: ./cms
         run: |
-          docker build -t azscjstrapi:${{ env.GITHUB_RUN_ID }} .
+          docker build -t azscjstrapi:$GITHUB_RUN_ID .
           
       - name: docker push
         run: |
-          docker push azscjacr.azurecr.io/azscjstrapi:${{ env.GITHUB_RUN_ID }}
+          docker push azscjacr.azurecr.io/azscjstrapi:$GITHUB_RUN_ID
       
     

@@ -35,7 +35,7 @@ resource "azurerm_container_registry" "acr" {
   resource_group_name = azurerm_resource_group.common.name
   location            = azurerm_resource_group.common.location
   sku                 = "Basic"
-  admin_enabled       = false
+  admin_enabled       = true
 
   identity {
     type = "UserAssigned"
@@ -125,13 +125,13 @@ resource "azurerm_app_service" "strapi" {
 
   identity {
     type         = "SystemAssigned, UserAssigned"
-    identity_ids = [resource.azurerm_user_assigned_identity.assigned-identity-acr-pull.id]
+    identity_ids = [resource.azurerm_user_assigned_identity.assigned-identity-acr-pull.principal_id]
   }
 
   site_config {
     scm_type                            = "VSTSRM"
-    linux_fx_version                    = "DOCKER|strapi/strapi"
-    acr_user_managed_identity_client_id = azurerm_user_assigned_identity.assigned-identity-acr-pull.id
+    linux_fx_version                    = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1404504103"
+    acr_user_managed_identity_client_id = azurerm_user_assigned_identity.assigned-identity-acr-pull.principal_id
   }
 
   app_settings = {

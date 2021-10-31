@@ -136,7 +136,6 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_NAME"     = "cms-db-${each.key}"
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
-    "DATABASE_SSL"      = "true"
   }
 }
 

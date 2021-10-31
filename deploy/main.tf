@@ -18,9 +18,37 @@ provider "azurerm" {
   features {}
 }
 
+// Common infrastructure
 resource "azurerm_resource_group" "common" {
   name     = "common-rg"
   location = "Germany West Central"
+}
+
+resource "azurerm_user_assigned_identity" "assigned-identity-acr-pull" {
+  resource_group_name = azurerm_resource_group.common.name
+  location            = azurerm_resource_group.common.location
+  name                = "User-ACR-pull"
+}
+
+resource "azurerm_container_registry" "acr" {
+  name                = "azscjacr"
+  resource_group_name = azurerm_resource_group.common.name
+  location            = azurerm_resource_group.common.location
+  sku                 = "Basic"
+  admin_enabled       = false
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [
+      azurerm_user_assigned_identity.assigned-identity-acr-pull.id
+    ]
+  }
+}
+
+resource "azurerm_role_assignment" "acr-pull" {
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = azurerm_user_assigned_identity.assigned-identity-acr-pull.principal_id
 }
 
 resource "azurerm_resource_group" "website" {
@@ -29,14 +57,7 @@ resource "azurerm_resource_group" "website" {
   location = "Germany West Central"
 }
 
-resource "azurerm_application_insights" "example" {
-  for_each            = var.environments
-  name                = "appinsights-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  application_type    = "Node.JS"
-}
-
+// Common database
 resource "azurerm_mysql_flexible_server" "cms-db" {
   name                   = "cms-db"
   resource_group_name    = azurerm_resource_group.common.name
@@ -46,6 +67,15 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
   backup_retention_days  = 7
   sku_name               = "B_Standard_B1s"
   version                = "8.0.21"
+}
+
+// Website specific resources
+resource "azurerm_application_insights" "AZSClujAppInisghts" {
+  for_each            = var.environments
+  name                = "aiazscj-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  application_type    = "Node.JS"
 }
 
 resource "azurerm_app_service_plan" "web-sites-service-plan" {
@@ -82,5 +112,29 @@ resource "azurerm_app_service" "app_service" {
     name  = "Database"
     type  = "Custom"
     value = "NoConnectionStringNeededYet"
+  }
+}
+
+// Strapi
+resource "azurerm_app_service" "strapi" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
+
+  identity {
+    type         = "SystemAssigned, UserAssigned"
+    identity_ids = [resource.azurerm_user_assigned_identity.assigned-identity-acr-pull.id]
+  }
+
+  site_config {
+    scm_type                            = "VSTSRM"
+    linux_fx_version                    = "DOCKER|strapi/strapi"
+    acr_user_managed_identity_client_id = azurerm_user_assigned_identity.assigned-identity-acr-pull.id
+  }
+
+  app_settings = {
+    "SOME_KEY" = "some-value"
   }
 }

@@ -21,11 +21,15 @@ jobs:
           password: ${{ secrets.AZURE_ACR_PASSWORD }}
       - name: docker build
         working-directory: ./cms
+        env:
+          tag: ${{ env.GITHUB_RUN_ID }}
         run: |
-          docker build -t azscjstrapi:$GITHUB_RUN_ID .
+          docker build -t azscjstrapi:$tag .
           
       - name: docker push
+        env:
+          tag: ${{ env.GITHUB_RUN_ID }}
         run: |
-          docker push azscjacr.azurecr.io/azscjstrapi:$GITHUB_RUN_ID
+          docker push azscjacr.azurecr.io/azscjstrapi:$tag
       
     

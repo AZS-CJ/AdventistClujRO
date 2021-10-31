@@ -39,16 +39,31 @@ resource "azurerm_resource_group" "website" {
 }
 
 // Common database
+resource "random_password" "admin-login-pass" {
+  length  = 32
+  special = true
+}
+
 resource "azurerm_mysql_flexible_server" "cms-db" {
   name                   = "cms-db"
   resource_group_name    = azurerm_resource_group.common.name
   location               = azurerm_resource_group.common.location
-  administrator_login    = "psqladmin"
-  administrator_password = "H@Sh1CoR3!"
+  administrator_login    = "mysqladminuser"
+  administrator_password = random_password.admin-login-pass.result
   backup_retention_days  = 7
   sku_name               = "B_Standard_B1s"
   version                = "8.0.21"
 }
+
+# Not yet available in the Azure provider, has to be done manually
+# after it's created by terraform
+# resource "azurerm_mysql_firewall_rule" "AllAccessRule" {
+#   name                = "AllAccessRule"
+#   resource_group_name = azurerm_resource_group.common.name
+#   server_name         = azurerm_mysql_flexible_server.cms-db.name
+#   start_ip_address    = "0.0.0.0"
+#   end_ip_address      = "255.255.255.255"
+# }
 
 // Website specific resources
 resource "azurerm_application_insights" "AZSClujAppInisghts" {
@@ -115,7 +130,13 @@ resource "azurerm_app_service" "strapi" {
   }
 
   app_settings = {
-    "SOME_KEY" = "some-value"
+    "DATABASE_CLIENT"   = "mysql"
+    "DATABASE_HOST"     = azurerm_mysql_flexible_server.cms-db.fqdn
+    "DATABASE_PORT"     = "3306"
+    "DATABASE_NAME"     = "cms-db-${each.key}"
+    "DATABASE_USERNAME" = "mysqladminuser"
+    "DATABASE_PASSWORD" = random_password.admin-login-pass.result
+    "DATABASE_SSL"      = "true"
   }
 }
 

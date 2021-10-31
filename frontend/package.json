@@ -61,10 +61,5 @@
     "history": "^5.0.0",
     "husky": "^4.3.0",
     "prettier": "^2.1.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint"
-    }
   }
 }

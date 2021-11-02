@@ -1,0 +1,5 @@
+module.exports = {
+  FRONTEND_HOST: 'http://localhost:3000',
+  FACEBOOK_CLIENT_ID: '434793591339860',
+  FACEBOOK_CLIENT_SECRET: 'c39ca97bd30abe7fe3b6d52d55975870',
+}

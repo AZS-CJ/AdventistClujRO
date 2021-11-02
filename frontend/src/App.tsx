@@ -4,22 +4,28 @@ import './App.css'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
-function App(): JSX.Element | null {
-  return (
-    <AppInsightsContext.Provider value={reactPlugin}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-        </header>
-      </div>
-    </AppInsightsContext.Provider>
-  )
+class App extends React.Component {
+  handleSubmit(event: any) {
+    event.preventDefault()
+    const data = new FormData(event.target)
+    // eslint-disable-next-line no-console
+    console.log('/facebook/callback', data)
+
+    fetch('/facebook')
+  }
+
+  render() {
+    return (
+      <AppInsightsContext.Provider value={reactPlugin}>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <a href="/facebook">Login with facebook</a>
+          </header>
+        </div>
+      </AppInsightsContext.Provider>
+    )
+  }
 }
 
 export default App

@@ -20,6 +20,10 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
+app.get('/api', function(req, res) { 
+  res.send('{"api": "works"}');
+});
+
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

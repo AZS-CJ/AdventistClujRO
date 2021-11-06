@@ -5,6 +5,7 @@ import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 
 function App(): JSX.Element | null {
+  // eslint-disable-next-line no-console
   return (
     <AppInsightsContext.Provider value={reactPlugin}>
       <div className="App">

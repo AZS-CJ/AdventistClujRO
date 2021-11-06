@@ -29,3 +29,5 @@ app.get('/*', function (req, res) {
 });
 
 app.listen(normalizePort(process.env.PORT || '3000'));
+
+console.log(`Server started on port ${process.env.PORT}`);

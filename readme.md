@@ -13,10 +13,10 @@
 ### Install, run and test locally
 
 1. Open any terminal and install `yarn` package manager: `npm install -g yarn`
-1. In two Visual Studio Code open `frontend` and `backend` folders
-1. Open a terminal from Terminal menu in each Code instance
-1. Run `yarn install` to install all the node dependencies for both folders
-1. Run `yarn run` to start the development server, first for backend and then for frontend
+1. In Visual Studio Code open the repository
+1. Open a terminal from Terminal menu
+1. Run `yarn install` to install all the node dependencies in `backend` and `frontend` folders
+1. From Debug pane of Code start the backend and the frontend debugging sessions
 1. Your default browser should automatically open `localhost:3000` with this application
 1. The API is available at `localhost:3001`
 

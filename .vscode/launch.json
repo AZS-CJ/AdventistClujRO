@@ -5,11 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "type": "node",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "runtimeExecutable": "yarn",
+            "program": "start",
+            "name": "Frontend",
+            "cwd": "${workspaceFolder}/frontend",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/frontend"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "yarn",
+            "program": "start",
+            "name": "Backend",
+            "cwd": "${workspaceFolder}/backend",
+            "skipFiles": [
+                "${workspaceFolder}/backend/<node_internals>/**"
+            ],
+            "envFile": "${workspaceFolder}/backend/.debug.env"
         }
     ]
 }

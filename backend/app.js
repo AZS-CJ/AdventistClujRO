@@ -8,9 +8,10 @@ const config = require('./config');
 passport.use(new Strategy({
         clientID: config.FACEBOOK_CLIENT_ID,
         clientSecret: config.FACEBOOK_CLIENT_SECRET,
-        callbackURL: '/facebook/callback',
+        callbackURL: `${config.FRONTEND_HOST}/facebook/callback`,
         profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
         passReqToCallback: true,
+        proxy: true
     },
     function(req, accessToken, refreshToken, profile, cb) {
         // save the profile on the Database
@@ -29,30 +30,30 @@ passport.deserializeUser(function(obj, cb) {
 
 function logiiin(re) {
     console.log('logggiiiiiiin ');
-    passport.authenticate('facebook');
+    return passport.authenticate('facebook');
 }
 
 function logiiinCAL(re) {
     console.log('login CALLLL ');
-    passport.authenticate('facebook', { failureRedirect: `${config.FRONTEND_HOST}/error`})
+    return passport.authenticate('facebook', { failureRedirect: `${config.FRONTEND_HOST}/error`})
 }
 
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
+app.use((req, res, nxt) => {
+  console.log("call made");
+  nxt();
+});
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/facebook', logiiin);
-app.get('/facebook/callback', logiiinCAL, (req, res) => {
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback', logiiinCAL, (req, res) => {
     console.log('here')
     res.send(`${config.FRONTEND_HOST}/success`);
 }) ;
-
-
-
-
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -80,6 +81,6 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.listen(normalizePort(process.env.PORT || '3000'));
+app.listen(normalizePort(process.env.PORT || '3001'));
 
 console.log(`Server started on port ${process.env.PORT}`);

@@ -9,7 +9,7 @@ const config = require('./config');
 passport.use(new FacebookStrategy({
         clientID: config.FACEBOOK_CLIENT_ID,
         clientSecret: config.FACEBOOK_CLIENT_SECRET,
-        callbackURL: `http://localhost:3001/auth/facebook/callback`,
+        callbackURL: `https://localhost:3000/auth/facebook/callback`,
         profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
         passReqToCallback: true,
         proxy: true
@@ -24,7 +24,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GoogleStrategy({
         clientID:     config.GOOGLE_CLIENT_ID,
         clientSecret: config.GOOGLE_CLIENT_SECRET,
-        callbackURL: `http://localhost:3001/auth/google/callback`,
+        callbackURL: `http://localhost:3000/auth/google/callback`,
         passReqToCallback   : true,
         proxy: true
     },

@@ -3,24 +3,34 @@ import logo from './logo.svg'
 import './App.css'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
+import Cookies from 'js-cookie'
+import UnderConstruction from './pages/underConstruction/underConstruction'
 
-function App(): JSX.Element | null {
-  // eslint-disable-next-line no-console
-  return (
-    <AppInsightsContext.Provider value={reactPlugin}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-        </header>
-      </div>
-    </AppInsightsContext.Provider>
-  )
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface IProps {}
+
+interface IState {
+  username?: string
+}
+
+class App extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props)
+    this.state = { username: Cookies.get('displayName') }
+    this.renderContent = this.renderContent.bind(this)
+  }
+
+  render() {
+    return (
+      <AppInsightsContext.Provider value={reactPlugin}>
+        <div className="App">{this.renderContent()}</div>
+      </AppInsightsContext.Provider>
+    )
+  }
+
+  renderContent() {
+    return <UnderConstruction />
+  }
 }
 
 export default App

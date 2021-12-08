@@ -4,12 +4,12 @@ const app = express();
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require( 'passport-google-oauth2' ).Strategy;
-const config = require('./config');
+require('dotenv').config()
 
 passport.use(new FacebookStrategy({
-        clientID: config.FACEBOOK_CLIENT_ID,
-        clientSecret: config.FACEBOOK_CLIENT_SECRET,
-        callbackURL: `https://localhost:3000/auth/facebook/callback`,
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: `${process.env.BACKEND_HOST}/auth/facebook/callback`,
         profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
         passReqToCallback: true,
         proxy: true
@@ -22,9 +22,9 @@ passport.use(new FacebookStrategy({
 ));
 
 passport.use(new GoogleStrategy({
-        clientID:     config.GOOGLE_CLIENT_ID,
-        clientSecret: config.GOOGLE_CLIENT_SECRET,
-        callbackURL: `http://localhost:3000/auth/google/callback`,
+        clientID:     process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: `${process.env.BACKEND_HOST}/auth/google/callback`,
         passReqToCallback   : true,
         proxy: true
     },
@@ -54,17 +54,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: `${config.FRONTEND_HOST}/?loginFailed=true`}), (req, res) => {
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_HOST}/?loginFailed=true`}), (req, res) => {
     if (res.req.user) res.cookie('displayName', res.req.user.displayName)
     if (res.req.authInfo) res.cookie('token', res.req.authInfo)
-    res.redirect(config.FRONTEND_HOST)
+    res.redirect(process.env.FRONTEND_HOST)
 }) ;
 
 app.get('/auth/google', passport.authenticate('google', { scope: [ 'email', 'profile' ] }))
-app.get('/auth/google/callback', passport.authenticate( 'google', { failureRedirect: `${config.FRONTEND_HOST}/?loginFailed=true` }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate( 'google', { failureRedirect: `${process.env.FRONTEND_HOST}/?loginFailed=true` }), (req, res) => {
     if (res.req.user) res.cookie('displayName', res.req.user.displayName)
     if (res.req.authInfo) res.cookie('token', res.req.authInfo)
-    res.redirect(config.FRONTEND_HOST)
+    res.redirect(process.env.FRONTEND_HOST)
 }) ;
 
 app.get('/auth/logout', function(req, res){
@@ -102,4 +102,4 @@ app.get('/*', function (req, res) {
 
 app.listen(normalizePort(process.env.PORT || '3001'));
 
-console.log(`Server started on port ${process.env.PORT}`);
+console.log(`Server started on port ${process.env.PORT || '3001'}`);

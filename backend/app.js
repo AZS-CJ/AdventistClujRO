@@ -9,14 +9,12 @@ require('dotenv').config()
 passport.use(new FacebookStrategy({
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: `${process.env.BACKEND_HOST}/auth/facebook/callback`,
+        callbackURL: `${process.env.HOST}/auth/facebook/callback`,
         profileFields: ['id', 'displayName', 'email', 'name', 'photos'],
         passReqToCallback: true,
         proxy: true
     },
     function(req, accessToken, refreshToken, profile, cb) {
-        // save the profile on the Database
-        // Save the accessToken and refreshToken if you need to call facebook apis later on
         return cb(null, profile, accessToken);
     }
 ));
@@ -24,7 +22,7 @@ passport.use(new FacebookStrategy({
 passport.use(new GoogleStrategy({
         clientID:     process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.BACKEND_HOST}/auth/google/callback`,
+        callbackURL: `${process.env.HOST}/auth/google/callback`,
         passReqToCallback   : true,
         proxy: true
     },
@@ -54,17 +52,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: `${process.env.FRONTEND_HOST}/?loginFailed=true`}), (req, res) => {
+app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: `/?loginFailed=true`}), (req, res) => {
     if (res.req.user) res.cookie('displayName', res.req.user.displayName)
     if (res.req.authInfo) res.cookie('token', res.req.authInfo)
-    res.redirect(process.env.FRONTEND_HOST)
+    res.redirect('/')
 }) ;
 
 app.get('/auth/google', passport.authenticate('google', { scope: [ 'email', 'profile' ] }))
-app.get('/auth/google/callback', passport.authenticate( 'google', { failureRedirect: `${process.env.FRONTEND_HOST}/?loginFailed=true` }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate( 'google', { failureRedirect: `/?loginFailed=true` }), (req, res) => {
     if (res.req.user) res.cookie('displayName', res.req.user.displayName)
     if (res.req.authInfo) res.cookie('token', res.req.authInfo)
-    res.redirect(process.env.FRONTEND_HOST)
+    res.redirect('/')
 }) ;
 
 app.get('/auth/logout', function(req, res){

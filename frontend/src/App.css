@@ -2,6 +2,24 @@
   text-align: center;
 }
 
+.user-name {
+    color: rebeccapurple;
+}
+
+.login {
+    padding-top: 100px;
+    font-size: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.login a {
+    background-color: #61dafb;
+    font-size: 25px;
+    color: black;
+    text-decoration: underline;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -11,8 +11,9 @@
             "program": "start",
             "name": "Frontend",
             "cwd": "${workspaceFolder}/frontend",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}/frontend"
+            "url": "https://localhost",
+            "webRoot": "${workspaceFolder}/frontend",
+            "envFile": "${workspaceFolder}/frontend/.debug.env"
         },
         {
             "type": "node",

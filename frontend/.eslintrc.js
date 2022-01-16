@@ -26,6 +26,9 @@ module.exports = {
     'unified-signatures': 0,
     'no-unnecessary-type-assertion': 0,
     '@typescript-eslint/no-namespace': 'off',
-    'no-console': 0
+    'no-console': 0,
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off'
   }
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'

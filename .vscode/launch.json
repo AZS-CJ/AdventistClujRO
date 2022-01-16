@@ -26,6 +26,19 @@
                 "${workspaceFolder}/backend/<node_internals>/**"
             ],
             "envFile": "${workspaceFolder}/backend/.debug.env"
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "yarn",
+            "program": "develop",
+            "name": "CMS",
+            "cwd": "${workspaceFolder}/cms",
+            "skipFiles": [
+                "${workspaceFolder}/cms/<node_internals>/**"
+            ],
+            "envFile": "${workspaceFolder}/cms/.debug.env",
+            "console": "integratedTerminal"
+        },
     ]
 }

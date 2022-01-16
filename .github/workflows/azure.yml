@@ -1,3 +1,5 @@
+name: Frontend/Backend Build
+
 on:
   push:
     branches:

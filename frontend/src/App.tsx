@@ -3,6 +3,8 @@ import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import NotFound from './pages/NotFound/NotFound'
+import Articles from './pages/Articles'
+import axios from 'axios'
 
 function App(): JSX.Element | null {
   return (
@@ -10,8 +12,9 @@ function App(): JSX.Element | null {
       <BrowserRouter>
         <div>
           <Routes>
-            <Route path="/" element={<Home />}>
+            <Route path="/" element={<Articles />}>
               <Route path="404Page" element={<NotFound />} />
+              <Route path="home" element={<Home />} />
             </Route>
           </Routes>
         </div>
@@ -25,6 +28,7 @@ function Home() {
     <div>
       <h1>Home Page</h1>
       <p>This is my Home Page</p>
+      <p></p>
     </div>
   )
 }

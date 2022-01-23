@@ -24,6 +24,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - run: printenv | grep ARM_CLIENT_ID
     
       - uses: hashicorp/setup-terraform@v1
         with:

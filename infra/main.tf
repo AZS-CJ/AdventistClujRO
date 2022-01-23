@@ -125,7 +125,7 @@ resource "azurerm_app_service" "strapi" {
 
   site_config {
     scm_type                             = "VSTSRM"
-    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1404822621"
+    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1735567085"
     acr_use_managed_identity_credentials = true
   }
 

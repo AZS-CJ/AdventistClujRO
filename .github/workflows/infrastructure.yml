@@ -1,0 +1,40 @@
+name: HashiCorp - Setup Terraform
+  # uses: hashicorp/setup-terraform@v1.2.1
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - ./cms
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+
+jobs:
+  build:
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZ_SP_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZ_SP_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SP_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZ_SP_TENANT_ID }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.12.25
+        
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./infra
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./infra
+
+      - name: Terraform apply
+        run: terraform apply
+        working-directory: ./infra

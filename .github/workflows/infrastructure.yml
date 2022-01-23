@@ -1,11 +1,10 @@
-name: HashiCorp - Setup Terraform
-  # uses: hashicorp/setup-terraform@v1.2.1
+name: Terraform Infrastructure
 
 on:
   push:
     branches: [ main ]
     paths:
-    - ./cms
+    - ./infra
   workflow_dispatch:
     inputs:
       logLevel:
@@ -23,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+    
       - uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 0.12.25

@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/under-construction",
+      "handler": "under-construction.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/under-construction",
+      "handler": "under-construction.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/under-construction",
+      "handler": "under-construction.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

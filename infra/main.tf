@@ -111,6 +111,11 @@ resource "azurerm_app_service" "app_service" {
   }
 }
 
+resource "random_password" "strapi-admin-jwt-secret" {
+  length = 32
+  special = false
+}
+
 // Strapi
 resource "azurerm_app_service" "strapi" {
   for_each            = var.environments
@@ -136,6 +141,7 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_NAME"     = "cms-db-${each.key}"
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
+    "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret.result
   }
 }
 

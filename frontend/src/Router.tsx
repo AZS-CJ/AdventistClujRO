@@ -1,28 +1,23 @@
 import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import Main from './Main'
-import Home from './Home'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Despre from './routes/Despre'
+import Home from './routes/Home'
+import Articole from './routes/Articole'
+import Navbar from './Navbar'
 
-import './App.css'
+import './Router.scss'
 
 class Router extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/main">Main</Link>
-          </li>
-        </ul>
+        <Navbar />
 
-        <hr />
         <div>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/main" element={<Main />} />
+            <Route path="/despre" element={<Despre />} />
+            <Route path="/articole" element={<Articole />} />
+            <Route path="/*" element={<Home />} />
           </Routes>
         </div>
       </BrowserRouter>

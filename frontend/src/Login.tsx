@@ -1,18 +1,16 @@
 import React from 'react'
-import './App.css'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import Cookies from 'js-cookie'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IProps {}
+import './Login.scss'
 
 interface IState {
   username?: string
 }
 
-class App extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+class App extends React.Component<any, IState> {
+  constructor(props) {
     super(props)
     this.state = { username: Cookies.get('displayName') }
     this.renderContent = this.renderContent.bind(this)

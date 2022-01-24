@@ -1,0 +1,45 @@
+name: Terraform Infrastructure
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+    - ./infra
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_SP_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SP_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZ_SP_TENANT_ID }}
+
+    steps:
+      - uses: actions/checkout@v2
+    
+      - uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.1.4
+
+      - name: Terraform Version
+        run: terraform version
+        working-directory: ./infra
+        
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./infra
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./infra
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve
+        working-directory: ./infra

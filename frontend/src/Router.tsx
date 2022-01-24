@@ -5,8 +5,6 @@ import Home from './routes/Home'
 import Articole from './routes/Articole'
 import Navbar from './Navbar'
 
-import './Router.scss'
-
 class Router extends React.Component {
   render() {
     return (

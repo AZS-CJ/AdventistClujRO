@@ -10,7 +10,7 @@ interface IState {
 class Navbar extends React.Component<any, IState> {
   constructor(props) {
     super(props)
-    this.state = { activeRoute: 'home' }
+    this.state = { activeRoute: window.location.pathname }
     this.setActiveRoute = this.setActiveRoute.bind(this)
     this.isActiveRoute = this.isActiveRoute.bind(this)
     this.renderLink = this.renderLink.bind(this)
@@ -21,7 +21,7 @@ class Navbar extends React.Component<any, IState> {
   }
 
   isActiveRoute(route: string) {
-    return this.state.activeRoute === route
+    return this.state.activeRoute.includes(route)
   }
 
   render() {

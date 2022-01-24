@@ -1,48 +1,38 @@
 /* eslint-disable arrow-parens */
 /* eslint-disable no-console */
 /* eslint-disable prettier/prettier */
-import React, { Component } from 'react'
+import React from 'react'
 import axios from 'axios'
-import { appendFile } from 'fs'
 
-const api = axios.create({
-  baseURL: 'http://localhost:1337/articles'
-})
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjQzMDE2NDU5LCJleHAiOjE2NDU2MDg0NTl9.q2myjs8Iad2AI7g-EUWDoF8RZeEOSjQeEHBupvFJttg';
+const baseURL = 'https://adventistclujro-strapi-test.azurewebsites.net';
+const config = {
+  headers: { Authorization: `Bearer ${token}` }
+};
 
-class Articles extends Component {
-
-    state = {
+class Articles extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
       articles: []
     }
-
-  constructor() {
-    super();
-    this.getArticles();
+    this.myArticles = this.myArticles.bind(this)
+    this.myArticles()
   }
 
-  getArticles = async () => {
-    try {
-      let data = await axios({
-          method: 'get',
-          url: 'http://localhost:1337/articles'
-      }).then(({data}) => data);
-      
-      //api.get('/').then(({data}) => data);
-      this.setState({articles: data})
-    } catch (err)
-    {
-      console.log(err)
-    }
+ myArticles() {
+    axios.get(baseURL + '/articles', config)
+    .then(res => this.setState({articles: res.data})).catch(err => console.log(err))
   }
-
   render() {
     return (
-      <div className="Articles">
-        <ul>
-          {this.state.articles.map(article =><li key={article.id}>{article.Title}</li>)}
-        </ul>
+      <div>
+      <div>Articles</div>
+      <ul>
+        {this.state.articles.map(article => <li>{article.Title}</li>)}
+      </ul>
       </div>
-    );
+    )
   }
 }
 

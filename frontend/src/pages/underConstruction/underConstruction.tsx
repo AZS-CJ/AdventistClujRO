@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.scss'
 import text from './text.svg'
-import logo from './logo.svg'
+import logo from '../../assets/logo.svg'
 import { Gradient } from './gradient'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'

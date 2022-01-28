@@ -1,34 +1,29 @@
 import React from 'react'
-import './App.css'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
-import Cookies from 'js-cookie'
+import logo from './assets/logo.svg'
+import Router from './Router'
+import Login from './Login'
 import UnderConstruction from './pages/underConstruction/underConstruction'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface IProps {}
+import './App.scss'
 
-interface IState {
-  username?: string
-}
-
-class App extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props)
-    this.state = { username: Cookies.get('displayName') }
-    this.renderContent = this.renderContent.bind(this)
-  }
-
+class App extends React.Component {
   render() {
     return (
       <AppInsightsContext.Provider value={reactPlugin}>
-        <div className="App">{this.renderContent()}</div>
+        <div className="App">
+          {/*<Login />*/}
+          {/*<UnderConstruction />*/}
+          <div className="content">
+            <Router />
+          </div>
+          <div className="logo-column">
+            <img className="church-logo" src={logo} alt="Logo" />
+          </div>
+        </div>
       </AppInsightsContext.Provider>
     )
-  }
-
-  renderContent() {
-    return <UnderConstruction />
   }
 }
 

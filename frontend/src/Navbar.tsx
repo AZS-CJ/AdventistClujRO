@@ -26,15 +26,15 @@ class Navbar extends React.Component<any, IState> {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg my-nav">
+      <nav className="navbar navbar-expand-lg my-nav my-menu">
         <div className="navbar-brand">
           <Link className="brand-name" to="/">
-            <div className="title">Biserica Adventista de Ziua a Saptea</div>
-            <div className="red-box">SPERANTA CLUJ-NAPOCA</div>
+            <div className="title">Biserica Adventistă de Ziua a Șaptea</div>
+            <div className="red-box">SPERANȚA CLUJ-NAPOCA</div>
           </Link>
         </div>
         <div className="navbar-nav">
-          {this.renderLink('home', 'Acasa')}
+          {this.renderLink('home', 'Acasă')}
           {this.renderLink('despre', 'Despre noi')}
           {this.renderLink('proiecte', 'Proiecte')}
           {this.renderLink('evenimente', 'Evenimente')}

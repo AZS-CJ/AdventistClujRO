@@ -4,7 +4,6 @@ import text from './text.svg'
 import logo from '../../assets/logo.svg'
 import { Gradient } from './gradient'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css'
 
 class UnderConstruction extends React.Component {
   componentDidMount() {
@@ -62,7 +61,6 @@ class UnderConstruction extends React.Component {
         <footer>
           <div className="copyright">
             <a className="copyright" href="https://goo.gl/maps/G9tndGkL8TA7hpsV8" target="_blank">
-              {' '}
               &copy 2021 Biserica Adventistă de Ziua a Șaptea "Speranța" Cluj-Napoca | România
             </a>
           </div>

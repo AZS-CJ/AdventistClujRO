@@ -1,0 +1,97 @@
+.page-footer {
+  position: absolute;
+  bottom: 2em;
+  right: 0.5em;
+  left: 0;
+  font-size: 0.8em;
+}
+
+.page-footer a {
+  text-align: left;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+
+.page-footer  a:hover {
+  color: black;
+  background-color: lightgray;
+  border-radius: 20px;
+}
+
+.container-fluid {
+  padding: 0.5em;
+}
+
+.container-fluid .social-media {
+  display: block;
+}
+
+.container-fluid .social-media a {
+  width: fit-content;
+  width: -moz-fit-content;
+  margin-left: 20%;
+  padding: 0.3em 1em;
+}
+
+.container-fluid .social-media .bi {
+  margin-right: .5em;
+  height: 1em;
+  padding: 1em 0.5em
+}
+
+.container-fluid .social-media .bi-youtube {
+  color: red
+}
+
+.container-fluid .social-media i:before {
+  font-size: 1.4em;
+  vertical-align: -0.3em
+}
+
+.container-fluid .social-media .bi-facebook {
+  color: #139ef8
+}
+
+.container-fluid .social-media .bi-instagram {
+  color: transparent;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+  -webkit-background-clip: text;
+}
+
+.footer-copyright {
+  margin-top: 1em;
+  font-size: 0.7em;
+  text-align: left;
+  display: block;
+}
+
+.footer-copyright a {
+  padding: 0;
+  width: fit-content;
+  width: -moz-fit-content;
+}
+
+.page-footer .links {
+  padding: .6em
+}
+
+.page-footer .links a {
+  padding: .2em;
+  position: relative
+}
+
+.page-footer .links a:before {
+  background-color: #c0351b;
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: -10px;
+  width: 6px;
+  height: 17px;
+  border-radius: 50%;
+}
+
+.page-footer .links .longer:before {
+  height: 41px;
+}

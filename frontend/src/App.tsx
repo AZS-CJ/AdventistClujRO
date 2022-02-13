@@ -4,8 +4,8 @@ import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import logo from './assets/logo.svg'
 import Router from './Router'
 import Footer from './Footer'
-import Login from './Login'
-import UnderConstruction from './pages/underConstruction/underConstruction'
+// import Login from './Login'
+// import UnderConstruction from './pages/underConstruction/underConstruction'
 
 import './App.scss'
 

@@ -7,6 +7,7 @@ interface IState {
   activeRoute: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class Navbar extends React.Component<any, IState> {
   constructor(props) {
     super(props)

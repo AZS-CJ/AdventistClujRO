@@ -94,6 +94,7 @@ resource "azurerm_app_service" "app_service" {
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
   app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
+  https_only          = true
 
   site_config {
     scm_type         = "None"

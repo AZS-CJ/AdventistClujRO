@@ -97,7 +97,7 @@ resource "azurerm_app_service" "app_service" {
 
   site_config {
     scm_type         = "None"
-    linux_fx_version = "NODE|12.9"
+    linux_fx_version = "NODE|14-lts"
   }
 
   app_settings = {

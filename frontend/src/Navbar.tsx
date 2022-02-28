@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import menuButton from './assets/menuButton.svg'
 
 import './Navbar.scss'
 
@@ -45,6 +46,9 @@ class Navbar extends React.Component<any, IState> {
 
         {/*render this only if there is a live streaming*/}
         <div className="live">LIVE</div>
+        <div className="menu-btn">
+          <img className="menu-btn" src={menuButton} alt="Menu" />
+        </div>
       </nav>
     )
   }

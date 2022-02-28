@@ -1,3 +1,5 @@
+@import 'util/layout';
+
 .my-menu {
   background-color: #f5f5f5;
   flex-direction: row;
@@ -77,4 +79,32 @@
   top: 50%;
   left: -1.2em;
   transform: translateY(-50%);
+}
+
+.my-nav .menu-btn {
+  display: none;
+}
+
+
+@media (max-width: $min-phone-width) {
+  .navbar.my-nav .navbar-nav,  .navbar.my-nav .live{
+    display:none
+  }
+  .my-nav .navbar-brand {
+    width: 50%;
+    margin-left: 10%
+  }
+
+  .my-nav .navbar-brand .title {
+    font-size: 1rem;
+  }
+
+  .my-nav .navbar-brand .red-box {
+    font-size: 0.7rem;
+  }
+
+  .my-nav .menu-btn {
+    margin: 0 auto;
+    display: block;
+  }
 }

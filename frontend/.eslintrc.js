@@ -29,6 +29,7 @@ module.exports = {
     'no-console': 0,
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'linebreak-style': 0,
   }
 }

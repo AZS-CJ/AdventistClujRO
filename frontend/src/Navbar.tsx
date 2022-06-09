@@ -27,7 +27,7 @@ class Navbar extends React.Component<any, IState> {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg my-nav my-menu">
+      <nav className="navbar my-nav my-menu">
         <div className="navbar-brand">
           <Link className="brand-name" to="/">
             <div className="title">Biserica Adventistă de Ziua a Șaptea</div>
@@ -46,8 +46,27 @@ class Navbar extends React.Component<any, IState> {
 
         {/*render this only if there is a live streaming*/}
         <div className="live">LIVE</div>
-        <div className="menu-btn">
+        <div className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <img className="menu-btn" src={menuButton} alt="Menu" />
+        </div>
+        <div className="collapse navbar-collapse bg-dark" id="navbarCollapse">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <a className="nav-link" href="#">
+                Home
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                Link
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#">
+                About
+              </a>
+            </li>
+          </ul>
         </div>
       </nav>
     )

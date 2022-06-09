@@ -1,7 +1,6 @@
 import React from 'react'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
-import logo from './assets/logo.svg'
 import Router from './Router'
 import Footer from './Footer'
 import Login from './Login'
@@ -21,7 +20,7 @@ class App extends React.Component {
             <Footer />
           </div>
           <div className="logo-column">
-            <img className="church-logo" src={logo} alt="Logo" />
+            <img className="church-logo" src="logo.svg" alt="Logo" />
           </div>
         </div>
       </AppInsightsContext.Provider>

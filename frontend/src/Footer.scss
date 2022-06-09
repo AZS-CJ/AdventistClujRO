@@ -99,24 +99,23 @@
   height: 41px;
 }
 
-//my solution
-//@media (max-width: $min-phone-width) {
-//  .page-footer .links {
-//    display:none
-//  }
-//  .container-fluid .social-media {
-//    width: fit-content;
-//    margin: 0 auto
-//  }
-//
-//  .container-fluid .social-media a {
-//    margin-left: unset
-//  }
-//}
+@media (max-width: $min-phone-width) {
+  .page-footer .links {
+    display:none
+  }
+  .container-fluid .social-media {
+    width: fit-content;
+    margin: 0 auto
+  }
 
-// bootstrap breakpoints not working :(
-@include media-breakpoint-down(sm) {
-  .page-footer {
-    display: none;
+  .container-fluid .social-media a {
+    margin-left: unset
   }
 }
+
+// bootstrap breakpoints not working :(
+//@include media-breakpoint-down(sm) {
+//  .page-footer {
+//    display: none;
+//  }
+//}

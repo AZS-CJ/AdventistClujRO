@@ -11,6 +11,7 @@
 
 .navbar.my-nav {
     margin: 2em .5em 0 0;
+    flex-wrap: nowrap;
 }
 
 .my-nav .navbar-brand {
@@ -38,6 +39,7 @@
 
 .my-nav .navbar-nav {
   justify-content: flex-end;
+  flex-direction: row;
 }
 
 
@@ -107,4 +109,32 @@
     margin: 0 auto;
     display: block;
   }
+}
+
+
+.navbar-collapse {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 15px;
+  //padding-left: 15px;
+  //padding-right: 15px;
+  //padding-bottom: 15px;
+  width: 80%;
+  height: 100%;
+}
+
+.navbar-collapse.collapsing {
+  right: -75%;
+  transition: height 0s ease;
+}
+
+.navbar-collapse.show {
+  right: 0;
+  transition: right 300ms ease-in-out;
+}
+
+.navbar-toggler.collapsed ~ .navbar-collapse {
+  transition: right 500ms ease-in-out;
 }

@@ -94,14 +94,16 @@ resource "azurerm_app_service" "app_service" {
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
   app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
+  https_only          = true
 
   site_config {
     scm_type         = "None"
-    linux_fx_version = "NODE|12.9"
+    linux_fx_version = "NODE|14-lts"
   }
 
   app_settings = {
     "SOME_KEY" = "some-value"
+    "CMS_DB_HOST" = azurerm_app_service.strapi[each.key].default_site_hostname
   }
 
   connection_string {

@@ -2,4 +2,6 @@
 **/node_modules
 **/yarn-error.log
 .idea/
-backend/.env
+backend/.debug.env
+frontend/.debug.env
+cms/.debug.env

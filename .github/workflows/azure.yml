@@ -16,7 +16,8 @@ on:
 env:
   AZURE_WEBAPP_NAME: adventistclujro-test
   AZURE_WEBAPP_PACKAGE_PATH: './backend'
-  NODE_VERSION: '12.x'
+  AZURE_HOST: 'https://adventistclujro-test.azurewebsites.net'
+  NODE_VERSION: '16.x'
 
 jobs:
   build-and-deploy:
@@ -33,6 +34,8 @@ jobs:
         npm install -g yarn
     - name: Build frontend
       working-directory: './frontend'
+      env: 
+        REACT_APP: ${{ env.AZURE_HOST }}
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.

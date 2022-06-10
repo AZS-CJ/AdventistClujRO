@@ -1,5 +1,5 @@
 @import 'util/layout';
-@import '../node_modules/bootstrap/scss/mixins/_breakpoints.scss';
+@import 'util/colors';
 
 .page-footer {
   position: absolute;
@@ -13,13 +13,14 @@
   text-align: left;
   display: block;
   text-decoration: none;
-  color: black;
+  color: $almostBlack;
+  white-space: pre;
 }
 
 .page-footer  a:hover {
-  color: black;
-  background-color: lightgray;
-  border-radius: 20px;
+  color: $lightgrey;
+  background-color: $orange;
+  border-radius: 0.7rem;
 }
 
 .container-fluid {
@@ -44,7 +45,7 @@
 }
 
 .container-fluid .social-media .bi-youtube {
-  color: red
+  color: $yRed
 }
 
 .container-fluid .social-media i:before {
@@ -53,7 +54,7 @@
 }
 
 .container-fluid .social-media .bi-facebook {
-  color: #139ef8
+  color: $skyBlue
 }
 
 .container-fluid .social-media .bi-instagram {
@@ -85,7 +86,7 @@
 }
 
 .page-footer .links a:before {
-  background-color: #c0351b;
+  background-color: $darkRed;
   content: '';
   position: absolute;
   top: 3px;
@@ -97,12 +98,14 @@
 
 .page-footer .links .longer:before {
   height: 41px;
+  border-radius: 30%;
 }
 
 @media (max-width: $min-phone-width) {
   .page-footer .links {
     display:none
   }
+
   .container-fluid .social-media {
     width: fit-content;
     margin: 0 auto
@@ -112,10 +115,3 @@
     margin-left: unset
   }
 }
-
-// bootstrap breakpoints not working :(
-//@include media-breakpoint-down(sm) {
-//  .page-footer {
-//    display: none;
-//  }
-//}

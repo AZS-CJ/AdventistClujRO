@@ -3,5 +3,6 @@
 **/yarn-error.log
 .idea/
 backend/.debug.env
+backend/.env
 frontend/.debug.env
 cms/.debug.env

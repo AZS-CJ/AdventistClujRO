@@ -26,7 +26,7 @@ class Footer extends React.Component {
               </div>
               <div className="footer-copyright">
                 © {new Date().getFullYear()} Biserica Adventistă de Ziua a Șaptea "Speranța" Cluj-Napoca
-                <a className="address" href="https://goo.gl/maps/G9tndGkL8TA7hpsV8" target="_blank">
+                <a className="address-link" href="https://goo.gl/maps/G9tndGkL8TA7hpsV8" target="_blank">
                   Strada Moților 47 Cluj-Napoca | România
                 </a>
               </div>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
+import logo from './assets/logo.svg'
 import Router from './Router'
 import Footer from './Footer'
-// import Login from './Login'
 import UnderConstruction from './pages/underConstruction/underConstruction'
 import underConstructionAPI from './api/underConstruction'
 
@@ -32,14 +32,13 @@ class App extends React.Component<any, IState> {
     return (
       <AppInsightsContext.Provider value={reactPlugin}>
         <div className="App">
-          {/*<Login />*/}
           {/*<UnderConstruction />*/}
           <div className="content">
             <Router />
             <Footer />
           </div>
           <div className="logo-column">
-            <img className="church-logo" src="logo.svg" alt="Logo" />
+            <img className="church-logo" src={logo} alt="Logo" />
           </div>
         </div>
       </AppInsightsContext.Provider>

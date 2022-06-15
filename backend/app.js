@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const passport = require('passport');
+const proxy = require('express-http-proxy');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 require('dotenv').config()
@@ -93,9 +94,11 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/api', function (req, res) {
-  res.send('{"api": "works"}');
-});
+app.use('/api', proxy(process.env.CMS_DB_HOST, {
+  proxyReqPathResolver: function (req) {
+    return req.url.replace(/^\/api/, '');
+  }
+}));
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

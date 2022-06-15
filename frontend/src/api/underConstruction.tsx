@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const getUnderConstruction = async () => {
-  const url = `${process.env.REACT_APP_HOST}/under-construction`
+  const url = `/api/under-construction`
   if (url !== undefined) {
     const response = await axios.get(url)
     console.log(JSON.stringify(response.data))

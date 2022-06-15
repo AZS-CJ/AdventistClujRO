@@ -4,5 +4,6 @@
   "arrowParens": "always",
   "space-before-function-paren": "always",
   "semi": false,
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "endOfLine": "auto"
 }

@@ -9,6 +9,7 @@ interface IState {
   username?: string
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 class App extends React.Component<any, IState> {
   constructor(props) {
     super(props)

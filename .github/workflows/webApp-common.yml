@@ -1,4 +1,4 @@
-name: Build and Deploy the web stack to an Azure Web App
+name: WebApp - common
 
 on:
   workflow_call:

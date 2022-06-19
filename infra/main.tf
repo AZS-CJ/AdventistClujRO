@@ -144,6 +144,7 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
     "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret.result
+    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1735567085"
   }
 }
 

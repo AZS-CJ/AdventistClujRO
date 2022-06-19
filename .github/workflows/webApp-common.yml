@@ -1,41 +1,40 @@
-name: Frontend/Backend Build
+name: Build and Deploy the web stack to an Azure Web App
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./frontend
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      logLevel:
-        description: 'Log level'
+      webAppName:
+        type: string
         required: true
-        default: 'warning'
-
-env:
-  AZURE_WEBAPP_NAME: adventistclujro-test
-  AZURE_WEBAPP_PACKAGE_PATH: './backend'
-  AZURE_HOST: 'https://adventistclujro-test.azurewebsites.net'
-  NODE_VERSION: '16.x'
-
+      webAppPackagePath:
+        type: string
+        required: true
+      azureHost:
+        type: string
+        required: true
+      nodeVersion:
+        type: string
+        required: true
+    secrets:
+      publishProfile:
+        required: true
 jobs:
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ env.NODE_VERSION }}
+    - name: Use Node.js ${{ inputs.nodeVersion }}
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ env.NODE_VERSION }}
+        node-version: ${{ inputs.nodeVersion }}
     - name: Install yarn
       run: |
         npm install -g yarn
     - name: Build frontend
       working-directory: './frontend'
       env: 
-        REACT_APP: ${{ env.AZURE_HOST }}
+        REACT_APP: ${{ inputs.azureHost }}
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
@@ -54,6 +53,6 @@ jobs:
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        app-name: ${{ inputs.webAppName }}
+        publish-profile: ${{ secrets.publishProfile }}
+        package: ${{ inputs.webAppPackagePath }}

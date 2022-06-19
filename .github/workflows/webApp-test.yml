@@ -1,0 +1,31 @@
+name: Frontend/Backend Build - Prod Site
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - ./frontend
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
+env:
+  AZURE_WEBAPP_NAME: adventistclujro-test
+  AZURE_WEBAPP_PACKAGE_PATH: './backend'
+  AZURE_HOST: 'https://adventistclujro-test.azurewebsites.net'
+  NODE_VERSION: '16.x'
+
+jobs:
+  build-and-deploy:
+    uses: ./github/workflows/build-and-deploy.yml
+    with:
+      webAppName: ${{ env.AZURE_WEBAPP_NAME }}
+      webAppPackagePath: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      azureHost: ${{ env.AZURE_HOST }}
+      nodeVersion: ${{ env.NODE_VERSION }}
+    secrets:
+      publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}

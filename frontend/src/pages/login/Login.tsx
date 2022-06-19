@@ -1,5 +1,5 @@
 import React from 'react'
-import { reactPlugin } from './ApplicationInsights'
+import { reactPlugin } from '../../ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import Cookies from 'js-cookie'
 

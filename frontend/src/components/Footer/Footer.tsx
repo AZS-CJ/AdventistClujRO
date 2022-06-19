@@ -1,5 +1,5 @@
 import React from 'react'
-import { LINKS } from './util/constants'
+import { LINKS } from '../../util/constants'
 
 import './Footer.scss'
 

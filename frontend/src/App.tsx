@@ -3,7 +3,7 @@ import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import logo from './assets/logo.svg'
 import Router from './Router'
-import Footer from './Footer'
+import Footer from './components/Footer/Footer'
 import UnderConstruction from './pages/underConstruction/underConstruction'
 import underConstructionAPI from './api/underConstruction'
 
@@ -37,7 +37,7 @@ class App extends React.Component<any, IState> {
             <Router />
             <Footer />
           </div>
-          <div className="logo-column">
+          <div className="logo-column" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <img className="church-logo" src={logo} alt="Logo" />
           </div>
         </div>

@@ -3,8 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Despre from './routes/Despre'
 import Home from './routes/Home'
 import Articole from './routes/Articole'
-import Navbar from './Navbar'
-import Login from './Login'
+import Navbar from './components/Navbar/Navbar'
+import Login from './pages/login/Login'
 
 class Router extends React.Component {
   render() {

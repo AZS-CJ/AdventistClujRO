@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import menuButton from './assets/menuButton.svg'
-import { LINKS } from './util/constants'
-import logo from './assets/logo.svg'
+import menuButton from '../../assets/menuButton.svg'
+import { LINKS } from '../../util/constants'
+import logo from '../../assets/logo.svg'
 
 import './Navbar.scss'
 

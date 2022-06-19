@@ -1,4 +1,4 @@
-name: Frontend/Backend Build - Prod Site
+name: WebApp - Prod
 
 on:
   push:

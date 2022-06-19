@@ -1,4 +1,4 @@
-name: Frontend/Backend Build - Prod Site
+name: Frontend/Backend Build - Test Site
 
 on:
   push:
@@ -21,7 +21,7 @@ env:
 
 jobs:
   build-and-deploy:
-    uses: ./github/workflows/build-and-deploy.yml
+    uses: ./github/workflows/webApp-common.yml
     with:
       webAppName: ${{ env.AZURE_WEBAPP_NAME }}
       webAppPackagePath: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

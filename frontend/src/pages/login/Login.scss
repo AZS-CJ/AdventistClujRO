@@ -1,0 +1,20 @@
+@import '../../util/colors';
+
+.user-name {
+    color: $black;
+}
+
+.login {
+    padding-top: 10vh;
+    font-size: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.login a {
+    padding: 1rem;
+    background-color: $orange;
+    color: $lightgrey;
+    border-radius: 50%;
+    text-decoration: none;
+}

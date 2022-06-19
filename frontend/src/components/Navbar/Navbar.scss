@@ -1,0 +1,273 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.my-menu {
+  background-color: $lightgrey;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+}
+
+.navbar.my-nav {
+    margin: 2em .5em 0 0;
+    flex-wrap: nowrap;
+}
+
+.my-nav .navbar-brand {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.my-nav .navbar-brand .brand-name {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    width: -moz-fit-content;
+    text-decoration: none;
+    color: $almostBlack
+}
+
+.my-nav .navbar-brand .brand-title {
+    font-size: 1.6rem;
+    max-width: 215px;
+    text-align: left;
+    white-space: pre-wrap
+}
+
+.navbar-nav.desktop-nav .link-list {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+}
+
+.my-nav .navbar-nav .nav-item {
+  width: fit-content;
+  width: -moz-fit-content;
+}
+
+.my-nav .nav-link {
+  padding: 0.5rem 0.8rem !important;
+  margin: 0 0.2rem;
+  border-radius: 0.7rem;
+  white-space: pre;
+}
+
+.desktop-nav .nav-link:hover, .desktop-nav .nav-link.active {
+    background-color: $orange;
+    color: $lightgrey;
+}
+
+.desktop-nav .nav-item a {
+  color: $black;
+}
+
+.my-nav .main-live {
+  position: absolute;
+  right: 2.5rem;
+  top: 1.5rem;
+  font-size: 0.8em;
+}
+
+.my-nav .live:before {
+  content: '';
+  display: block;
+  height: .7em;
+  width: .7em;
+  background: $red;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: -1.2em;
+  transform: translateY(-50%);
+}
+
+.my-nav .menu-btn {
+  display: none;
+}
+
+
+@media (max-width: $min-phone-width) {
+  .navbar.my-nav .desktop-nav,  .navbar.my-nav .main-live{
+    display:none
+  }
+  .my-nav .navbar-brand {
+    width: 50%;
+    margin-left: 10%
+  }
+
+  .my-nav .navbar-brand .brand-title {
+    font-size: 1rem;
+  }
+
+  .my-nav .navbar-brand .red-box {
+    font-size: 0.7rem;
+  }
+
+  .my-nav .menu-btn {
+    margin: 0 auto;
+    display: block;
+  }
+}
+
+.close-nav {
+  position: absolute;
+  top: 1rem;
+  left: -20%;
+  color: $lightgrey;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.6rem;
+  border-radius: 50%;
+  background-color: $orange;
+  font-size: 1.7rem;
+  line-height: 1.7rem;
+  text-align: center;
+}
+
+.my-nav .navbar-collapse {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 0 1rem 1rem 1rem;
+  width: 80%;
+  height: 100%;
+  background-image: linear-gradient(163deg, #f89f6d 0%, #cd4c27 100%);
+  transition: opacity 0.5s linear;
+  border-top-left-radius: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.navbar-collapse.collapsing {
+  right: -75%;
+  transition: height 0s ease;
+}
+
+.navbar-collapse.show {
+  right: 0;
+  transition: right 300ms ease-in-out;
+}
+
+.navbar-toggler.collapsed ~ .navbar-collapse {
+  transition: right 500ms ease-in-out;
+  height: 100%;
+}
+
+.navbar-collapse .navbar-nav {
+  color: $lightgrey;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.navbar-collapse .nav-link {
+  color: $lightgrey;
+}
+
+.navbar-collapse .sidebar-live {
+  color: $lightgrey !important;
+  margin: 1rem;
+  text-align: left;
+  position: relative;
+}
+
+.navbar-collapse .navbar-content {
+  height: 100%;
+  overflow-y: scroll;
+  padding-left: 1rem;
+  display: flex;
+}
+
+.navbar-collapse .church-logo {
+  width: 4rem;
+  padding: 1em 0
+}
+
+.navbar-collapse .navbar-resources {
+  margin-top: 3.4rem;
+  margin-left: 2rem;
+  flex: 1;
+}
+
+.navbar-collapse .navbar-resources .resources-list {
+  position: relative;
+}
+
+.navbar-collapse .navbar-resources a {
+  color: $lightgrey;
+  display: block;
+  text-decoration: none;
+  text-align: left;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 0.7rem;
+}
+
+.navbar-collapse .navbar-resources .resources-list:before, .navbar-resources-title:before {
+  background-color: $lightgrey;
+  content: '';
+  position: absolute;
+  top: 1vh;
+  left: -4px;
+  width: 6px;
+  height: 94%;
+  border-radius: 30%;
+}
+
+.navbar-collapse .navbar-resources .navbar-resources-title:before {
+  top: 0;
+  border-radius: 40%;
+}
+
+.navbar-resources-title {
+  position: relative;
+  color: $lightgrey;
+  text-align: left;
+  padding: 0 1rem;
+  margin: 0.5rem 0;
+}
+
+.navbar-collapse .navbar-resources .social-media  {
+  margin-top: 9rem;
+}
+
+
+.navbar-collapse .nav-link:hover, .navbar-collapse .nav-link.active, .navbar-collapse .resources-list a:hover  {
+  background-color: $lightgrey;
+  color: $black !important;
+}
+
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .navbar-collapse {
+    padding-left: 0.5rem !important;
+  }
+
+  .navbar-collapse .navbar-content {
+    flex-direction: column;
+  }
+
+  .sidebar-description, .navbar-resources-title, .navbar-collapse .navbar-resources .social-media {
+    display:none
+  }
+
+  .navbar-collapse .navbar-resources {
+    margin: 0 !important;
+  }
+
+  .my-nav .navbar-collapse .nav-link {
+    padding: 0.3rem 0.5rem !important;
+  }
+
+  .navbar-collapse .navbar-resources a {
+    padding: 0.3rem 0.5rem !important;
+  }
+
+}

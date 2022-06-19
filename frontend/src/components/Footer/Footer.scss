@@ -1,3 +1,6 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
 .page-footer {
   position: absolute;
   bottom: 2em;
@@ -10,13 +13,14 @@
   text-align: left;
   display: block;
   text-decoration: none;
-  color: black;
+  color: $almostBlack;
+  white-space: pre;
 }
 
 .page-footer  a:hover {
-  color: black;
-  background-color: lightgray;
-  border-radius: 20px;
+  color: $lightgrey;
+  background-color: $orange;
+  border-radius: 0.7rem;
 }
 
 .container-fluid {
@@ -41,7 +45,7 @@
 }
 
 .container-fluid .social-media .bi-youtube {
-  color: red
+  color: $yRed
 }
 
 .container-fluid .social-media i:before {
@@ -50,7 +54,7 @@
 }
 
 .container-fluid .social-media .bi-facebook {
-  color: #139ef8
+  color: $skyBlue
 }
 
 .container-fluid .social-media .bi-instagram {
@@ -77,16 +81,16 @@
 }
 
 .page-footer .links a {
-  padding: .2em;
+  padding: .2em .5em;
   position: relative
 }
 
 .page-footer .links a:before {
-  background-color: #c0351b;
+  background-color: $darkRed;
   content: '';
   position: absolute;
   top: 3px;
-  left: -10px;
+  left: -4px;
   width: 6px;
   height: 17px;
   border-radius: 50%;
@@ -94,4 +98,20 @@
 
 .page-footer .links .longer:before {
   height: 41px;
+  border-radius: 30%;
+}
+
+@media (max-width: $min-phone-width) {
+  .page-footer .links {
+    display:none
+  }
+
+  .container-fluid .social-media {
+    width: fit-content;
+    margin: 0 auto
+  }
+
+  .container-fluid .social-media a {
+    margin-left: unset
+  }
 }

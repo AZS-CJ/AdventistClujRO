@@ -13,19 +13,13 @@ on:
         required: true
         default: 'warning'
 
-env:
-  AZURE_WEBAPP_NAME: adventistclujro-test
-  AZURE_WEBAPP_PACKAGE_PATH: './backend'
-  AZURE_HOST: 'https://adventistclujro-test.azurewebsites.net'
-  NODE_VERSION: '16.x'
-
 jobs:
   build-and-deploy:
     uses: ./.github/workflows/webApp-common.yml
     with:
-      webAppName: ${{ env.AZURE_WEBAPP_NAME }}
-      webAppPackagePath: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-      azureHost: ${{ env.AZURE_HOST }}
-      nodeVersion: ${{ env.NODE_VERSION }}
+      webAppName: adventistclujro-test
+      webAppPackagePath: './backend'
+      azureHost: 'https://adventistclujro-test.azurewebsites.net'
+      nodeVersion: '16.x'
     secrets:
       publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}

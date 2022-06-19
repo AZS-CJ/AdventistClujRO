@@ -21,7 +21,7 @@ env:
 
 jobs:
   build-and-deploy:
-    uses: ./github/workflows/webApp-common.yml@main
+    uses: ././github/workflows/webApp-common.yml@main
     with:
       webAppName: ${{ env.AZURE_WEBAPP_NAME }}
       webAppPackagePath: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}

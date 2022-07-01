@@ -16,15 +16,6 @@ function Navbar() {
     return activeRoute.includes(route)
   }
 
-  console.log('sidebarOpen', sidebarOpen)
-
-  // const handleCollapse = () => {
-  //   const nav = document.getElementById('navbarCollapse')
-  //   const btn = document.getElementById('navbarBtn')
-  //   if (nav) nav.classList.remove('show')
-  //   if (btn) btn.classList.add('collapsed')
-  // }
-
   const renderLink = (to: string, text: string) => {
     return (
       <li className="nav-item" onClick={hideSidebar}>

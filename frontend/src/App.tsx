@@ -1,49 +1,46 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { reactPlugin } from './ApplicationInsights'
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
-import logo from './assets/logo.svg'
 import Router from './Router'
+import { NavigationProvider } from './contexts/navigation'
 import Footer from './components/Footer/Footer'
+import Sidebar from './components/Sidebar/Sidebar'
 import UnderConstruction from './pages/underConstruction/underConstruction'
 import underConstructionAPI from './api/underConstruction'
 
 import './App.scss'
 
-interface IState {
-  isUnderConstruction: boolean
-}
+function App() {
+  const [isUnderConstruction, setIsUnderConstruction] = useState<boolean>(false)
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-class App extends React.Component<any, IState> {
-  constructor(props) {
-    super(props)
-    this.state = { isUnderConstruction: false }
-  }
+  useEffect(() => {
+    // eslint-disable-next-line prettier/prettier
+    (async () => {
+      const underConstruction = await underConstructionAPI()
+      setIsUnderConstruction(underConstruction)
+    })()
+  }, [])
 
-  async componentDidMount() {
-    const isUnderConstruction = await underConstructionAPI()
-    this.setState({ isUnderConstruction })
-  }
-
-  render() {
-    if (this.state.isUnderConstruction) {
-      return <UnderConstruction />
-    }
-    return (
-      <AppInsightsContext.Provider value={reactPlugin}>
-        <div className="App">
-          {/*<UnderConstruction />*/}
-          <div className="content">
-            <Router />
-            <Footer />
-          </div>
-          <div className="logo-column" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <img className="church-logo" src={logo} alt="Logo" />
-          </div>
-        </div>
-      </AppInsightsContext.Provider>
-    )
-  }
+  return (
+    <>
+      {isUnderConstruction ? (
+        <UnderConstruction />
+      ) : (
+        <NavigationProvider>
+          <AppInsightsContext.Provider value={reactPlugin}>
+            <div className="App">
+              {/*<UnderConstruction />*/}
+              <div className="content">
+                <Router />
+                <Footer />
+              </div>
+              <Sidebar />
+            </div>
+          </AppInsightsContext.Provider>
+        </NavigationProvider>
+      )}
+    </>
+  )
 }
 
 export default App

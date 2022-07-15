@@ -7,5 +7,8 @@ export const LINKS = {
   respiro: 'https://respiro.ro',
   speranta: 'http://www.sperantatv.ro',
   radio: 'https://rvs.ro',
-  adra: 'https://adra.ro'
+  adra: 'https://adra.ro',
+  cookies: '',
+  confidential: '',
+  stagingAPI: 'https://adventistclujro-strapi-test.azurewebsites.net/'
 }

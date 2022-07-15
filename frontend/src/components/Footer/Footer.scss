@@ -2,10 +2,9 @@
 @import '../../util/colors';
 
 .page-footer {
-  position: absolute;
-  bottom: 2em;
-  right: 0.5em;
-  left: 0;
+  position: relative;
+  margin-bottom: 2em;
+  margin-right: 0.5em;
   font-size: 0.8em;
 }
 
@@ -76,13 +75,13 @@
   width: -moz-fit-content;
 }
 
-.page-footer .links {
-  padding: .6em
-}
-
 .page-footer .links a {
   padding: .2em .5em;
   position: relative
+}
+
+.page-footer .links ul {
+  margin-bottom: 0;
 }
 
 .page-footer .links a:before {
@@ -99,6 +98,16 @@
 .page-footer .links .longer:before {
   height: 41px;
   border-radius: 30%;
+}
+
+.page-footer .links .last-one {
+  margin-top: 0.75rem;
+}
+
+.page-footer .links .last-one:before {
+  height: 6px;
+  border-radius: 50%;
+  top: 9px;
 }
 
 @media (max-width: $min-phone-width) {

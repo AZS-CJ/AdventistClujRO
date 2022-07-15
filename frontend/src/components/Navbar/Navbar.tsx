@@ -65,7 +65,7 @@ class Navbar extends React.Component<any, IState> {
               <div className="sidebar-live live">LIVE</div>
               {this.renderMainLinks()}
               {this.renderLink('login', 'Log in')}
-              <img className="church-logo" src={logo} alt="Logo" />
+              <img className="nav-church-logo" src={logo} alt="Logo" />
               <p>Biserica Adventistă de Ziua a Șaptea "Speranța" din Cluj-Napoca</p>
               <p className="sidebar-description">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras accumsan magna enim, at facilisis turpis ullamcorper sed. In viverra eu ipsum sit amet dignissim.

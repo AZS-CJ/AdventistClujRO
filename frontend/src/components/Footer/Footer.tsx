@@ -43,6 +43,9 @@ class Footer extends React.Component {
                   <a href={LINKS.respiro} target="_blank">
                     Revista Respiro
                   </a>
+                  <a href={LINKS.cookies} className="last-one" target="_blank">
+                    Politica privind cookies
+                  </a>
                 </div>
                 <div className="col-md-5">
                   <ul className="list-unstyled">
@@ -54,6 +57,9 @@ class Footer extends React.Component {
                     </a>
                     <a href={LINKS.adra} target="_blank">
                       ADRA
+                    </a>
+                    <a href={LINKS.confidential} className="last-one" target="_blank">
+                      Politica de confidențialitate
                     </a>
                   </ul>
                 </div>

@@ -1,0 +1,44 @@
+@import '../../util/colors';
+
+.articles-page .article-wrapper {
+  background-color: $white;
+  border-radius: 28px;
+  margin: 0 10% 6.66vh 10%;
+  padding: 2.77vh 6.77vw;
+}
+
+.articles-page .article-list {
+  width: 60%;
+}
+
+.articles-page .article-card {
+  padding: 2.4vh 1.56vw;
+  box-shadow: 0 3px 6px $almostWhite;
+  margin-top: 3.24vh;
+  border-radius: 28px;
+  text-align: left;
+  display: flex;
+}
+
+.articles-page .article-card .article-title {
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 3.25rem;
+  text-decoration: underline;
+  color: $almostBlack;
+}
+
+.articles-page .article-card .cover-img img {
+  width: 8.54vw;
+  height: 8.54vw;
+  border-radius: 28px;
+  margin-right: 1.77vw;
+}
+
+.articles-page .article-card .article-date-author {
+  font-weight: bold;
+  text-transform: capitalize;
+  color: $darkRed;
+  font-size: 1.12rem;
+  line-height: 1.75rem;
+}

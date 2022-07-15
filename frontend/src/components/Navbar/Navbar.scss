@@ -126,6 +126,7 @@
   font-size: 1.7rem;
   line-height: 1.7rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .my-nav .navbar-collapse {
@@ -183,9 +184,14 @@
   overflow-y: scroll;
   padding-left: 1rem;
   display: flex;
+  scrollbar-width: none;
 }
 
-.navbar-collapse .church-logo {
+.navbar-collapse .navbar-content::-webkit-scrollbar {
+  display: none
+}
+
+.navbar-collapse .nav-church-logo {
   width: 4rem;
   padding: 1em 0
 }

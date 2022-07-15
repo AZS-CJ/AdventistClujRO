@@ -132,7 +132,7 @@
 .my-nav .navbar-collapse {
   position: fixed;
   top: 0;
-  right: 0;
+  right: -100%;
   z-index: 2;
   padding: 0 1rem 1rem 1rem;
   width: 80%;
@@ -144,6 +144,7 @@
   justify-content: space-around;
   align-items: flex-start;
   text-align: left;
+  transition: right 300ms ease-in-out;
 }
 
 .navbar-collapse.collapsing {
@@ -154,11 +155,6 @@
 .navbar-collapse.show {
   right: 0;
   transition: right 300ms ease-in-out;
-}
-
-.navbar-toggler.collapsed ~ .navbar-collapse {
-  transition: right 500ms ease-in-out;
-  height: 100%;
 }
 
 .navbar-collapse .navbar-nav {

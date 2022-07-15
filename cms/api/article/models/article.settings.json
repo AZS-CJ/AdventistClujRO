@@ -12,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Content": {
-      "type": "richtext"
-    },
     "Title": {
       "type": "string"
     },
@@ -29,6 +26,15 @@
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
+    },
+    "Content": {
+      "type": "text"
+    },
+    "Author": {
+      "type": "string"
+    },
+    "Summary": {
+      "type": "string"
     }
   }
 }

@@ -522,9 +522,6 @@
           "id": {
             "type": "string"
           },
-          "Content": {
-            "type": "string"
-          },
           "Title": {
             "type": "string"
           },
@@ -595,6 +592,15 @@
               }
             }
           },
+          "Content": {
+            "type": "string"
+          },
+          "Author": {
+            "type": "string"
+          },
+          "Summary": {
+            "type": "string"
+          },
           "published_at": {
             "type": "string",
             "format": "date-time"
@@ -603,10 +609,16 @@
       },
       "NewArticle": {
         "properties": {
+          "Title": {
+            "type": "string"
+          },
           "Content": {
             "type": "string"
           },
-          "Title": {
+          "Author": {
+            "type": "string"
+          },
+          "Summary": {
             "type": "string"
           },
           "published_at": {

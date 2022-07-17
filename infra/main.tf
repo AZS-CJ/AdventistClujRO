@@ -127,31 +127,31 @@ resource "random_password" "strapi-jwt-secret" {
 
 resource "random_password" "strapi-app-key1" {
   for_each            = var.environments
-  length = 8
+  length = 16
   special = true
 }
 
 resource "random_password" "strapi-app-key2" {
   for_each            = var.environments
-  length = 8
+  length = 16
   special = true
 }
 
 resource "random_password" "strapi-app-key3" {
   for_each            = var.environments
-  length = 8
+  length = 16
   special = true
 }
 
 resource "random_password" "strapi-app-key4" {
   for_each            = var.environments
-  length = 8
+  length = 16
   special = true
 }
 
 resource "random_password" "api-token-salt" {
   for_each            = var.environments
-  length = 8
+  length = 16
   special = true
 }
 

@@ -96,7 +96,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/api', proxy(process.env.CMS_DB_HOST, {
   proxyReqPathResolver: function (req) {
-    return req.url.replace(/^\/api/, '');
+    return `/api${req.url}`;
   }
 }));
 

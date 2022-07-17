@@ -26,7 +26,7 @@ jobs:
           username: ${{ secrets.AZURE_ACR_USER }}
           password: ${{ secrets.AZURE_ACR_PASSWORD }}
       - name: docker build
-        working-directory: ./cms
+        working-directory: ./cmsstrapi
         run: |
           docker build -t azscjacr.azurecr.io/azscjstrapi:${{ github.run_id }} .
           

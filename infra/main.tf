@@ -165,7 +165,7 @@ resource "azurerm_dns_cname_record" "adventistclujro-prod" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  records             = azurerm_app_service.strapi["prod"].default_site_hostname
+  record              = azurerm_app_service.strapi["prod"].default_site_hostname
 }
 
 resource "azurerm_dns_cname_record" "adventistclujro-test" {
@@ -173,5 +173,5 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  records             = azurerm_app_service.strapi["test"].default_site_hostname
+  record              = azurerm_app_service.strapi["test"].default_site_hostname
 }

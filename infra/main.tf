@@ -115,7 +115,6 @@ resource "azurerm_app_service" "webhost" {
 
 resource "random_password" "strapi-admin-jwt-secret" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 32
   special = false
 }
@@ -129,35 +128,30 @@ resource "random_password" "strapi-jwt-secret" {
 
 resource "random_password" "strapi-app-key1" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 8
   special = true
 }
 
 resource "random_password" "strapi-app-key2" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 8
   special = true
 }
 
 resource "random_password" "strapi-app-key3" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 8
   special = true
 }
 
 resource "random_password" "strapi-app-key4" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 8
   special = true
 }
 
 resource "random_password" "api-token-salt" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 8
   special = true
 }

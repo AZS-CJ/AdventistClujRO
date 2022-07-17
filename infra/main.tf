@@ -132,7 +132,7 @@ resource "azurerm_app_service" "strapi" {
 
   site_config {
     scm_type                             = "VSTSRM"
-    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685452330"
+    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685506637"
     acr_use_managed_identity_credentials = true
   }
 
@@ -144,7 +144,7 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
     "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret.result
-    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685452330"
+    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685506637"
   }
 }
 

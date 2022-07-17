@@ -154,3 +154,9 @@ resource "azurerm_role_assignment" "acr" {
   scope                = azurerm_container_registry.acr.id
   principal_id         = each.value.identity[0].principal_id
 }
+
+resource "azurerm_dns_zone" "azscj-zone" {
+  name                = "adventistcluj.ro"
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
+}

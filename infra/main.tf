@@ -88,7 +88,7 @@ resource "azurerm_app_service_plan" "web-sites-service-plan" {
   }
 }
 
-resource "azurerm_app_service" "app_service" {
+resource "azurerm_app_service" "webhost" {
   for_each            = var.environments
   name                = "${var.website_name}-${each.key}"
   location            = azurerm_resource_group.website[each.key].location
@@ -165,7 +165,7 @@ resource "azurerm_dns_cname_record" "adventistclujro-prod" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  record              = azurerm_app_service.strapi["prod"].default_site_hostname
+  record              = azurerm_app_service.webhost["prod"].default_site_hostname
 }
 
 resource "azurerm_dns_cname_record" "adventistclujro-test" {
@@ -173,5 +173,5 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  record              = azurerm_app_service.strapi["test"].default_site_hostname
+  record              = azurerm_app_service.webhost["test"].default_site_hostname
 }

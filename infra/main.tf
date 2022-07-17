@@ -160,18 +160,18 @@ resource "azurerm_dns_zone" "azscj-zone" {
   resource_group_name = azurerm_resource_group.common.name
 }
 
-resource "azurerm_dns_cname_record" "adventistcluj.ro" {
+resource "azurerm_dns_cname_record" "adventistclujro" {
   name                = "adventistcluj.ro"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  records             = azurerm_app_service.strapi[prod].default_site_hostname
+  records             = azurerm_app_service.strapi["prod"].default_site_hostname
 }
 
-resource "azurerm_dns_cname_record" "adventistcluj.ro" {
+resource "azurerm_dns_cname_record" "adventistclujro" {
   name                = "test.adventistcluj.ro"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  records             = azurerm_app_service.strapi[test].default_site_hostname
+  records             = azurerm_app_service.strapi["test"].default_site_hostname
 }

@@ -157,6 +157,5 @@ resource "azurerm_role_assignment" "acr" {
 
 resource "azurerm_dns_zone" "azscj-zone" {
   name                = "adventistcluj.ro"
-  location            = azurerm_resource_group.common.location
   resource_group_name = azurerm_resource_group.common.name
 }

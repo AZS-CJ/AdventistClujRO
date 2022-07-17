@@ -114,8 +114,52 @@ resource "azurerm_app_service" "webhost" {
 }
 
 resource "random_password" "strapi-admin-jwt-secret" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
   length = 32
   special = false
+}
+
+resource "random_password" "strapi-jwt-secret" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  length = 32
+  special = false
+}
+
+resource "random_password" "strapi-app-key1" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  length = 8
+  special = true
+}
+
+resource "random_password" "strapi-app-key2" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  length = 8
+  special = true
+}
+
+resource "random_password" "strapi-app-key3" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  length = 8
+  special = true
+}
+
+resource "random_password" "strapi-app-key4" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  length = 8
+  special = true
+}
+
+resource "random_password" "api-token-salt" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  length = 8
+  special = true
 }
 
 // Strapi
@@ -143,7 +187,10 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_NAME"     = "cms-db-${each.key}"
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
-    "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret.result
+    "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret[each.key].result
+    "JWT_SECRET"        = random_password.strapi-jwt-secret[each.key].result
+    "APP_KEYS"          = base64encode(random_password.strapi-app-key1[each.key].result) + "," + base64encode(random_password.strapi-app-key2[each.key].result) + "," + base64encode(random_password.strapi-app-key3[each.key].result) + "," + base64encode(random_password.strapi-app-key4[each.key].result)
+    "API_TOKEN_SALT"    = random_password.api-token-salt[each.key].result
     "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685506637"
   }
 }

@@ -121,7 +121,6 @@ resource "random_password" "strapi-admin-jwt-secret" {
 
 resource "random_password" "strapi-jwt-secret" {
   for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
   length = 32
   special = false
 }

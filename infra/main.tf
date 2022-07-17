@@ -180,10 +180,10 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_NAME"     = "cms-db-${each.key}"
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
-    "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret[each.key].result
-    "JWT_SECRET"        = random_password.strapi-jwt-secret[each.key].result
+    "ADMIN_JWT_SECRET"  = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
+    "JWT_SECRET"        = base64encode(random_password.strapi-jwt-secret[each.key].result)
     "APP_KEYS"          = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
-    "API_TOKEN_SALT"    = random_password.api-token-salt[each.key].result
+    "API_TOKEN_SALT"    = base64encode(random_password.api-token-salt[each.key].result)
     "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685506637"
   }
 }

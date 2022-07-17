@@ -33,7 +33,7 @@
             "runtimeExecutable": "yarn",
             "program": "develop",
             "name": "CMS",
-            "cwd": "${workspaceFolder}/cms",
+            "cwd": "${workspaceFolder}/cmsstrapi",
             "skipFiles": [
                 "${workspaceFolder}/cms/<node_internals>/**"
             ],

@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "under_constructions",
+  "info": {
+    "singularName": "under-construction",
+    "pluralName": "under-constructions",
+    "displayName": "UnderConstruction"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Enabled": {
+      "type": "boolean"
+    }
+  }
+}

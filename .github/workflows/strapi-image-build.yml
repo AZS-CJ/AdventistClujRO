@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-    - ./cms
+    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:

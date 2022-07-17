@@ -13,28 +13,30 @@
   "pluginOptions": {},
   "attributes": {
     "Title": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "Cover": {
       "model": "file",
       "via": "related",
       "allowedTypes": [
-        "images",
-        "files",
-        "videos"
+        "images"
       ],
       "plugin": "upload",
       "required": false,
       "pluginOptions": {}
     },
     "Content": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "Author": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "Summary": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

@@ -169,7 +169,7 @@ resource "azurerm_app_service" "strapi" {
 
   site_config {
     scm_type                             = "VSTSRM"
-    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685506637"
+    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2686415218"
     acr_use_managed_identity_credentials = true
   }
 
@@ -184,7 +184,7 @@ resource "azurerm_app_service" "strapi" {
     "JWT_SECRET"        = base64encode(random_password.strapi-jwt-secret[each.key].result)
     "APP_KEYS"          = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
     "API_TOKEN_SALT"    = base64encode(random_password.api-token-salt[each.key].result)
-    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2685506637"
+    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2686415218"
   }
 }
 

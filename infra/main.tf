@@ -88,7 +88,7 @@ resource "azurerm_app_service_plan" "web-sites-service-plan" {
   }
 }
 
-resource "azurerm_app_service" "app_service" {
+resource "azurerm_app_service" "webhost" {
   for_each            = var.environments
   name                = "${var.website_name}-${each.key}"
   location            = azurerm_resource_group.website[each.key].location
@@ -114,8 +114,45 @@ resource "azurerm_app_service" "app_service" {
 }
 
 resource "random_password" "strapi-admin-jwt-secret" {
+  for_each            = var.environments
   length = 32
   special = false
+}
+
+resource "random_password" "strapi-jwt-secret" {
+  for_each            = var.environments
+  length = 32
+  special = false
+}
+
+resource "random_password" "strapi-app-key1" {
+  for_each            = var.environments
+  length = 16
+  special = true
+}
+
+resource "random_password" "strapi-app-key2" {
+  for_each            = var.environments
+  length = 16
+  special = true
+}
+
+resource "random_password" "strapi-app-key3" {
+  for_each            = var.environments
+  length = 16
+  special = true
+}
+
+resource "random_password" "strapi-app-key4" {
+  for_each            = var.environments
+  length = 16
+  special = true
+}
+
+resource "random_password" "api-token-salt" {
+  for_each            = var.environments
+  length = 16
+  special = true
 }
 
 // Strapi
@@ -132,7 +169,7 @@ resource "azurerm_app_service" "strapi" {
 
   site_config {
     scm_type                             = "VSTSRM"
-    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1735567085"
+    linux_fx_version                     = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2686415218"
     acr_use_managed_identity_credentials = true
   }
 
@@ -143,8 +180,11 @@ resource "azurerm_app_service" "strapi" {
     "DATABASE_NAME"     = "cms-db-${each.key}"
     "DATABASE_USERNAME" = "mysqladminuser"
     "DATABASE_PASSWORD" = random_password.admin-login-pass.result
-    "ADMIN_JWT_SECRET"  = random_password.strapi-admin-jwt-secret.result
-    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:1735567085"
+    "ADMIN_JWT_SECRET"  = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
+    "JWT_SECRET"        = base64encode(random_password.strapi-jwt-secret[each.key].result)
+    "APP_KEYS"          = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
+    "API_TOKEN_SALT"    = base64encode(random_password.api-token-salt[each.key].result)
+    "LINUX_FX_VERSION"  = "DOCKER|azscjacr.azurecr.io/azscjstrapi:2686415218"
   }
 }
 
@@ -153,4 +193,25 @@ resource "azurerm_role_assignment" "acr" {
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id
   principal_id         = each.value.identity[0].principal_id
+}
+
+resource "azurerm_dns_zone" "azscj-zone" {
+  name                = "adventistcluj.ro"
+  resource_group_name = azurerm_resource_group.common.name
+}
+
+resource "azurerm_dns_cname_record" "adventistclujro-prod" {
+  name                = "adventistcluj.ro"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  record              = azurerm_app_service.webhost["prod"].default_site_hostname
+}
+
+resource "azurerm_dns_cname_record" "adventistclujro-test" {
+  name                = "test.adventistcluj.ro"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  record              = azurerm_app_service.webhost["test"].default_site_hostname
 }

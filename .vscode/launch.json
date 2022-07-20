@@ -32,12 +32,12 @@
             "request": "launch",
             "runtimeExecutable": "yarn",
             "program": "develop",
-            "name": "CMS",
-            "cwd": "${workspaceFolder}/cms",
+            "name": "CMSStrapi",
+            "cwd": "${workspaceFolder}/cmsstrapi",
             "skipFiles": [
                 "${workspaceFolder}/cms/<node_internals>/**"
             ],
-            "envFile": "${workspaceFolder}/cms/.debug.env",
+            "envFile": "${workspaceFolder}/cmsstrapi/.debug.env",
             "console": "integratedTerminal"
         },
     ]

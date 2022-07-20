@@ -11,8 +11,10 @@
 }
 
 .navbar.my-nav {
-    margin: 2em .5em 0 0;
+    position: fixed;
+    margin-top: 3.79vh;
     flex-wrap: nowrap;
+    width:86%;
 }
 
 .my-nav .navbar-brand {
@@ -59,6 +61,7 @@
 .desktop-nav .nav-link:hover, .desktop-nav .nav-link.active {
     background-color: $orange;
     color: $lightgrey;
+    opacity: 0.8;
 }
 
 .desktop-nav .nav-item a {
@@ -140,6 +143,7 @@
   background-image: linear-gradient(163deg, #f89f6d 0%, #cd4c27 100%);
   transition: opacity 0.5s linear;
   border-top-left-radius: 5%;
+  border-bottom-left-radius: 5%;
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
@@ -162,6 +166,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding: 6vh 0;
+  justify-content: space-between;
 }
 
 .navbar-collapse .nav-link {
@@ -193,7 +199,7 @@
 }
 
 .navbar-collapse .navbar-resources {
-  margin-top: 3.4rem;
+  padding: 6vh 0;
   margin-left: 2rem;
   flex: 1;
 }
@@ -243,6 +249,7 @@
 
 .navbar-collapse .nav-link:hover, .navbar-collapse .nav-link.active, .navbar-collapse .resources-list a:hover  {
   background-color: $lightgrey;
+  opacity: 0.5;
   color: $black !important;
 }
 

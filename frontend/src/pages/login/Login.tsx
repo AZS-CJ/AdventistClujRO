@@ -1,51 +1,32 @@
-import React from 'react'
-import { reactPlugin } from '../../ApplicationInsights'
-import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
+import React, { useState } from 'react'
 import Cookies from 'js-cookie'
 
 import './Login.scss'
 
-interface IState {
-  username?: string
-}
+function Login() {
+  const [username] = useState<string | undefined>(Cookies.get('displayName'))
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-class App extends React.Component<any, IState> {
-  constructor(props) {
-    super(props)
-    this.state = { username: Cookies.get('displayName') }
-    this.renderContent = this.renderContent.bind(this)
-  }
-
-  render() {
-    return (
-      <AppInsightsContext.Provider value={reactPlugin}>
-        <div className="App">{this.renderContent()}</div>
-      </AppInsightsContext.Provider>
-    )
-  }
-
-  renderContent() {
-    if (!!this.state.username)
-      return (
+  return (
+    <>
+      {username ? (
         <div className="login">
-          <span>HI {this.state.username}!</span>
+          <span>HI {username}!</span>
           <a href="/auth/logout" role="button">
             Logout
           </a>
         </div>
-      )
-    return (
-      <div className="login">
-        <a href="/auth/facebook" role="button">
-          Login with facebook
-        </a>
-        <a href="/auth/google" role="button">
-          Login with GOOGLE
-        </a>
-      </div>
-    )
-  }
+      ) : (
+        <div className="login">
+          <a href="/auth/facebook" role="button">
+            Login with facebook
+          </a>
+          <a href="/auth/google" role="button">
+            Login with GOOGLE
+          </a>
+        </div>
+      )}
+    </>
+  )
 }
 
-export default App
+export default Login

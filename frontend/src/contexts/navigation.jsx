@@ -18,7 +18,7 @@ const useNavigationContext = () => {
   }
 
   const hideSidebar = () => {
-    setNavState({ ...state, isOpen: false })
+    setNavState((state) => ({ ...state, isOpen: false }))
   }
 
   return {

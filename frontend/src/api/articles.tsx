@@ -1,8 +1,14 @@
 import axios from 'axios'
 
-const getArticles = async () => {
+// const pageSize = 5
+
+// const url = `/api/articles?sort=published_date%3desc&pagination[page]=${page}&pagination[pageSize]=${pageSize}`
+
+const getArticles = async (page) => {
+  console.log('page? ', page)
   const url = `/api/articles`
   const response = await axios.get(url)
+  // return the number of pages: response.meta.pagination.pageCount
   return response.data.map((art) => {
     const formattedD = new Date(art.published_at).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })
     return {

@@ -27,9 +27,13 @@
     width: 87%;
     position: relative;
     background-image: url('assets/church.png');
-    background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
+    background-position: right;
+}
+
+.content .page-content {
+  margin-top: 28.15vh;
 }
 
 .logo-column {
@@ -51,7 +55,7 @@
 .left-title-section {
   border-radius: 0 22px 22px 0;
   box-shadow: 0 5px 20px $almostWhite;
-  margin: 8vh 0;
+  margin-bottom: 8.15vh;
   padding: 2.7vh 0;
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(30px);

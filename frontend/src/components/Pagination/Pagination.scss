@@ -1,0 +1,30 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.pagination {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination div {
+  height: 2.875rem;
+  width: 2.875rem;
+  font-size: 26px;
+  color: $blue;
+  padding: 4px 15px;
+  margin: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.pagination .current {
+  color: $white;
+  background-color: $blue;
+}
+
+.pagination .disabled {
+  color: $grey;
+  pointer-events: none;
+}
+

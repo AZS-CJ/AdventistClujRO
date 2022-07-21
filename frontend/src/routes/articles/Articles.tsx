@@ -3,24 +3,24 @@ import './Articles.scss'
 import getArticles from '../../api/articles'
 import { Article } from '../../data/article'
 import { LINKS } from '../../util/constants'
-import Pagination from '../../components/Pagination/Paginationo'
+import NumberPagination from '../../components/NumberPagination/NumberPagination'
 
-interface IState {
+interface ArticleState {
   articles: Article[]
   loading: boolean
 }
 
 function Articles() {
-  const [articleRequest, setArticleRequest] = useState<IState>({ articles: [], loading: false })
+  const [articleRequest, setArticleRequest] = useState<ArticleState>({ articles: [], loading: false })
   const [page, setPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
 
   useEffect(() => {
     ;(async () => {
-      getArticles(page).then((articles) => {
-        setArticleRequest({ articles: articles, loading: false })
-        // set Page size from the response
-        setTotalPages(5)
+      setArticleRequest({ articles: [], loading: true })
+      getArticles(page).then((response) => {
+        setArticleRequest({ articles: response.articles, loading: false })
+        setTotalPages(response.pageCount)
       })
     })()
   }, [page])
@@ -30,6 +30,7 @@ function Articles() {
   const renderArticleContainer = () => {
     return (
       <div className="article-wrapper">
+        {loading && <div className="spinner-border" role="status" />}
         {articles.map((article) => {
           return (
             <div className="article-card" key={article.id}>
@@ -42,13 +43,14 @@ function Articles() {
                 <div className="article-title">{article.title}</div>
                 <div className="article-date-author">
                   <span>{article.formattedDate}</span>
+                  <span>{article.author}</span>
                 </div>
-                <div className="article-content">{article.content.slice(0, 100)}</div>
+                <div className="article-content">{article.summary.slice(0, 150)}</div>
               </div>
             </div>
           )
         })}
-        <Pagination totalPages={totalPages} currentPage={page} setPage={setPage} />
+        {!loading ? <NumberPagination totalPages={totalPages} currentPage={page} setPage={setPage} /> : ''}
       </div>
     )
   }
@@ -56,10 +58,9 @@ function Articles() {
   return (
     <div className="articles-page">
       <div className="left-title-section">
-        <span className="bold-title"> Articole </span>
+        <span className="bold-title">Articole</span>
       </div>
-      {loading && <div className="spinner-border" role="status"></div>}
-      {articles.length ? renderArticleContainer() : ''}
+      {renderArticleContainer()}
     </div>
   )
 }

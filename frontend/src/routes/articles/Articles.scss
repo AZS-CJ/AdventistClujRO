@@ -1,7 +1,8 @@
 @import '../../util/colors';
+@import '../../util/layout';
 
 .articles-page .article-wrapper {
-  background-color: $white;
+  background-color: $lightgrey;
   border-radius: 28px;
   margin: 0 10% 6.66vh 10%;
   padding: 2.77vh 6.77vw;
@@ -14,6 +15,7 @@
   border-radius: 28px;
   text-align: left;
   display: flex;
+  cursor: pointer;
 }
 
 .articles-page .article-card .article-title {
@@ -37,4 +39,28 @@
   color: $darkRed;
   font-size: 1.12rem;
   line-height: 1.75rem;
+}
+
+.articles-page .article-card .article-date-author span {
+  margin-right: 1vw
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .articles-page .article-wrapper {
+    width: 100%;
+    border-radius: 0;
+    margin: 0 0 6.66vh 0;
+  }
+
+  .articles-page .article-card {
+    flex-direction: column;
+  }
+  .articles-page .article-card .article-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  .articles-page .article-card .article-date-author span {
+    display: block;
+    text-align: center;
+  }
 }

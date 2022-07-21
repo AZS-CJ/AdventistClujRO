@@ -11,16 +11,19 @@
   height: 2.875rem;
   width: 2.875rem;
   font-size: 26px;
-  color: $blue;
-  padding: 4px 15px;
+  font-weight: bold;
+  color: black;
   margin: 0.5rem;
   border-radius: 50%;
   cursor: pointer;
 }
 
+.pagination .page-number{
+  border: solid 4px transparent;
+}
+
 .pagination .current {
-  color: $white;
-  background-color: $blue;
+  border-color: $darkRed;
 }
 
 .pagination .disabled {
@@ -28,3 +31,15 @@
   pointer-events: none;
 }
 
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .pagination div {
+    height: 2.4rem;
+    width: 2.4rem;
+    font-size: 21px;
+    margin: .2rem;
+  }
+
+  .pagination .arrow {
+    display: none
+  }
+}

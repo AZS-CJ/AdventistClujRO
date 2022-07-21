@@ -1,4 +1,5 @@
 @import 'util/colors';
+@import 'util/layout';
 
 .App {
   display: flex;
@@ -31,6 +32,12 @@
     background-size: cover;
     background-position: right;
 }
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .content {
+    background-image: url('assets/church_mobile.png');
+    background-position: center;
+  }
+}
 
 .content .page-content {
   margin-top: 28.15vh;
@@ -53,6 +60,8 @@
 }
 
 .left-title-section {
+  position: relative;
+  z-index: 1;
   border-radius: 0 22px 22px 0;
   box-shadow: 0 5px 20px $almostWhite;
   margin-bottom: 8.15vh;
@@ -68,4 +77,15 @@
   line-height: 4.3rem;
   font-weight: bold;
   color: $black;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .left-title-section {
+    width:100%;
+    border-radius: 0;
+  }
+  .left-title-section .bold-title {
+    font-size: 1.82rem;
+    line-height: 2.25rem;
+  }
 }

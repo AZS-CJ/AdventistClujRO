@@ -1,6 +1,8 @@
 export type Article = {
   id: number
   title: string
+  author: string
+  summary: string
   content: string
   cover: object
   img: string

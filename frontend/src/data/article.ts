@@ -4,10 +4,7 @@ export type Article = {
   author: string
   summary: string
   content: string
-  cover: object
-  img: string
-  createdAt: string
+  smallImg?: string
+  largeImg?: string
   publishedAt: string
-  updatedAt: string
-  formattedDate: string
 }

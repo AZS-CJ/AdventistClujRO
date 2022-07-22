@@ -9,6 +9,7 @@ export const LINKS = {
   radio: 'https://rvs.ro',
   adra: 'https://adra.ro',
   cookies: '',
-  confidential: '',
-  stagingAPI: 'https://adventistclujro-strapi-test.azurewebsites.net/'
+  confidential: ''
 }
+
+export const stagingAPI = 'https://adventistclujro-strapi-test.azurewebsites.net/'

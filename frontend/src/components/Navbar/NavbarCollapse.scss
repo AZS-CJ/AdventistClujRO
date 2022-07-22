@@ -127,12 +127,15 @@
   margin: 0.5rem 0;
 }
 
-.navbar-collapse .navbar-resources .social-media  {
+.navbar-collapse .navbar-resources .social-media {
   margin-top: 9rem;
 }
 
+.navbar-collapse .nav-link:hover, .navbar-collapse .resources-list a:hover {
+  text-decoration: underline;
+}
 
-.navbar-collapse .nav-link:hover, .navbar-collapse .nav-link.active, .navbar-collapse .resources-list a:hover  {
+.navbar-collapse .nav-link.active {
   background-color: $lightgrey;
   opacity: 0.5;
   color: $black !important;

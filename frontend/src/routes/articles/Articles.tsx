@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './Articles.scss'
 import getArticles from '../../api/articles'
 import { Article } from '../../data/article'
-import { LINKS } from '../../util/constants'
+import { stagingAPI } from '../../util/constants'
 import NumberPagination from '../../components/NumberPagination/NumberPagination'
+import { formatToLocalDate } from '../../util/functions'
 
 interface ArticleState {
   articles: Article[]
@@ -34,15 +35,15 @@ function Articles() {
         {articles.map((article) => {
           return (
             <div className="article-card" key={article.id}>
-              {article.img && (
+              {article.smallImg && (
                 <div className="cover-img">
-                  <img src={`${LINKS.stagingAPI}${article.img}`} alt="cover" />
+                  <img src={`${stagingAPI}${article.smallImg}`} alt="cover" />
                 </div>
               )}
               <div className="article-card-content">
                 <div className="article-title">{article.title}</div>
                 <div className="article-date-author">
-                  <span>{article.formattedDate}</span>
+                  <span>{formatToLocalDate(article.publishedAt)}</span>
                   <span>{article.author}</span>
                 </div>
                 <div className="article-content">{article.summary.slice(0, 150)}</div>

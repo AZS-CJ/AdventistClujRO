@@ -16,6 +16,7 @@
     margin-top: 3.79vh;
     flex-wrap: nowrap;
     width:86%;
+    padding-left: 14vw;
 }
 
 .navbar.my-nav.scrolled {
@@ -26,7 +27,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
 .my-nav .navbar-brand .brand-name {
@@ -99,12 +99,15 @@
 
 
 @media (max-width: $min-phone-width) {
+  .navbar.my-nav {
+    padding-left: 7vw
+  }
+
   .navbar.my-nav .desktop-nav,  .navbar.my-nav .main-live{
     display:none
   }
   .my-nav .navbar-brand {
     width: 50%;
-    margin-left: 10%
   }
 
   .my-nav .navbar-brand .brand-title {

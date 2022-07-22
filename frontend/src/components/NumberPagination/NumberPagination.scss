@@ -22,13 +22,12 @@
   border: solid 4px transparent;
 }
 
-.pagination .current {
-  border-color: $darkRed;
+.pagination .arrow{
+  padding: 2.5px;
 }
 
-.pagination .disabled {
-  color: $grey;
-  pointer-events: none;
+.pagination .current {
+  border-color: $darkRed;
 }
 
 @media (orientation: portrait) and (max-width: $min-phone-width) {
@@ -37,9 +36,5 @@
     width: 2.4rem;
     font-size: 21px;
     margin: .2rem;
-  }
-
-  .pagination .arrow {
-    display: none
   }
 }

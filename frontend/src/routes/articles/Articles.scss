@@ -4,8 +4,8 @@
 .articles-page .article-wrapper {
   background-color: $lightgrey;
   border-radius: 28px;
-  margin: 0 10% 6.66vh 10%;
-  padding: 2.77vh 6.77vw;
+  margin: 0 7vw 6.66vh 7vw;
+  padding: 2.77vh 7vw;
 }
 
 .articles-page .article-card {
@@ -29,7 +29,7 @@
 .articles-page .article-card .cover-img img {
   width: 8.54vw;
   height: 8.54vw;
-  border-radius: 28px;
+  border-radius: 12px;
   margin-right: 1.77vw;
 }
 
@@ -54,12 +54,25 @@
 
   .articles-page .article-card {
     flex-direction: column;
+    padding: 3vh 3.4vw;
   }
   .articles-page .article-card .article-title {
     font-size: 1.5rem;
     text-align: center;
   }
-  .articles-page .article-card .article-date-author span {
+
+  .articles-page .article-card .cover-img {
+    display: flex;
+    justify-content: center;
+  }
+
+  .articles-page .article-card .cover-img img {
+    width: 53vw;
+    height: 53vw;
+    margin-right: 0;
+  }
+
+  .articles-page .article-card .article-date-author span, .article-card .article-content {
     display: block;
     text-align: center;
   }

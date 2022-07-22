@@ -65,10 +65,12 @@
   border-radius: 0 22px 22px 0;
   box-shadow: 0 5px 20px $almostWhite;
   margin-bottom: 8.15vh;
-  padding: 2.7vh 0;
+  padding: 2.7vh 14vw;
   background: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(30px);
-  width: 50%;
+  width: fit-content;
+  width: -moz-fit-content;
+  text-align: left;
 }
 
 .left-title-section .bold-title {
@@ -83,6 +85,7 @@
   .left-title-section {
     width:100%;
     border-radius: 0;
+    padding: 2.7vh 7vw;
   }
   .left-title-section .bold-title {
     font-size: 1.82rem;

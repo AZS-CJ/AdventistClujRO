@@ -1,10 +1,12 @@
 @import 'util/colors';
+@import 'util/layout';
 
 .App {
   display: flex;
   width: 100%;
   height: 100%;
   text-align: center;
+  min-height: 100vh;
 }
 
 .red-box {
@@ -20,14 +22,29 @@
 }
 
 .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 87%;
     position: relative;
-    background-color: $skyBlue;
+    background-image: url('assets/church.png');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: right;
+}
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .content {
+    background-image: url('assets/church_mobile.png');
+    background-position: center;
+  }
+}
+
+.content .page-content {
+  margin-top: 28.15vh;
 }
 
 .logo-column {
   width: 13%;
-  height: 100vh;
   background-image: linear-gradient(163deg, #f89f6d 0%, #cd4c27 100%);
   transition: opacity 0.5s linear;
   cursor: pointer;
@@ -36,5 +53,42 @@
 }
 
 .church-logo {
-  width: 60%
+  position: fixed;
+  width: 7.44vw;
+  top: 50%;
+  transform: translate(0,-50%);
+}
+
+.left-title-section {
+  position: relative;
+  z-index: 1;
+  border-radius: 0 22px 22px 0;
+  box-shadow: 0 5px 20px $almostWhite;
+  margin-bottom: 8.15vh;
+  padding: 2.7vh 14vw;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(30px);
+  width: fit-content;
+  width: -moz-fit-content;
+  text-align: left;
+}
+
+.left-title-section .bold-title {
+  text-align: center;
+  font-size: 3.68rem;
+  line-height: 4.3rem;
+  font-weight: bold;
+  color: $black;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .left-title-section {
+    width:100%;
+    border-radius: 0;
+    padding: 2.7vh 7vw;
+  }
+  .left-title-section .bold-title {
+    font-size: 1.82rem;
+    line-height: 2.25rem;
+  }
 }

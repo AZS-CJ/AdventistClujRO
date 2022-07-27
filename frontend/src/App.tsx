@@ -29,7 +29,6 @@ function App() {
         <NavigationProvider>
           <AppInsightsContext.Provider value={reactPlugin}>
             <div className="App">
-              {/*<UnderConstruction />*/}
               <div className="content">
                 <Router />
                 <Footer />

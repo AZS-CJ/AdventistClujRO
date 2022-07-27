@@ -1,0 +1,7 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.program-page .bi-sunset::before {
+  color: $darkRed;
+  font-size: 32px;
+}

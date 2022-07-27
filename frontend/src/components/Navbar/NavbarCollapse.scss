@@ -1,0 +1,170 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.navbar-collapse .close-nav {
+  position: absolute;
+  top: 1rem;
+  left: -20%;
+  color: $lightgrey;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.6rem;
+  border-radius: 50%;
+  background-color: $orange;
+  font-size: 1.7rem;
+  line-height: 1.7rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.navbar-collapse {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: -100%;
+  padding: 0 1rem 1rem 1rem;
+  width: 80%;
+  height: 100%;
+  background-image: linear-gradient(163deg, #f89f6d 0%, #cd4c27 100%);
+  border-top-left-radius: 5%;
+  border-bottom-left-radius: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  text-align: left;
+  transition: right 300ms ease-in-out;
+}
+
+.navbar-collapse.collapsing {
+  right: -75%;
+}
+
+.navbar-collapse.show {
+  right: 0;
+  transition: right 300ms ease-in-out;
+}
+
+.navbar-collapse .navbar-nav {
+  color: $lightgrey;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 6vh 0;
+  justify-content: space-between;
+}
+
+.navbar-collapse .nav-link {
+  color: $lightgrey;
+  margin: 2px 0;
+}
+
+.navbar-collapse .sidebar-live {
+  color: $lightgrey !important;
+  margin: 1rem;
+  text-align: left;
+  position: relative;
+}
+
+.navbar-collapse .navbar-content {
+  height: fit-content;
+  width: 100%;
+  overflow-y: scroll;
+  padding-left: 1rem;
+  display: flex;
+  scrollbar-width: none;
+}
+
+.navbar-collapse .navbar-content::-webkit-scrollbar {
+  display: none
+}
+
+.navbar-collapse .nav-church-logo {
+  width: 4rem;
+  padding: 1em 0
+}
+
+.navbar-collapse .navbar-resources {
+  padding: 6vh 0;
+  margin-left: 2rem;
+  flex: 1;
+}
+
+.navbar-collapse .navbar-resources .resources-list {
+  position: relative;
+}
+
+.navbar-collapse .nav-item a, .navbar-resources a {
+  color: $lightgrey !important;
+  display: block;
+  text-decoration: none;
+  text-align: left;
+  width: fit-content;
+  padding: 0.5rem 1rem;
+  border-radius: 0.7rem;
+}
+
+.navbar-collapse .navbar-resources .resources-list:before, .navbar-resources-title:before {
+  background-color: $lightgrey;
+  content: '';
+  position: absolute;
+  top: 1vh;
+  left: -4px;
+  width: 6px;
+  height: 94%;
+  border-radius: 30%;
+}
+
+.navbar-collapse .navbar-resources .navbar-resources-title:before {
+  top: 0;
+  border-radius: 40%;
+}
+
+.navbar-resources-title {
+  position: relative;
+  color: $lightgrey;
+  text-align: left;
+  padding: 0 1rem;
+  margin: 0.5rem 0;
+}
+
+.navbar-collapse .navbar-resources .social-media {
+  margin-top: 9rem;
+}
+
+.navbar-collapse .nav-link:hover, .navbar-collapse .resources-list a:hover {
+  text-decoration: underline;
+}
+
+.navbar-collapse .nav-link.active {
+  background-color: $lightgrey;
+  opacity: 0.5;
+  color: $black !important;
+}
+
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .navbar-collapse {
+    padding-left: 0.5rem !important;
+  }
+
+  .navbar-collapse .navbar-content {
+    flex-direction: column;
+  }
+
+  .navbar-collapse .navbar-resources {
+    margin: 0 !important;
+  }
+
+  .navbar-collapse .navbar-nav {
+    padding: 3vh 0;
+  }
+
+  .navbar-collapse .nav-link {
+    padding: 0.3rem 0.5rem !important;
+  }
+
+  .navbar-collapse .navbar-resources a {
+    padding: 0.3rem 0.5rem !important;
+  }
+
+}

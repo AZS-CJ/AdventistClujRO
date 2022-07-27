@@ -1,0 +1,40 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.pagination {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination div {
+  height: 2.875rem;
+  width: 2.875rem;
+  font-size: 26px;
+  font-weight: bold;
+  color: black;
+  margin: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.pagination .page-number{
+  border: solid 4px transparent;
+}
+
+.pagination .arrow{
+  padding: 2.5px;
+}
+
+.pagination .current {
+  border-color: $darkRed;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .pagination div {
+    height: 2.4rem;
+    width: 2.4rem;
+    font-size: 21px;
+    margin: .2rem;
+  }
+}

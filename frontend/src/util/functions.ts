@@ -17,3 +17,11 @@ export const range = (from, to, step = 1) => {
 
   return range
 }
+
+// returns the date by day of week
+// for example for 5, the date of the next friday
+export const getNextDate = (dayOfWeek) => {
+  const date = new Date()
+  date.setDate(date.getDate() + ((dayOfWeek + 7 - date.getDay()) % 7))
+  return date
+}

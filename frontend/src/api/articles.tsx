@@ -25,12 +25,12 @@ const getArticles = async (page) => {
 
     return {
       id: article.id,
-      title: attrs.Title,
-      author: attrs.Author,
-      summary: attrs.Summary || '',
-      content: attrs.Content,
-      smallImg: attrs.Background.data ? attrs.Background.data.attributes.formats.small.url : '',
-      largeImg: attrs.Background.data ? attrs.Background.data.attributes.formats.large.url : '',
+      title: attrs.title,
+      author: attrs.author,
+      summary: attrs.summary || '',
+      content: attrs.content,
+      smallImg: attrs.background.data ? attrs.background.data.attributes.formats.small.url : '',
+      largeImg: attrs.background.data ? attrs.background.data.attributes.formats.large.url : '',
       publishedAt: attrs.publishedAt
     }
   })

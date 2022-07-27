@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
-import menuButton from '../../assets/menuButton.svg'
+import menuButton from '../../assets/mobile_menu_toggle.svg'
 import NavbarCollapse from './NavbarCollapse'
 
 import './Navbar.scss'

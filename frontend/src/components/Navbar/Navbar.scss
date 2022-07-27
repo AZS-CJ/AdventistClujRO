@@ -93,7 +93,7 @@
   transform: translateY(-50%);
 }
 
-.my-nav .menu-btn {
+.my-nav .navbar-toggler {
   display: none;
 }
 
@@ -118,8 +118,9 @@
     font-size: 0.7rem;
   }
 
-  .my-nav .menu-btn {
-    margin: 0 auto;
+  .my-nav .navbar-toggler {
+    padding: 0;
+    margin-right: 6vw;
     display: block;
   }
 }

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-07-17T17:56:08.037Z"
+    "x-generation-date": "2022-07-21T17:35:40.065Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -94,22 +94,28 @@
         ],
         "properties": {
           "data": {
-            "required": [],
+            "required": [
+              "title",
+              "content",
+              "summary",
+              "author",
+              "background"
+            ],
             "type": "object",
             "properties": {
-              "Title": {
+              "title": {
                 "type": "string"
               },
-              "Content": {
+              "content": {
                 "type": "string"
               },
-              "Summary": {
+              "summary": {
                 "type": "string"
               },
-              "Author": {
+              "author": {
                 "type": "string"
               },
-              "Background": {
+              "background": {
                 "oneOf": [
                   {
                     "type": "integer"
@@ -138,19 +144,19 @@
                 "attributes": {
                   "type": "object",
                   "properties": {
-                    "Title": {
+                    "title": {
                       "type": "string"
                     },
-                    "Content": {
+                    "content": {
                       "type": "string"
                     },
-                    "Summary": {
+                    "summary": {
                       "type": "string"
                     },
-                    "Author": {
+                    "author": {
                       "type": "string"
                     },
-                    "Background": {
+                    "background": {
                       "type": "object",
                       "properties": {
                         "data": {
@@ -859,19 +865,19 @@
               "attributes": {
                 "type": "object",
                 "properties": {
-                  "Title": {
+                  "title": {
                     "type": "string"
                   },
-                  "Content": {
+                  "content": {
                     "type": "string"
                   },
-                  "Summary": {
+                  "summary": {
                     "type": "string"
                   },
-                  "Author": {
+                  "author": {
                     "type": "string"
                   },
-                  "Background": {
+                  "background": {
                     "type": "object",
                     "properties": {
                       "data": {

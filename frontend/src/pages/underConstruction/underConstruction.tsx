@@ -1,7 +1,6 @@
 import React from 'react'
 import './styles.scss'
 import text from './text.svg'
-import logo from '../../assets/logo.svg'
 import { Gradient } from './gradient'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -16,9 +15,6 @@ class UnderConstruction extends React.Component {
       <div>
         <canvas id="gradient-canvas" data-transition-in ref="gradientCanvas" className="gradient-canvas"></canvas>
         <img className="church-name-logo" src={text} alt="Logo" />
-        <a className="sabbath-column" href="#">
-          <img className="symbol" src={logo} alt="Symbol" />
-        </a>
         <main>
           <div className="title">
             <h1>
@@ -33,7 +29,7 @@ class UnderConstruction extends React.Component {
             </div>
             <div className="text-info">
               <a className="telephone" href="#">
-                <i className="bi bi-telephone"></i> +40 7xx xxx xxx
+                <i className="bi bi-telephone"></i> +40 712 121 121
               </a>
             </div>
             <div className="wrapper">

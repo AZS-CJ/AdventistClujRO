@@ -30,7 +30,7 @@ function Articles() {
 
   const renderArticleContainer = () => {
     return (
-      <div className="article-wrapper">
+      <div className="article-wrapper default-container">
         {loading && <div className="spinner-border" role="status" />}
         {articles.map((article) => {
           return (

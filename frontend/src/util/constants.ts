@@ -13,3 +13,4 @@ export const LINKS = {
 }
 
 export const stagingAPI = 'https://adventistclujro-strapi-test.azurewebsites.net/'
+// local export const stagingAPI = 'http://localhost:1337'

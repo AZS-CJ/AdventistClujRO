@@ -1,12 +1,15 @@
 import React from 'react'
 import { LINKS } from '../../util/constants'
+import { useNavigationContext } from '../../contexts/navigation'
 
 import './Footer.scss'
 
 function Footer() {
+  const { sidebarOpen } = useNavigationContext()
+
   return (
-    <footer className="page-footer font-small blue my-menu">
-      <div className="container-fluid">
+    <footer className={`page-footer font-small blue ${sidebarOpen && 'blurred'}`}>
+      <div className="container-fluid my-menu">
         <div className="row">
           <div className="col-md-8">
             <div className="social-media">
@@ -68,6 +71,7 @@ function Footer() {
           </div>
         </div>
       </div>
+      <div className="emptyDiv" />
     </footer>
   )
 }

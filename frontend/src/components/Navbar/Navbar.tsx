@@ -6,10 +6,9 @@ import NavbarCollapse from './NavbarCollapse'
 
 import './Navbar.scss'
 
-function Navbar() {
-  const [activeRoute, setActiveRoute] = useState(window.location.pathname)
+function Navbar(props) {
   const [scrolled, setScrolled] = useState(false)
-  const { toggleSidebar, hideSidebar } = useNavigationContext()
+  const { toggleSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
 
   const isActiveRoute = (route: string) => {
     return activeRoute.includes(route)
@@ -36,8 +35,8 @@ function Navbar() {
     return (
       <div className="link-list">
         {renderLink('home', 'Acasă')}
+        {renderLink('despre', 'Despre noi')}
         {/*Will be implemented later*/}
-        {/*{renderLink('despre', 'Despre noi')}*/}
         {/*{renderLink('proiecte', 'Proiecte')}*/}
         {/*{renderLink('evenimente', 'Evenimente')}*/}
         {/*{renderLink('articole', 'Articole')}*/}
@@ -49,9 +48,9 @@ function Navbar() {
 
   return (
     <>
-      <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''} ${sidebarOpen && 'blurred'}`} ref={props.navbarRef}>
         <div className="navbar-brand">
-          <Link className="brand-name" to="/">
+          <Link className="brand-name" to="/" onClick={() => setActiveRoute('home')}>
             <div className="brand-title">Biserica Adventistă de Ziua a Șaptea</div>
             <div className="red-box">SPERANȚA CLUJ-NAPOCA</div>
           </Link>

@@ -29,8 +29,8 @@ const getArticles = async (page) => {
       author: attrs.author,
       summary: attrs.summary || '',
       content: attrs.content,
-      smallImg: attrs.background.data ? attrs.background.data.attributes.formats.small.url : '',
-      largeImg: attrs.background.data ? attrs.background.data.attributes.formats.large.url : '',
+      //smallImg: attrs.background.data ? attrs.background.data.attributes.formats.small.url : '',
+      //largeImg: attrs.background.data ? attrs.background.data.attributes.formats.large.url : '',
       publishedAt: attrs.publishedAt
     }
   })

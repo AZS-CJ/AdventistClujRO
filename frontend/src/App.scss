@@ -32,6 +32,14 @@
     background-size: cover;
     background-position: right;
 }
+
+.content .blurred {
+  backdrop-filter: blur(30px);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+
 @media (orientation: portrait) and (max-width: $min-phone-width) {
   .content {
     background-image: url('assets/church_mobile.png');
@@ -40,7 +48,7 @@
 }
 
 .content .page-content {
-  margin-top: 28.15vh;
+  padding-top: 28.15vh;
 }
 
 .logo-column {
@@ -63,13 +71,11 @@
   position: relative;
   z-index: 1;
   border-radius: 0 22px 22px 0;
-  box-shadow: 0 5px 20px $almostWhite;
   margin-bottom: 8.15vh;
-  padding: 2.7vh 14vw;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(30px);
-  width: fit-content;
-  width: -moz-fit-content;
+  padding: 2.7vh 0.2vw 2.7vh 14vw;
+  backdrop-filter: brightness(2) blur(30px);
+  -webkit-backdrop-filter: brightness(2) blur(30px);
+  width: 53%;
   text-align: left;
 }
 
@@ -81,6 +87,31 @@
   color: $black;
 }
 
+.default-red-button {
+  display: block;
+  width: fit-content;
+  width: -moz-fit-content;
+  color: $white;
+  font-size: 1.125rem;
+  line-height: 1.1875rem;
+  padding: 1.38vh 1vw;
+  border-radius: 22px;
+  background-color: $darkRed;
+  cursor: pointer;
+}
+
+.default-red-button a, .default-red-button a:hover {
+  text-decoration: none;
+  color: $lightgrey;
+}
+
+.default-container {
+  background-color: $lightgrey;
+  border-radius: 28px;
+  margin: 0 7vw 10vh 7vw;
+  padding: 2.77vh 7vw;
+}
+
 @media (orientation: portrait) and (max-width: $min-phone-width) {
   .left-title-section {
     width:100%;
@@ -90,5 +121,16 @@
   .left-title-section .bold-title {
     font-size: 1.82rem;
     line-height: 2.25rem;
+  }
+
+  .default-red-button {
+    font-size: 1rem;
+    line-height: 1rem;
+    padding: 1.38vh 3.73vw;
+  }
+
+  .default-container {
+    border-radius: 0;
+    margin: 0 0 13vh 0;
   }
 }

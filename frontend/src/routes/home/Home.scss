@@ -2,7 +2,7 @@
 @import '../../util/layout';
 
 .home-page .fullScreen-wrapper {
-  min-height: 71.95vh;
+  height: 71.85vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -22,7 +22,7 @@
   background-color: $lightgrey;
   border-radius: 50%;
   cursor: pointer;
-  margin: 0 auto 9.44vh auto;
+  margin: 0 auto 5vh auto;
 }
 
 .scroll-arrow .bi-chevron-down::before {
@@ -38,6 +38,7 @@
   margin: 4.5vh 0 4vh 0;
   position: relative;
   color: $black;
+  white-space: pre-wrap;
 }
 
 .home-page .description .design-lines {
@@ -86,7 +87,6 @@
     max-height: 31vh;
     overflow: hidden;
     padding: 2vh 0 0 4vw;
-    //-webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   }
 

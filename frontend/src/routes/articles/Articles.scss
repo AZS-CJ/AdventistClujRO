@@ -1,11 +1,8 @@
 @import '../../util/colors';
 @import '../../util/layout';
 
-.articles-page .article-wrapper {
-  background-color: $lightgrey;
-  border-radius: 28px;
-  margin: 0 7vw 6.66vh 7vw;
-  padding: 2.77vh 7vw;
+.articles-page .left-title-section {
+  margin-bottom: 8.15vh;
 }
 
 .articles-page .article-card {

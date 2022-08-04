@@ -5,7 +5,8 @@ const NavigationContext = createContext([{}, () => {}])
 
 const NavigationProvider = ({ children }) => {
   const [navigationState, setNavigationState] = useState({
-    isOpen: false
+    isOpen: false,
+    activeRoute: window.location.pathname
   })
   return <NavigationContext.Provider value={[navigationState, setNavigationState]}>{children}</NavigationContext.Provider>
 }
@@ -21,10 +22,16 @@ const useNavigationContext = () => {
     setNavState((state) => ({ ...state, isOpen: false }))
   }
 
+  const setActiveRoute = (route) => {
+    setNavState((state) => ({ ...state, activeRoute: route }))
+  }
+
   return {
     toggleSidebar,
     hideSidebar,
-    sidebarOpen: navState.isOpen
+    setActiveRoute,
+    sidebarOpen: navState.isOpen,
+    activeRoute: navState.activeRoute
   }
 }
 

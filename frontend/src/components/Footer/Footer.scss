@@ -3,7 +3,7 @@
 
 .page-footer {
   position: relative;
-  margin-right: 0.5em;
+  margin-right: 1rem;
   font-size: 0.8em;
 }
 
@@ -26,18 +26,27 @@
 }
 
 .container-fluid {
-  padding: 0.5em;
+  padding: 3.7vh 0 !important;
 }
 
 .container-fluid .social-media {
-  display: block;
+  display: flex;
+  align-items: center;
+  padding-left: 14vw;
+}
+
+.container-fluid .social-media p {
+  font-weight: bold;
+  color: $almostBlack;
+  font-size: 0.93rem;
+  margin-right: 1.72vw;
 }
 
 .container-fluid .social-media a {
   width: fit-content;
   width: -moz-fit-content;
-  margin-left: 20%;
-  padding: 0.3em 1em;
+  padding-bottom: 0.8125rem;
+  font-size: 1rem;
 }
 
 .container-fluid .social-media .bi {
@@ -66,8 +75,8 @@
 }
 
 .footer-copyright {
-  margin-top: 1em;
-  font-size: 0.7em;
+  margin: 2.3vh 0 0 7vw;
+  font-size: 0.6875rem;
   text-align: left;
   display: block;
 }
@@ -76,11 +85,13 @@
   padding: 0;
   width: fit-content;
   width: -moz-fit-content;
+  display: inline-block;
 }
 
 .page-footer .links a {
-  padding: .2em .5em;
-  position: relative
+  padding: 0 0 0.625vw 1.57vh;
+  position: relative;
+  font-size: 1rem;
 }
 
 .page-footer .links ul {
@@ -103,7 +114,7 @@
 }
 
 .page-footer .links .last-one {
-  margin-top: 0.75rem;
+  margin-top: 3.6vh;
 }
 
 .page-footer .links .last-one:before {
@@ -113,13 +124,22 @@
 }
 
 @media (max-width: $min-phone-width) {
-  .page-footer .links {
+  .page-footer {
+    margin-right: 0.625rem;
+  }
+
+  .page-footer .links, .social-media p {
     display:none
+  }
+
+  .container-fluid {
+    padding: 2.8vh 0 !important;
   }
 
   .container-fluid .social-media {
     width: fit-content;
-    margin: 0 auto
+    margin: 0 auto;
+    padding-left: 0;
   }
 
   .container-fluid .social-media a {
@@ -129,9 +149,11 @@
   .footer-copyright {
     text-align: center;
     padding: 0 9.72vw;
+    margin: 1vh 0 0 0;
   }
 
   .footer-copyright a {
     margin: 0 auto;
+    display: block;
   }
 }

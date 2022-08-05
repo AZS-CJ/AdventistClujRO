@@ -2,8 +2,10 @@ import axios from 'axios'
 
 const getHomePageContent = async () => {
   const url = `/api/home-page`
-  const response = await axios.get(url)
-  return response.data.data.attributes
+  return axios
+    .get(url)
+    .then((response) => response.data.data.attributes)
+    .catch((err) => console.log(err))
 }
 
 export default getHomePageContent

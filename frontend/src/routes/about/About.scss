@@ -1,0 +1,11 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.about-page {
+}
+
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .about-page {
+  }
+}

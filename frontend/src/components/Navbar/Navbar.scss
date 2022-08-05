@@ -15,7 +15,7 @@
     z-index: 9;
     margin-top: 3.79vh;
     flex-wrap: nowrap;
-    width:86%;
+    width: calc(87% - 1rem);
     padding-left: 14vw;
 }
 
@@ -100,7 +100,8 @@
 
 @media (max-width: $min-phone-width) {
   .navbar.my-nav {
-    padding-left: 7vw
+    padding-left: 7vw;
+    width: calc(87% - 0.625rem);
   }
 
   .navbar.my-nav .desktop-nav,  .navbar.my-nav .main-live{

@@ -1,27 +1,33 @@
 import React from 'react'
 import { LINKS } from '../../util/constants'
+import { useNavigationContext } from '../../contexts/navigation'
 
 import './Footer.scss'
 
 function Footer() {
+  const { sidebarOpen } = useNavigationContext()
+
   return (
-    <footer className="page-footer font-small blue my-menu">
-      <div className="container-fluid">
+    <footer className={`page-footer font-small blue ${sidebarOpen && 'blurred'}`}>
+      <div className="container-fluid my-menu">
         <div className="row">
           <div className="col-md-8">
             <div className="social-media">
-              <a className="button" href={LINKS.youtube} target="_blank">
-                <i className="bi bi-youtube" />
-                <span>YouTube</span>
-              </a>
-              <a className="button" href={LINKS.facebook} target="_blank">
-                <i className="bi bi-facebook" />
-                <span>Facebook</span>
-              </a>
-              <a className="button" href={LINKS.instagram} target="_blank">
-                <i className="bi bi-instagram" />
-                <span>Instagram</span>
-              </a>
+              <p>Social Media:</p>
+              <div className="media-links">
+                <a className="button" href={LINKS.youtube} target="_blank">
+                  <i className="bi bi-youtube" />
+                  <span>YouTube</span>
+                </a>
+                <a className="button" href={LINKS.facebook} target="_blank">
+                  <i className="bi bi-facebook" />
+                  <span>Facebook</span>
+                </a>
+                <a className="button" href={LINKS.instagram} target="_blank">
+                  <i className="bi bi-instagram" />
+                  <span>Instagram</span>
+                </a>
+              </div>
             </div>
             <div className="footer-copyright">
               © {new Date().getFullYear()} Biserica Adventistă de Ziua a Șaptea "Speranța" Cluj-Napoca
@@ -42,10 +48,9 @@ function Footer() {
                 <a href={LINKS.respiro} target="_blank">
                   Revista Respiro
                 </a>
-                {/*Will be implemented later*/}
-                {/*<a href={LINKS.cookies} className="last-one" target="_blank">*/}
-                {/*  Politica privind cookies*/}
-                {/*</a>*/}
+                <a href={LINKS.cookies} className="last-one" target="_blank">
+                  Politica privind cookies
+                </a>
               </div>
               <div className="col-md-5">
                 <ul className="list-unstyled">
@@ -58,16 +63,16 @@ function Footer() {
                   <a href={LINKS.adra} target="_blank">
                     ADRA
                   </a>
-                  {/*Will be implemented later*/}
-                  {/*<a href={LINKS.confidential} className="last-one" target="_blank">*/}
-                  {/*  Politica de confidențialitate*/}
-                  {/*</a>*/}
+                  <a href={LINKS.confidential} className="last-one" target="_blank">
+                    Politica de confidențialitate
+                  </a>
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <div className="emptyDiv" />
     </footer>
   )
 }

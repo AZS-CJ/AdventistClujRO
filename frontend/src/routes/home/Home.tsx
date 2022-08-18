@@ -3,6 +3,10 @@ import InfoSection from '../../components/InfoSection/InfoSection'
 import { Link } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
 import getHomePageContent from '../../api/homePage'
+import getProgram from '../../api/program'
+import { ProgramType } from '../../data/program'
+import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
+import { getDayName } from '../../util/functions'
 
 import './Home.scss'
 
@@ -17,9 +21,11 @@ function Home(props) {
   const [historyOpen, setHistoryOpen] = useState<boolean>(false)
   const { setActiveRoute } = useNavigationContext()
   const [content, setContent] = useState<ContentState>({ title: '', description: '', aboutUs: '', loading: true })
+  const [program, setProgram] = useState<ProgramType[]>([])
 
   useEffect(() => {
     ;(async () => {
+      setProgram(await getProgram())
       const response = await getHomePageContent()
       setContent({ ...response, loading: false })
     })()
@@ -32,6 +38,18 @@ function Home(props) {
     const htmlElement = document.documentElement
     htmlElement.style.scrollBehavior = 'smooth'
     window.scrollBy(0, scrollHeight)
+  }
+
+  // returns list of 2 DateNumber of the next 2 days that have at least 1 program
+  const getNext2Days = () => {
+    const nextDays: number[] = []
+    let dayNumber = new Date().getDay() + 1
+    while (nextDays.length < 2 && program.length) {
+      const hasProgram = program.some((p) => p.day === getDayName(dayNumber))
+      if (hasProgram) nextDays.push(dayNumber)
+      dayNumber = dayNumber < 7 ? dayNumber + 1 : 1
+    }
+    return nextDays
   }
 
   return content.loading ? (
@@ -68,7 +86,12 @@ function Home(props) {
         </div>
       </InfoSection>
       <InfoSection title="Program" ctaText={'Vezi întregul program'} ctaURL="/program">
-        <div>content Program</div>
+        <div className="program-section">
+          <div className="next">urmează:</div>
+          {getNext2Days().map((dayN) => (
+            <OneDayProgram dayNumber={dayN} programs={program} key={dayN} />
+          ))}
+        </div>
       </InfoSection>
     </div>
   )

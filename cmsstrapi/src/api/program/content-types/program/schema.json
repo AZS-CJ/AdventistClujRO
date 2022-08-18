@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "programs",
+  "info": {
+    "singularName": "program",
+    "pluralName": "programs",
+    "displayName": "Program",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "live": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "time": {
+      "type": "time",
+      "required": true,
+      "default": "11:00"
+    },
+    "day": {
+      "type": "enumeration",
+      "enum": [
+        "Duminica",
+        "Luni",
+        "Marti",
+        "Miercuri",
+        "Joi",
+        "Vineri",
+        "Sambata"
+      ],
+      "required": true
+    },
+    "expirationDate": {
+      "type": "date"
+    }
+  }
+}

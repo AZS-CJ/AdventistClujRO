@@ -1,0 +1,37 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.program-day {
+  text-align: left;
+  margin-bottom: 4.9vh;
+}
+
+.program-day .bold {
+  font-weight: bold;
+}
+
+.program-day .day-title {
+  color: $blue
+}
+
+.program-day .day-title .day-name {
+  font-size: 2.125rem;
+  line-height: 2.31rem;
+}
+
+.program-day .bi-sunset::before {
+  color: $darkRed;
+  font-size: 2rem;
+  vertical-align: -0.7rem;
+}
+
+.program-day .program-line p {
+  display: inline;
+  font-weight: bold;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .program-day {
+    text-align: center;
+  }
+}

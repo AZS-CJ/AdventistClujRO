@@ -1,24 +1,52 @@
-import React, { useState } from 'react'
-import SunCalc from 'suncalc'
-import { formatToLocalDate, getNextDate } from '../../util/functions'
+import React, { useEffect, useState } from 'react'
+import getProgram from '../../api/program'
+import { ProgramType } from '../../data/program'
+import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 
 import './Program.scss'
 
+interface ProgramState {
+  programs: ProgramType[]
+  loading: boolean
+}
+
 function Program() {
-  const getSunsets = () => {
-    const timesFriday = SunCalc.getTimes(getNextDate(5), 46.763, 23.58)
-    const timesSaturday = SunCalc.getTimes(getNextDate(6), 46.763, 23.58)
+  const [programRequest, setProgramRequest] = useState<ProgramState>({ programs: [], loading: true })
 
-    const sunsetFriday = `${timesFriday.sunset.getHours()}:${timesFriday.sunset.getMinutes()}`
-    const sunsetSaturday = `${timesSaturday.sunset.getHours()}:${timesSaturday.sunset.getMinutes()}`
-    return { friday: sunsetFriday, saturday: sunsetSaturday }
+  useEffect(() => {
+    ;(async () => {
+      getProgram().then((programs) => setProgramRequest({ programs, loading: false }))
+    })()
+  }, [])
+
+  const renderContent = () => {
+    if (programRequest.loading) return <div className="spinner-border" role="status" />
+    return (
+      <div className="week default-container">
+        <div className="column">
+          <OneDayProgram dayNumber={6} programs={programRequest.programs} />
+          <OneDayProgram dayNumber={7} programs={programRequest.programs} />
+        </div>
+        <div className="design-lines">
+          <div className="shorter" />
+          <div className="longer" />
+        </div>
+        <div className="column">
+          <OneDayProgram dayNumber={1} programs={programRequest.programs} />
+          <OneDayProgram dayNumber={2} programs={programRequest.programs} />
+          <OneDayProgram dayNumber={3} programs={programRequest.programs} />
+          <OneDayProgram dayNumber={4} programs={programRequest.programs} />
+          <OneDayProgram dayNumber={5} programs={programRequest.programs} />
+        </div>
+      </div>
+    )
   }
-
-  const [sunsets] = useState<{ friday: string; saturday: string }>(() => getSunsets())
-
   return (
     <div className="program-page">
-      Program: <i className="bi bi-sunset fa-10x" /> {formatToLocalDate(getNextDate(5))}: {sunsets.friday} , {formatToLocalDate(getNextDate(6))}: {sunsets.saturday}
+      <div className="left-title-section with-margin">
+        <span className="bold-title">Program</span>
+      </div>
+      {renderContent()}
     </div>
   )
 }

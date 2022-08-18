@@ -1,7 +1,49 @@
 @import '../../util/colors';
 @import '../../util/layout';
 
-.program-page .bi-sunset::before {
-  color: $darkRed;
-  font-size: 32px;
+
+.program-page .week {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  line-height: 2.125rem;
+  color: $black;
+}
+
+.program-page .week .column {
+  width: 48%;
+}
+
+.week .design-lines {
+  display: none
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .program-page .week {
+    flex-direction: column;
+  }
+  .program-page .week .column {
+    width: 100%;
+  }
+
+  .week .design-lines {
+    width: 37vw;
+    margin: 0 auto 4.9vh auto;
+    display: flex;
+  }
+
+  .week .design-lines div{
+    border-bottom: solid 5px $blueLines;
+    border-radius: 15px;
+    height: 0;
+  }
+
+  .week .design-lines .shorter{
+    width: 4vw;
+  }
+
+  .week .design-lines .longer {
+    margin-left: 5.33vw;
+    width: 100%;
+  }
 }

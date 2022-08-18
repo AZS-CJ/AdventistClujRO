@@ -67,6 +67,22 @@
   height: 100%;
 }
 
+.home-page .program-section {
+  display: flex;
+  margin: 6.5vh 0 1.85vh 0;
+  justify-content: space-between;
+}
+
+.home-page .program-section .program-day {
+  max-width: 40%;
+}
+
+.home-page .program-section .next {
+  color: $blue;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
 
 @media (orientation: portrait) and (max-width: $min-phone-width) {
   .home-page .parag {
@@ -123,6 +139,19 @@
     padding: 0 4.8vw;
     width: fit-content;
     width: -moz-fit-content;
+  }
+
+  .home-page .program-section {
+    flex-direction: column;
+    margin: 5.4vh 0 1vh 0;
+  }
+
+  .home-page .program-section .program-day {
+    max-width: 100%;
+  }
+
+  .home-page .program-section .next {
+    margin-bottom: 3vh;
   }
 
 }

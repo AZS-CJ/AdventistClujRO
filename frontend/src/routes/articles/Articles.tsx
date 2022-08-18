@@ -58,7 +58,7 @@ function Articles() {
 
   return (
     <div className="articles-page">
-      <div className="left-title-section">
+      <div className="left-title-section with-margin">
         <span className="bold-title">Articole</span>
       </div>
       {renderArticleContainer()}

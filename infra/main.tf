@@ -200,18 +200,22 @@ resource "azurerm_dns_zone" "azscj-zone" {
   resource_group_name = azurerm_resource_group.common.name
 }
 
-resource "azurerm_dns_cname_record" "adventistclujro-prod" {
-  name                = "adventistcluj.ro"
+resource "azurerm_dns_a_record" "adventistclujro-prod" {
+  name                = "@"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
   record              = azurerm_app_service.webhost["prod"].default_site_hostname
 }
 
-resource "azurerm_dns_cname_record" "adventistclujro-test" {
+resource "azurerm_dns_a_record" "adventistclujro-test" {
   name                = "test.adventistcluj.ro"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
   record              = azurerm_app_service.webhost["test"].default_site_hostname
+}
+
+resource "azurerm_dns_txt_record" "adventistclujro-prod" {
+  name = "adventistclu"
 }

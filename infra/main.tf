@@ -201,7 +201,7 @@ resource "azurerm_dns_zone" "azscj-zone" {
 }
 
 resource "azurerm_dns_cname_record" "adventistclujro-prod-naked" {
-  name                = "@"
+  name                = "www"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300

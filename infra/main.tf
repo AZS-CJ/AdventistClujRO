@@ -234,7 +234,3 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
   ttl                 = 300
   record              = azurerm_app_service.webhost["test"].default_site_hostname
 }
-
-resource "azurerm_dns_txt_record" "adventistclujro-prod" {
-  name = "adventistclu"
-}

@@ -188,6 +188,12 @@ resource "azurerm_app_service" "strapi" {
   }
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "example" {
+  hostname            = "adventistcluj.ro"
+  app_service_name    = azurerm_app_service.webhost["prod"].name
+  resource_group_name = azurerm_resource_group.website["prod"].name
+}
+
 resource "azurerm_role_assignment" "acr" {
   for_each             = azurerm_app_service.strapi
   role_definition_name = "AcrPull"

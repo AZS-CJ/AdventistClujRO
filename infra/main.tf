@@ -253,7 +253,7 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
 }
 
 resource "azurerm_app_service_managed_certificate" "managed_certificate" {
-  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.example.id
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding.id
 }
 
 resource "azurerm_app_service_certificate_binding" "managed_certificate_binding" {

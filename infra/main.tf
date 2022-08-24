@@ -206,16 +206,16 @@ resource "azurerm_dns_zone" "azscj-zone" {
   resource_group_name = azurerm_resource_group.common.name
 }
 
-resource "azurerm_dns_cname_record" "adventistclujro-prod-www" {
-  name                = "www"
+resource "azurerm_dns_a_record" "adventistclujro-prod-naked" {
+  name                = "@"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  record              = azurerm_app_service.webhost["prod"].default_site_hostname
+  records             = ["51.116.145.35"] // this has to be added manually as the app service resource doesn't output the ip in terraform
 }
 
-resource "azurerm_dns_txt_record" "adventistclujro-prod-verif-www" {
-  name                = "asuid.www"
+resource "azurerm_dns_txt_record" "adventistclujro-prod-naked-verif" {
+  name                = "asuid"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
@@ -225,8 +225,16 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-verif-www" {
   }
 }
 
-resource "azurerm_dns_txt_record" "adventistclujro-prod-verif-naked" {
-  name                = "asuid"
+resource "azurerm_dns_cname_record" "adventistclujro-prod-www" {
+  name                = "www"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  records             = ["51.116.145.35"] // this has to be added manually as the app service resource doesn't output the ip in terraform
+}
+
+resource "azurerm_dns_txt_record" "adventistclujro-prod-www-verif" {
+  name                = "asuid.www"
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300

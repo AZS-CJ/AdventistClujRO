@@ -230,7 +230,7 @@ resource "azurerm_dns_cname_record" "adventistclujro-prod-www" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  records             = ["51.116.145.35"] // this has to be added manually as the app service resource doesn't output the ip in terraform
+  record              = "51.116.145.35" // this has to be added manually as the app service resource doesn't output the ip in terraform
 }
 
 resource "azurerm_dns_txt_record" "adventistclujro-prod-www-verif" {

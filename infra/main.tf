@@ -188,7 +188,7 @@ resource "azurerm_app_service" "strapi" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "example" {
+resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
   hostname            = "adventistcluj.ro"
   app_service_name    = azurerm_app_service.webhost["prod"].name
   resource_group_name = azurerm_resource_group.website["prod"].name
@@ -250,4 +250,14 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
   record              = azurerm_app_service.webhost["test"].default_site_hostname
+}
+
+resource "azurerm_app_service_managed_certificate" "managed_certificate" {
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.example.id
+}
+
+resource "azurerm_app_service_certificate_binding" "managed_certificate_binding" {
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding.id
+  certificate_id      = azurerm_app_service_managed_certificate.managed_certificate.id
+  ssl_state           = "SniEnabled"
 }

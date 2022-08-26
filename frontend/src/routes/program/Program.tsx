@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import getProgram from '../../api/program'
 import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
+import { useGeneralContext } from '../../contexts/generalState'
+import { stagingAPI } from '../../util/constants'
 
 import './Program.scss'
 
@@ -12,6 +14,7 @@ interface ProgramState {
 
 function Program() {
   const [programRequest, setProgramRequest] = useState<ProgramState>({ programs: [], loading: true })
+  const { backgroundImages } = useGeneralContext()
 
   useEffect(() => {
     ;(async () => {
@@ -42,7 +45,7 @@ function Program() {
     )
   }
   return (
-    <div className="program-page">
+    <div className="program-page page-content" style={{ backgroundImage: `url(${stagingAPI}${backgroundImages.program || backgroundImages.home})` }}>
       <div className="left-title-section with-margin">
         <span className="bold-title">Program</span>
       </div>

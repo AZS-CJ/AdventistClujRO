@@ -1,4 +1,5 @@
 export type BackgroundImages = {
-  homeDesktop: string
-  homeMobile: string
+  home: string
+  program?: string
+  contact?: string
 }

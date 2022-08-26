@@ -16,7 +16,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Navbar navbarRef={navbarRef} />
-      <div className={`page-content ${sidebarOpen && 'blurred'}`}>
+      <div className={`router-content ${sidebarOpen && 'blurred'}`}>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/despre" element={<About />} />

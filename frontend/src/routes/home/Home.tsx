@@ -7,6 +7,8 @@ import getProgram from '../../api/program'
 import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
+import { useGeneralContext } from '../../contexts/generalState'
+import { stagingAPI } from '../../util/constants'
 
 import './Home.scss'
 
@@ -22,6 +24,7 @@ function Home(props) {
   const { setActiveRoute } = useNavigationContext()
   const [content, setContent] = useState<ContentState>({ title: '', description: '', aboutUs: '', loading: true })
   const [program, setProgram] = useState<ProgramType[]>([])
+  const { backgroundImages } = useGeneralContext()
 
   useEffect(() => {
     ;(async () => {
@@ -52,47 +55,53 @@ function Home(props) {
     return nextDays
   }
 
-  return content.loading ? (
-    <div className="spinner-border" role="status" />
-  ) : (
-    <div className="home-page">
-      <div className="fullScreen-wrapper">
-        <div className="left-title-section">
-          <span className="bold-title">{content.title}</span>
-          <div className="parag">{content.description}</div>
-          <div className="default-red-button">
-            <Link to="/program" onClick={() => setActiveRoute('program')}>
-              AFLĂ PROGRAMUL
-            </Link>
+  const returnContent = () => {
+    return (
+      <>
+        <div className="fullScreen-wrapper">
+          <div className="left-title-section">
+            <span className="bold-title">{content.title}</span>
+            <div className="parag">{content.description}</div>
+            <div className="default-red-button">
+              <Link to="/program" onClick={() => setActiveRoute('program')}>
+                AFLĂ PROGRAMUL
+              </Link>
+            </div>
+          </div>
+          <div className="scroll-arrow" onClick={scrollDownBtn}>
+            <i className="bi bi-chevron-down"></i>
           </div>
         </div>
-        <div className="scroll-arrow" onClick={scrollDownBtn}>
-          <i className="bi bi-chevron-down"></i>
-        </div>
-      </div>
-      <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
-        <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
-          <div className="design-lines">
-            <div className="shorter" />
-            <div className="longer" />
+        <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
+          <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
+            <div className="design-lines">
+              <div className="shorter" />
+              <div className="longer" />
+            </div>
+            <div className="text">{content.aboutUs}</div>
+            <div className="moreButton" onClick={() => setHistoryOpen(true)}>
+              Citește mai mult
+            </div>
+            <div className="lessButton" onClick={() => setHistoryOpen(false)}>
+              Citește mai puțin
+            </div>
           </div>
-          <div className="text">{content.aboutUs}</div>
-          <div className="moreButton" onClick={() => setHistoryOpen(true)}>
-            Citește mai mult
+        </InfoSection>
+        <InfoSection title="Program" ctaText={'Vezi întregul program'} ctaURL="/program">
+          <div className="program-section">
+            <div className="next">urmează:</div>
+            {getNext2Days().map((dayN) => (
+              <OneDayProgram dayNumber={dayN} programs={program} key={dayN} />
+            ))}
           </div>
-          <div className="lessButton" onClick={() => setHistoryOpen(false)}>
-            Citește mai puțin
-          </div>
-        </div>
-      </InfoSection>
-      <InfoSection title="Program" ctaText={'Vezi întregul program'} ctaURL="/program">
-        <div className="program-section">
-          <div className="next">urmează:</div>
-          {getNext2Days().map((dayN) => (
-            <OneDayProgram dayNumber={dayN} programs={program} key={dayN} />
-          ))}
-        </div>
-      </InfoSection>
+        </InfoSection>
+      </>
+    )
+  }
+
+  return (
+    <div className="home-page page-content" style={{ backgroundImage: `url(${stagingAPI}${backgroundImages.home})` }}>
+      {content.loading ? <div className="spinner-border" role="status" /> : returnContent()}
     </div>
   )
 }

@@ -5,5 +5,6 @@
 backend/.debug.env
 backend/.env
 frontend/.debug.env
+frontend/.env
 cms/.debug.env
 cms/.cache

@@ -12,5 +12,4 @@ export const LINKS = {
   confidential: ''
 }
 
-export const stagingAPI = 'https://adventistclujro-strapi-test.azurewebsites.net/'
-// local export const stagingAPI = 'http://localhost:1337'
+export const host = process.env.REACT_APP_HOST

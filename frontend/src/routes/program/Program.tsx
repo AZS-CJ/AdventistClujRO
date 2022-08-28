@@ -3,7 +3,7 @@ import getProgram from '../../api/program'
 import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { useGeneralContext } from '../../contexts/generalState'
-import { stagingAPI } from '../../util/constants'
+import { host } from '../../util/constants'
 
 import './Program.scss'
 
@@ -45,7 +45,7 @@ function Program() {
     )
   }
   return (
-    <div className="program-page page-content" style={{ backgroundImage: `url(${stagingAPI}${backgroundImages.program || backgroundImages.home})` }}>
+    <div className="program-page page-content" style={{ backgroundImage: `url(${host}${backgroundImages.program || backgroundImages.home})` }}>
       <div className="left-title-section with-margin">
         <span className="bold-title">Program</span>
       </div>

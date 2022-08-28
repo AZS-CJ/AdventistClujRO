@@ -12,4 +12,4 @@ export const LINKS = {
   confidential: ''
 }
 
-export const host = process.env.REACT_APP_HOST
+export const host = process.env.REACT_APP_HOST || 'https://adventistclujro-strapi-test.azurewebsites.net/'

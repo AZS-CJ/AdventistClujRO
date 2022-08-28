@@ -46,6 +46,7 @@
   top: 0;
   left: -1.56vw;
   height: 11vh;
+  max-height: 50%;
 }
 
 .home-page .description .moreButton, .home-page .description .lessButton {
@@ -120,7 +121,6 @@
     position: absolute;
     left: 0;
     height: 28vh;
-    max-height: 50%;
   }
 
   .home-page .description.open .design-lines {

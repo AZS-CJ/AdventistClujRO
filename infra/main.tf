@@ -236,7 +236,7 @@ resource "azurerm_dns_cname_record" "adventistclujro-prod-www" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  record              = "adventistcluj.ro"
+  record              = azurerm_app_service.webhost["prod"].default_site_hostname
 }
 
 resource "azurerm_dns_txt_record" "adventistclujro-prod-www-verif" {

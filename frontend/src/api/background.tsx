@@ -8,9 +8,9 @@ const getBackgroundImages = async (): Promise<BackgroundImages> => {
     .then((response) => {
       const attrs = response.data.data.attributes
       return {
-        home: attrs.home.data ? attrs.home.data.attributes.url : '',
-        program: attrs.program.data ? attrs.program.data.attributes.url : '',
-        contact: attrs.contact.data ? attrs.contact.data.attributes.url : ''
+        home: attrs.home.data?.attributes.url || '',
+        program: attrs.program.data?.attributes.url || '',
+        contact: attrs.contact.data?.attributes.url || ''
       }
     })
     .catch((err) => {

@@ -58,7 +58,7 @@ function Home(props) {
   const returnContent = () => {
     return (
       <>
-        <div className="fullScreen-wrapper">
+        <div className="fullscreen-wrapper">
           <div className="left-title-section">
             <span className="bold-title">{content.title}</span>
             <div className="parag">{content.description}</div>

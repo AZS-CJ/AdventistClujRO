@@ -194,6 +194,12 @@ resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
   resource_group_name = azurerm_resource_group.website["prod"].name
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "www_hostname_binding" {
+  hostname            = "www.adventistcluj.ro"
+  app_service_name    = azurerm_app_service.webhost["prod"].name
+  resource_group_name = azurerm_resource_group.website["prod"].name
+}
+
 resource "azurerm_role_assignment" "acr" {
   for_each             = azurerm_app_service.strapi
   role_definition_name = "AcrPull"
@@ -261,3 +267,4 @@ resource "azurerm_app_service_certificate_binding" "managed_certificate_binding"
   certificate_id      = azurerm_app_service_managed_certificate.managed_certificate.id
   ssl_state           = "SniEnabled"
 }
+

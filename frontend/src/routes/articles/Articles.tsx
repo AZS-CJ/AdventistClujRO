@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import './Articles.scss'
 import getArticles from '../../api/articles'
 import { Article } from '../../data/article'
-import { stagingAPI } from '../../util/constants'
+import { host } from '../../util/constants'
 import NumberPagination from '../../components/NumberPagination/NumberPagination'
 import { formatToLocalDate } from '../../util/functions'
+import { useGeneralContext } from '../../contexts/generalState'
+
+import './Articles.scss'
 
 interface ArticleState {
   articles: Article[]
@@ -15,6 +17,7 @@ function Articles() {
   const [articleRequest, setArticleRequest] = useState<ArticleState>({ articles: [], loading: false })
   const [page, setPage] = useState<number>(1)
   const [totalPages, setTotalPages] = useState<number>(1)
+  const { backgroundImages } = useGeneralContext()
 
   useEffect(() => {
     ;(async () => {
@@ -37,7 +40,7 @@ function Articles() {
             <div className="article-card" key={article.id}>
               {article.smallImg && (
                 <div className="cover-img">
-                  <img src={`${stagingAPI}${article.smallImg}`} alt="cover" />
+                  <img src={`${host}${article.smallImg}`} alt="cover" />
                 </div>
               )}
               <div className="article-card-content">
@@ -57,7 +60,7 @@ function Articles() {
   }
 
   return (
-    <div className="articles-page">
+    <div className="articles-page page-content" style={{ backgroundImage: `url(${host}${backgroundImages.home}` }}>
       <div className="left-title-section with-margin">
         <span className="bold-title">Articole</span>
       </div>

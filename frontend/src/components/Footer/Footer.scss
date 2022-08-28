@@ -2,8 +2,8 @@
 @import '../../util/colors';
 
 .page-footer {
-  position: relative;
-  margin-right: 1rem;
+  position: absolute;
+  width: calc(100% - 1rem);
   font-size: 0.8em;
 }
 

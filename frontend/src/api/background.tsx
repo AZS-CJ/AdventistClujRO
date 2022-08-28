@@ -1,17 +1,21 @@
 import axios from 'axios'
+import { BackgroundImages } from '../data/backgroundImages'
 
-const getBackgroundImages = async () => {
+const getBackgroundImages = async (): Promise<BackgroundImages> => {
   const url = `/api/background?populate=*`
   return axios
     .get(url)
     .then((response) => {
+      const attrs = response.data.data.attributes
       return {
-        homeDesktop: response.data.data.attributes.homeDesktop.data.attributes.url,
-        homeMobile: response.data.data.attributes.homeMobile.data.attributes.url
+        home: attrs.home.data?.attributes.url || '',
+        program: attrs.program.data?.attributes.url || '',
+        contact: attrs.contact.data?.attributes.url || ''
       }
     })
-    .catch(() => {
-      return { homeDesktop: '', homeMobile: '' }
+    .catch((err) => {
+      console.log('error ', err)
+      return { home: '' }
     })
 }
 

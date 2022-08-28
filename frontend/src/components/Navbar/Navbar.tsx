@@ -10,16 +10,16 @@ function Navbar(props) {
   const [scrolled, setScrolled] = useState(false)
   const { toggleSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
 
-  const isActiveRoute = (route: string) => {
-    return activeRoute.includes(route)
-  }
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
     window.removeEventListener('scroll', onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const isActiveRoute = (route: string) => {
+    return activeRoute.includes(route)
+  }
 
   const renderLink = (to: string, text: string) => {
     return (

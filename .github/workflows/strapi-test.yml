@@ -27,8 +27,9 @@ jobs:
 
     - name: Get latest tag
       run: |
-        jvar = az acr repository show-tags -n azscjacr --repository azscjstrapi --top 1 --orderby time_desc --query "[0]"
-        tag = $jvar | tr -d '"'
+        jvar=az acr repository show-tags -n azscjacr --repository azscjstrapi --top 1 --orderby time_desc --query "[0]"
+        tag=$jvar | tr -d '"'
+        echo "Latest tag found: ${tag}"
         echo "::set-output name=tag::${tag}"
 
     - name: Set container to webapp

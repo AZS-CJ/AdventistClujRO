@@ -15,7 +15,7 @@ on:
 
 jobs:
   build-and-deploy:
-    uses: ./.github/workflows/webApp-common.yml
+    uses: ./.github/webApp-common.yml
     with:
       webAppName: adventistclujro-prod
       webAppPackagePath: './backend'

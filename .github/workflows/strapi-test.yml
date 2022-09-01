@@ -25,9 +25,15 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CLI_CREDS }}
 
+    - name: Get latest tag
+      run: |
+        jvar = az acr repository show-tags -n azscjacr --repository azscjstrapi --top 1 --orderby time_desc --query "[0]"
+        tag = $jvar | tr -d '"'
+        echo "::set-output name=tag::${tag}"
+
     - name: Set container to webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'adventistclujro-strapi-test'
         publish-profile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}
-        images: 'azscjacr.azurecr.io/azscjstrapi:1'
+        images: 'azscjacr.azurecr.io/azscjstrapi:${{ steps.vars.outputs.tag }}'

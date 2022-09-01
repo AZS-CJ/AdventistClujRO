@@ -23,7 +23,7 @@ jobs:
     - name: Azure login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CLI_CREDS }
+        creds: ${{ secrets.AZURE_CLI_CREDS }}
 
     - name: Set container to webapp
       uses: azure/webapps-deploy@v2

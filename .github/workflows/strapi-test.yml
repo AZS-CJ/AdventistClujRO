@@ -1,4 +1,4 @@
-name: Strapi - Test
+name: Strapi - Deploy Test
 
 on:
   push:

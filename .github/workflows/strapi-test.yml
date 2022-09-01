@@ -26,6 +26,7 @@ jobs:
         creds: ${{ secrets.AZURE_CLI_CREDS }}
 
     - name: Get latest tag
+      id: latestTag
       run: |
         tag=$(az acr repository show-tags -n azscjacr --repository azscjstrapi --top 1 --orderby time_desc --query "[0]" -o tsv)
         echo "Latest tag found: ${tag}"
@@ -36,4 +37,4 @@ jobs:
       with:
         app-name: 'adventistclujro-strapi-test'
         publish-profile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}
-        images: 'azscjacr.azurecr.io/azscjstrapi:${{ steps.vars.outputs.tag }}'
+        images: 'azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}'

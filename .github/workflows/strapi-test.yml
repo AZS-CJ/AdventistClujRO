@@ -41,4 +41,5 @@ jobs:
 
     - name: Set tag with image
       run: |
-        az resource tag --tags Image='azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}' -g adventistclujro-test-rg -n adventistcluj-test --resource-type "Microsoft.Web"
+        tag='azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}'
+        az webapp update -g adventistclujro-test-rg -n adventistcluj-test --set tags.tagName=tagValue

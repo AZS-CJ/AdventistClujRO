@@ -42,4 +42,4 @@ jobs:
     - name: Set tag with image
       run: |
         tagValue='azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}'
-        az webapp update -g adventistclujro-test-rg -n adventistcluj-test --set tags.image=$tagValue
+        az webapp update -g adventistclujro-test-rg -n adventistclujro-test --set tags.image=$tagValue

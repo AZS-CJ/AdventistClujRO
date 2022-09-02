@@ -38,3 +38,7 @@ jobs:
         app-name: 'adventistclujro-strapi-test'
         publish-profile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}
         images: 'azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}'
+
+    - name: Set tag with image
+      run: |
+        az resource tag --tags Image='azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}' -g adventistclujro-test-rg -n adventistcluj-test --resource-type "Microsoft.Web"

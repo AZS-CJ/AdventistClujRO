@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 import './InfoSection.scss'
 
 const InfoSection = (props) => {
-  const { title, ctaText, ctaURL, children: content, sectionRef } = props
+  const { title, ctaText, ctaURL, children: content, sectionRef, customCSS } = props
   const { setActiveRoute } = useNavigationContext()
 
   return (
-    <div className="info-section default-container" ref={sectionRef}>
+    <div className={`info-section default-container ${customCSS}`} ref={sectionRef}>
       <div className="info-section-title">{title}</div>
       {content}
       {ctaText && (

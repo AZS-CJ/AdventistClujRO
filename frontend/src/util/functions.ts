@@ -62,3 +62,22 @@ export const getSunsetForDay = (date) => {
   const times = SunCalc.getTimes(date, 46.763, 23.58)
   return `${times.sunset.getHours()}:${times.sunset.getMinutes()}`
 }
+
+export const getFormattedPeriod = (startDate: string, endDate: string) => {
+  const startD = new Date(startDate)
+  const endD = new Date(endDate)
+  const formattedStartDate = formatToLocalDate(startDate)
+  const formattedEndDate = formatToLocalDate(endDate)
+
+  // event is just one day
+  if (formattedStartDate === formattedEndDate) return formattedStartDate
+  // event is multiple days in the same month
+  if (startD.getFullYear() === endD.getFullYear() && startD.getMonth() === endD.getMonth()) return `${startD.getDay()} - ${formattedEndDate}`
+  // event is multiple days in different months
+  if (startD.getFullYear() === endD.getFullYear()) {
+    const dayMonthStart = startD.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' }).replace(/ \w/, (c) => c.toUpperCase())
+    return `${dayMonthStart} - ${formattedEndDate}`
+  }
+  // event is in different years
+  return `${formattedStartDate} - ${formattedEndDate}`
+}

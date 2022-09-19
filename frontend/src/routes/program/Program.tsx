@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import getProgram from '../../api/program'
+import getPrograms from '../../api/program'
 import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { useGeneralContext } from '../../contexts/generalState'
@@ -18,7 +18,7 @@ function Program() {
 
   useEffect(() => {
     ;(async () => {
-      getProgram().then((programs) => setProgramRequest({ programs, loading: false }))
+      getPrograms().then((programs) => setProgramRequest({ programs, loading: false }))
     })()
   }, [])
 

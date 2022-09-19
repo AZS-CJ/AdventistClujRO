@@ -1,0 +1,155 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.carousel-container {
+  padding: 5.55vh 0;
+}
+
+.react-multi-carousel-track {
+  min-height: 19rem;
+}
+
+.carousel-container .react-multi-carousel-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-container.center{
+  justify-content: center;
+}
+
+.react-multi-carousel-dot-list {
+  width: 50%;
+  margin-left: 25%;
+  background-color: $blueLines;
+  border-radius: 1rem;
+}
+
+.carousel-container .custom-line {
+  height: 0.6875rem;
+  width: 100%;
+}
+
+.carousel-container .custom-line.active {
+  background-color: $blue;
+  border-radius: 1rem;
+}
+
+.carousel-container .event-card {
+  height: 13rem;
+  width: 13rem;
+  border-radius: 1rem;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.5s;
+}
+
+.carousel-container .event-card-body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  border-radius: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  color: $white;
+  text-align: center;
+  padding: 1.5rem 0.4rem;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.carousel-container .event-card.active-element {
+  height: 19rem;
+  width: 19rem;
+}
+
+.carousel-container .event-card.active-element .event-card-body {
+  justify-content: space-between;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.carousel-container .event-card.active-element .event-card-body .event-card-title {
+  display: block;
+}
+
+.carousel-container .event-card-body .event-card-period {
+  font-size: 1.125rem;
+}
+
+.carousel-container .event-card-body .event-card-title {
+  font-size: 2.18rem;
+  display: none;
+}
+
+.carousel-button-group {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 2.5rem;
+  right: 2.5rem;
+}
+
+.carousel-button-group .custom-arrow {
+  height: 3.125rem;
+  width: 3.125rem;
+  color: $lightgrey;
+  background-color: $blue;
+  border-radius: 50%;
+  box-shadow: 0 5px 5px $almostWhite;
+  font-size: 1.68rem;
+  line-height: 3.125rem;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .default-container.event-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .react-multi-carousel-track {
+    min-height: 10rem;
+  }
+
+  .carousel-button-group {
+    display: none
+  }
+
+  .carousel-container .event-card {
+    width: 7.56rem;
+    height: 7.56rem;
+    padding: 0;
+  }
+
+  .carousel-container .event-card-body {
+    padding: 0.5rem 0.1rem;
+  }
+
+  .carousel-container .event-card-body .event-card-period {
+    font-size: 0.9rem;
+  }
+
+  .carousel-container .react-multi-carousel-item--active .event-card {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .carousel-container .react-multi-carousel-item--active .event-card-body {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .carousel-container .react-multi-carousel-item--active .event-card-body {
+    justify-content: space-between;
+  }
+
+  .carousel-container .react-multi-carousel-item--active .event-card-body .event-card-title {
+    display: block;
+    font-size: 1.18rem;
+  }
+
+
+}

@@ -9,6 +9,7 @@ import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
 import { host } from '../../util/constants'
+import EventsCarousel from './EventsCarousel'
 
 import './Home.scss'
 
@@ -94,6 +95,9 @@ function Home(props) {
               <OneDayProgram dayNumber={dayN} programs={program} key={dayN} />
             ))}
           </div>
+        </InfoSection>
+        <InfoSection title="Evenimente" customCSS="event-container">
+          <EventsCarousel />
         </InfoSection>
       </>
     )

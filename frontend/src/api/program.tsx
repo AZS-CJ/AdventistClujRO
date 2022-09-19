@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const getProgram = async () => {
+const getPrograms = async () => {
   const url = `/api/programs?`
   const { data: response } = await axios.get(url)
 
@@ -12,4 +12,4 @@ const getProgram = async () => {
     })
 }
 
-export default getProgram
+export default getPrograms

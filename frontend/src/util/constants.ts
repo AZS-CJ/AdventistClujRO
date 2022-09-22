@@ -11,5 +11,3 @@ export const LINKS = {
   cookies: '',
   confidential: ''
 }
-
-export const host = process.env.REACT_APP_HOST || 'https://adventistclujro-strapi-test.azurewebsites.net/'

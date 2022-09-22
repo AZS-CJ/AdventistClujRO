@@ -101,6 +101,12 @@ app.use('/api', proxy(cmsDbHost, {
   }
 }));
 
+app.use('/uploads', proxy(cmsDbHost, {
+    proxyReqPathResolver: function (req) {
+        return `/uploads${req.url}`;
+    }
+}));
+
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

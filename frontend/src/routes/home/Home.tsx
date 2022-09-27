@@ -8,7 +8,6 @@ import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
-import { host } from '../../util/constants'
 
 import './Home.scss'
 
@@ -100,7 +99,7 @@ function Home(props) {
   }
 
   return (
-    <div className="home-page page-content" style={{ backgroundImage: `url(${host}${backgroundImages.home})` }}>
+    <div className="home-page page-content" style={{ backgroundImage: `url(${backgroundImages.home})` }}>
       {content.loading ? <div className="spinner-border" role="status" /> : returnContent()}
     </div>
   )

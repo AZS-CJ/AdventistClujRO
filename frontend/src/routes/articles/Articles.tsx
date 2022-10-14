@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import getArticles from '../../api/articles'
 import { Article } from '../../data/article'
-import { host } from '../../util/constants'
 import NumberPagination from '../../components/NumberPagination/NumberPagination'
 import { formatToLocalDate } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
@@ -40,7 +39,7 @@ function Articles() {
             <div className="article-card" key={article.id}>
               {article.smallImg && (
                 <div className="cover-img">
-                  <img src={`${host}${article.smallImg}`} alt="cover" />
+                  <img src={`${article.smallImg}`} alt="cover" />
                 </div>
               )}
               <div className="article-card-content">
@@ -60,7 +59,7 @@ function Articles() {
   }
 
   return (
-    <div className="articles-page page-content" style={{ backgroundImage: `url(${host}${backgroundImages.home}` }}>
+    <div className="articles-page page-content" style={{ backgroundImage: `url(${backgroundImages.home}` }}>
       <div className="left-title-section with-margin">
         <span className="bold-title">Articole</span>
       </div>

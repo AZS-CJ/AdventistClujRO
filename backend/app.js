@@ -94,11 +94,22 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = process.env.CMS_DB_HOST || 'adventistclujro-strapi-test.azurewebsites.net/';
+const cmsDbHost = 'adventistclujro-strapi-test.azurewebsites.net/';
 app.use('/api', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;
   }
+}));
+app.use('/uploads', proxy(cmsDbHost, {
+  proxyReqPathResolver: function (req) {
+    return `/uploads${req.url}`;
+  }
+}));
+
+app.use('/uploads', proxy(cmsDbHost, {
+    proxyReqPathResolver: function (req) {
+        return `/uploads${req.url}`;
+    }
 }));
 
 app.get('/*', function (req, res) {

@@ -12,7 +12,6 @@ export const LINKS = {
   confidential: ''
 }
 
-export const host = process.env.REACT_APP_HOST || 'https://adventistclujro-strapi-test.azurewebsites.net/'
 export enum InputType {
   TEXT,
   EMAIL,

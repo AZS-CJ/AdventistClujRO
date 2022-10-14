@@ -28,10 +28,10 @@ jobs:
       - name: docker build
         working-directory: ./cmsstrapi
         run: |
-          docker build -t azscjacr.azurecr.io/azscjstrapi:${{ github.run_attempt }} .
+          docker build -t azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }} .
           
       - name: docker push
         run: |
-          docker push azscjacr.azurecr.io/azscjstrapi:${{ github.run_attempt }}
+          docker push azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }}
       
     

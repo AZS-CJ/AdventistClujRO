@@ -4,6 +4,7 @@ import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { useGeneralContext } from '../../contexts/generalState'
 import { host } from '../../util/constants'
+import Divider from '../../components/Divider/Divider'
 
 import './Program.scss'
 
@@ -30,10 +31,7 @@ function Program() {
           <OneDayProgram dayNumber={6} programs={programRequest.programs} />
           <OneDayProgram dayNumber={7} programs={programRequest.programs} />
         </div>
-        <div className="design-lines">
-          <div className="shorter" />
-          <div className="longer" />
-        </div>
+        <Divider />
         <div className="column">
           <OneDayProgram dayNumber={1} programs={programRequest.programs} />
           <OneDayProgram dayNumber={2} programs={programRequest.programs} />
@@ -44,6 +42,7 @@ function Program() {
       </div>
     )
   }
+
   return (
     <div className="program-page page-content" style={{ backgroundImage: `url(${host}${backgroundImages.program || backgroundImages.home})` }}>
       <div className="left-title-section with-margin">

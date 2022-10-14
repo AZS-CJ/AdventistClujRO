@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const getProgram = async () => {
-  const url = `/api/programs?`
+  const url = `/api/programs`
   const { data: response } = await axios.get(url)
 
   return response.data

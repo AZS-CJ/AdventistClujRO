@@ -1,0 +1,45 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.my-input{
+  position: relative;
+  display: block;
+  padding-bottom: 3.2rem;
+}
+
+.my-input input, .my-input textarea{
+  padding-left: 1.66vw;
+  border-radius: 1.8rem;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  border: 0
+}
+
+.my-input input{
+  height: 3.37rem;
+  width: 100%;
+}
+
+.my-input  textarea{
+  height: 30vh;
+  width: 100%;
+}
+
+.my-input input:focus, .my-input  textarea:focus{
+  outline: 3px solid $blue;
+  box-shadow: none;
+}
+
+.my-input .help-block{
+  position: absolute;
+  left: 0.9vw;
+  bottom: 1.8rem;
+  color: $red;
+  font-size: 1rem;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .divider {
+    width: 37vw;
+  }
+}

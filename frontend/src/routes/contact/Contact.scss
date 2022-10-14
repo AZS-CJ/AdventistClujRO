@@ -1,0 +1,80 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+
+.contact-page .contact-details{
+  font-size: 1.25rem;
+  line-height: 1.68rem;
+  padding-left: 1.35vw;
+}
+
+.contact-page .contact-details .line{
+  display: inline-flex;
+  width: 100%;
+}
+
+.contact-page .contact-details p{
+  margin-bottom: 1.125rem;
+  text-align: left;
+}
+
+.contact-page .contact-details .section{
+  width: 5.5rem;
+  color: $blue;
+}
+
+.contact-page .contact-details .value{
+  font-weight: bold;
+  color: $black;
+}
+
+.contact-page iframe {
+  max-width: 100%;
+}
+
+//form
+.contact-page .contact-form {
+  padding: 0 3.75vw;
+}
+
+.contact-page .contact-form .form-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact-page .contact-form .form-line .my-input{
+  width: 45%;
+}
+
+.contact-page .contact-form .default-red-button {
+  font-size: 1.93rem;
+  line-height: 2.375rem;
+  padding: 1vh 3vw;
+  margin: 4.53vh auto 1.75vh auto;
+}
+
+@media (orientation: portrait) and (max-width: $min-phone-width) {
+  .contact-page .default-container{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .contact-page .contact-details{
+    padding-left: 7vw;
+    padding-right: 7vw;
+  }
+
+  .contact-page .contact-details .line{
+    display: block;
+    margin-bottom: 1.375rem;
+  }
+
+  .contact-page .contact-details .section{
+    width: 100%;
+  }
+
+  .contact-page .contact-details p{
+    margin-bottom: 0;
+    text-align: center;
+  }
+}

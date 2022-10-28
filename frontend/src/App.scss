@@ -104,6 +104,7 @@
   border-radius: 33px;
   background-color: $darkRed;
   cursor: pointer;
+  border: 0;
 }
 
 .default-red-button.disabled {
@@ -124,7 +125,19 @@
   padding: 2.77vh 7vw;
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+.App ::-webkit-scrollbar {
+  width: 0.5rem;
+}
+.App ::-webkit-scrollbar-track {
+  border-radius: 1rem;
+  box-shadow: inset 0 0 5px grey;
+}
+.App ::-webkit-scrollbar-thumb {
+  background: $blue;
+  border-radius: 1rem;
+}
+
+@media (max-width: $min-phone-width) {
   .left-title-section {
     width:100%;
     border-radius: 0;

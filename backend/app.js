@@ -5,6 +5,8 @@ const passport = require('passport');
 const proxy = require('express-http-proxy');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const nodemailer = require('nodemailer')
+const bodyParser = require('body-parser')
 require('dotenv').config()
 
 if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
@@ -47,6 +49,10 @@ passport.deserializeUser(function (obj, cb) {
 
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.text())
+app.use(bodyParser.json())
+
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
 app.use((req, res, nxt) => {
@@ -94,23 +100,38 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = 'adventistclujro-strapi-test.azurewebsites.net/';
+const cmsDbHost =  process.env.CMS_DB_HOST || 'adventistclujro-strapi-test.azurewebsites.net/';
 app.use('/api', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;
   }
 }));
+
 app.use('/uploads', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
     return `/uploads${req.url}`;
   }
 }));
 
-app.use('/uploads', proxy(cmsDbHost, {
-    proxyReqPathResolver: function (req) {
-        return `/uploads${req.url}`;
-    }
-}));
+app.post('/email', async(req, res) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_ADDRESS,
+        to: process.env.EMAIL_ADDRESS,
+        subject: req.body.title,
+        html: req.body.htmlContent
+    };
+    transporter.sendMail(mailOptions, function(error){
+        if (error) {
+            res.status(500)
+            res.send(error)
+        } else res.sendStatus(200)
+    });
+});
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

@@ -62,3 +62,17 @@ export const getSunsetForDay = (date) => {
   const times = SunCalc.getTimes(date, 46.763, 23.58)
   return `${times.sunset.getHours()}:${times.sunset.getMinutes()}`
 }
+
+export const createEmailFormat = (message, name) => {
+  const phone = message.phone ? `<div style="margin-bottom:0.625rem;"><span style="color:#245AA6">Telefon:</span> ${message.phone}</div>` : ''
+  return `<div style="margin:1rem;">
+      <div style="margin-bottom:0.625rem;">
+        <span style="color:#245AA6">Nume:</span> ${name}
+      </div>
+      ${phone}
+      <div style="margin-bottom:1rem;">
+        <span style="color:#245AA6">E-Mail:</span> ${message.email}
+      </div>
+      <div style="padding:1rem;border:2px solid #245AA6;border-radius:1.8rem;white-space: pre-wrap;width:fit-content;">${message.text}</div>
+    </div>`
+}

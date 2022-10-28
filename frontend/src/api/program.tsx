@@ -5,7 +5,7 @@ const getProgram = async () => {
   const { data: response } = await axios.get(url)
 
   return response.data
-    .map((p) => p.attributes)
+    .map((p) => ({ id: p.id, ...p.attributes }))
     .filter((p) => {
       if (!p.expirationDate) return true
       return new Date(p.expirationDate) > new Date()

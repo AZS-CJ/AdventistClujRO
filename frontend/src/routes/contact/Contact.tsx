@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useGeneralContext } from '../../contexts/generalState'
-import { InputType } from '../../util/constants'
+import { EMAIL_TEST_REGEX, InputType, PHONE_TEST_REGEX } from '../../util/constants'
 import { ContactType } from '../../data/contact'
-import getContact from '../../api/contact'
 import Divider from '../../components/Divider/Divider'
 import Input from '../../components/Input/Input'
+import { getContact, sendEmail } from '../../api/contact'
+import Toast from '../../components/Toast/Toast'
 
 import './Contact.scss'
 
@@ -21,21 +22,30 @@ interface Message {
   text: string
 }
 
+const messageInitialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  text: ''
+}
+
 function Contact() {
-  const [contactRequest, setContactRequest] = useState<ContactState>({ contact: {}, loading: true })
   const { backgroundImages } = useGeneralContext()
-  const message: Message = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    text: ''
-  }
+  const [contactRequest, setContactRequest] = useState<ContactState>({ contact: {}, loading: true })
+  const [message, setMessage] = useState<Message>(messageInitialState)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [showError, setShowError] = useState<boolean>(false)
+  const [responseMessage, setResponseMessage] = useState<string>('')
+  let toastTimeout
 
   useEffect(() => {
     ;(async () => {
       getContact().then((contact: ContactType) => setContactRequest({ contact, loading: false }))
     })()
+    return () => {
+      clearTimeout(toastTimeout)
+    }
   }, [])
 
   const renderContactDetails = () => {
@@ -47,43 +57,74 @@ function Contact() {
         </div>
         <div className="line">
           <p className="section">Telefon:</p>
-          <p className="value">{contactRequest.contact.phone}</p>
+          <a className="value" href={`tel:${contactRequest.contact.phone}`}>
+            {contactRequest.contact.phone}
+          </a>
         </div>
         <div className="line">
           <p className="section">E-Mail:</p>
-          <p className="value">{contactRequest.contact.email}</p>
+          <a className="value" href={`mailto:${contactRequest.contact.email}`}>
+            {contactRequest.contact.email}
+          </a>
         </div>
         <div className="line">
           <p className="section">Adresă:</p>
-          <p className="value">Strada Moților 47 Cluj-Napoca | România</p>
+          <p className="value">
+            Strada Moților 47 <br className="mobile-br" /> Cluj-Napoca | România
+          </p>
         </div>
       </div>
     )
   }
 
-  const sendEmail = () => {
-    console.log('sendEmail')
+  const setField = (fieldName, value) => {
+    setMessage({ ...message, [fieldName]: value })
   }
 
-  const allFilled = () => {
-    return message.lastName && message.firstName && message.email && message.text
+  const dataIsValid = () => {
+    if (!message.lastName || !message.firstName || !message.email || !message.text) return false
+    if (message.phone) return PHONE_TEST_REGEX.test(message.phone)
+    return EMAIL_TEST_REGEX.test(message.email)
+  }
+
+  const callSendEmail = () => {
+    if (dataIsValid()) {
+      setLoading(true)
+      sendEmail(message)
+        .then(() => {
+          setMessage(messageInitialState)
+          setResponseMessage('Mesajul tău s-a trimis cu success!')
+        })
+        .catch(() => {
+          setResponseMessage('A apărut o eroare, te rugăm să încerci din nou.')
+        })
+        .finally(() => {
+          toastTimeout = setTimeout(() => setResponseMessage(''), 3000)
+          setShowError(false)
+          setLoading(false)
+        })
+    } else {
+      setShowError(true)
+    }
   }
 
   const renderForm = () => {
     return (
       <div className="contact-form">
         <div className="form-line">
-          <Input name="Nume" type={InputType.TEXT} mandatory={true} onValueChange={(val) => (message.lastName = val)} />
-          <Input name="Prenume" type={InputType.TEXT} mandatory={true} onValueChange={(val) => (message.firstName = val)} />
+          <Input name="Nume" value={message.lastName} mandatory={true} showError={showError} onValueChange={(val) => setField('lastName', val)} />
+          <Input name="Prenume" value={message.firstName} mandatory={true} showError={showError} onValueChange={(val) => setField('firstName', val)} />
         </div>
         <div className="form-line">
-          <Input name="E-Mail" type={InputType.EMAIL} mandatory={true} onValueChange={(val) => (message.email = val)} />
-          <Input name="Telefon" type={InputType.PHONE_NUMBER} mandatory={false} onValueChange={(val) => (message.phone = val)} />
+          <Input name="E-Mail" value={message.email} type={InputType.EMAIL} mandatory={true} showError={showError} onValueChange={(val) => setField('email', val)} />
+          <Input name="Telefon" value={message.phone} type={InputType.PHONE_NUMBER} mandatory={false} onValueChange={(val) => setField('phone', val)} />
         </div>
-        <Input name="Mesajul tău" type={InputType.LONG_TEXT} mandatory={true} onValueChange={(val) => (message.text = val)} />
-        <div className={`default-red-button ${allFilled() ? '' : 'disabled'}`} onClick={sendEmail}>
+        <Input name="Mesajul tău" value={message.text} type={InputType.LONG_TEXT} mandatory={true} showError={showError} onValueChange={(val) => setField('text', val)} />
+        <button className={`default-red-button ${loading ? 'disabled' : ''}`} onClick={callSendEmail}>
           Trimite
-        </div>
+          {loading ? <div className="spinner-border" role="status" /> : ''}
+        </button>
+        {responseMessage ? <Toast text={responseMessage} onClose={() => setResponseMessage('')} /> : ''}
       </div>
     )
   }

@@ -30,7 +30,7 @@
   border-color: $darkRed;
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .pagination div {
     height: 2.4rem;
     width: 2.4rem;

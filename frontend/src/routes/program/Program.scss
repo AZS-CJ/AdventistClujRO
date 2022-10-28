@@ -18,7 +18,7 @@
   display: none
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .program-page .week {
     flex-direction: column;
   }

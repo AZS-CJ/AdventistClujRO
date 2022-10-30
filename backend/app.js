@@ -95,8 +95,6 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.use(cors())
-
 const cmsDbHost = 'cms-test.adventistcluj.ro';
 app.use('/api', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
@@ -114,6 +112,8 @@ app.use('/uploads', proxy(cmsDbHost, {
         return `/uploads${req.url}`;
     }
 }));
+
+app.use(cors());
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

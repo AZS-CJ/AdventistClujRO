@@ -327,3 +327,13 @@ resource "azurerm_app_service_certificate_binding" "test_managed_certificate_bin
   certificate_id      = azurerm_app_service_managed_certificate.test_managed_certificate.id
   ssl_state           = "SniEnabled"
 }
+
+resource "azurerm_app_service_managed_certificate" "cms_managed_certificate" {
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.strapi_hostname_binding.id
+}
+
+resource "azurerm_app_service_certificate_binding" "cms_managed_certificate_binding" {
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.strapi_hostname_binding.id
+  certificate_id      = azurerm_app_service_managed_certificate.cms_managed_certificate.id
+  ssl_state           = "SniEnabled"
+}

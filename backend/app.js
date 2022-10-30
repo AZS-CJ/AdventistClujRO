@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const path = require('path');
 const app = express();
 const passport = require('passport');
@@ -6,6 +7,13 @@ const proxy = require('express-http-proxy');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 require('dotenv').config()
+
+var corsOptions = {
+  origin: /adventistcluj\.ro$/,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions))
 
 if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
   passport.use(new FacebookStrategy({
@@ -96,7 +104,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 const cmsDbHost = 'cms-test.adventistcluj.ro';
 app.use('/api', proxy(cmsDbHost, {
-  preserveHostHdr: true,
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;
   }

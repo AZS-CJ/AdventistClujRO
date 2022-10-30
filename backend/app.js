@@ -94,7 +94,7 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = 'adventistclujro-strapi-test.azurewebsites.net/';
+const cmsDbHost = 'cms-test.adventistcluj.ro';
 app.use('/api', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;

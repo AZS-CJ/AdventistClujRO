@@ -204,6 +204,12 @@ resource "azurerm_app_service_custom_hostname_binding" "test_hostname_binding" {
   resource_group_name = azurerm_resource_group.website["test"].name
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "strapi_hostname_binding" {
+  hostname            = "test.adventistcluj.ro"
+  app_service_name    = azurerm_app_service.strapi["prod"].name
+  resource_group_name = azurerm_resource_group.website["prod"].name
+}
+
 resource "azurerm_role_assignment" "acr" {
   for_each             = azurerm_app_service.strapi
   role_definition_name = "AcrPull"
@@ -270,6 +276,25 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-test-verif" {
   
   record {
     value = azurerm_app_service.webhost["test"].custom_domain_verification_id
+  }
+}
+
+resource "azurerm_dns_cname_record" "adventistclujro-prod-cms" {
+  name                = "cms"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  record              = azurerm_app_service.strapi["prod"].default_site_hostname
+}
+
+resource "azurerm_dns_txt_record" "adventistclujro-prod-cms-verify" {
+  name                = "asuid.cms"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  
+  record {
+    value = azurerm_app_service.straoi["prod"].custom_domain_verification_id
   }
 }
 

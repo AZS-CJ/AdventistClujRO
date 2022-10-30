@@ -3,7 +3,6 @@ const request = require('request');
 const path = require('path');
 const app = express();
 const passport = require('passport');
-const proxy = require('express-http-proxy');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 require('dotenv').config()

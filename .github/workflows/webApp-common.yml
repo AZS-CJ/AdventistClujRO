@@ -9,9 +9,6 @@ on:
       webAppPackagePath:
         type: string
         required: true
-      azureHost:
-        type: string
-        required: true
       nodeVersion:
         type: string
         required: true
@@ -34,7 +31,7 @@ jobs:
     - name: Build frontend
       working-directory: './frontend'
       env: 
-        REACT_APP: ${{ inputs.azureHost }}
+        REACT_APP: react_app
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.

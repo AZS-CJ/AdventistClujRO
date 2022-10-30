@@ -19,7 +19,6 @@ jobs:
     with:
       webAppName: adventistclujro-prod
       webAppPackagePath: './backend'
-      azureHost: 'https://adventistcluj.ro'
       nodeVersion: '16.x'
     secrets:
       publishProfile: ${{ secrets.AZURE_WEBAPP_PROD_PUBLISH_PROFILE }}

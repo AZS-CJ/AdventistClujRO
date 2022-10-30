@@ -99,6 +99,10 @@ const cmsDbHost = 'cms-test.adventistcluj.ro';
 app.use('/api', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;
+  },
+  proxyReqOptDecorator(proxyReqOpts) {
+    proxyReqOpts.headers['Origin'] = cmsDbHost;
+    return proxyReqOpts;
   }
 }));
 app.use('/uploads', proxy(cmsDbHost, {
@@ -112,8 +116,6 @@ app.use('/uploads', proxy(cmsDbHost, {
         return `/uploads${req.url}`;
     }
 }));
-
-app.use(cors());
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

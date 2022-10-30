@@ -294,7 +294,7 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-cms-verify" {
   ttl                 = 300
   
   record {
-    value = azurerm_app_service.straoi["prod"].custom_domain_verification_id
+    value = azurerm_app_service.strapi["prod"].custom_domain_verification_id
   }
 }
 

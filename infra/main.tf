@@ -256,6 +256,17 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
   record              = azurerm_app_service.webhost["test"].default_site_hostname
 }
 
+resource "azurerm_dns_txt_record" "adventistclujro-prod-www-verif" {
+  name                = "asuid.test"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  
+  record {
+    value = azurerm_app_service.webhost["test"].custom_domain_verification_id
+  }
+}
+
 resource "azurerm_app_service_managed_certificate" "managed_certificate" {
   custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding.id
 }

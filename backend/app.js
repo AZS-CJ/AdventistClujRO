@@ -96,6 +96,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 const cmsDbHost = 'cms-test.adventistcluj.ro';
 app.use('/api', proxy(cmsDbHost, {
+  preserveHostHdr: true,
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;
   }

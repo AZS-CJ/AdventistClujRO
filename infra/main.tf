@@ -199,7 +199,7 @@ resource "azurerm_app_service_custom_hostname_binding" "www_hostname_binding" {
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "test_hostname_binding" {
-  hostname            = "www.adventistcluj.ro"
+  hostname            = "test.adventistcluj.ro"
   app_service_name    = azurerm_app_service.webhost["test"].name
   resource_group_name = azurerm_resource_group.website["test"].name
 }

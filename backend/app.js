@@ -1,5 +1,5 @@
 const express = require('express');
-var cors = require('cors');
+const request = require('request');
 const path = require('path');
 const app = express();
 const passport = require('passport');
@@ -95,27 +95,15 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = 'cms-test.adventistcluj.ro';
-app.use('/api', proxy(cmsDbHost, {
-  proxyReqPathResolver: function (req) {
-    return `/api${req.url}`;
-  },
-  proxyReqOptDecorator(proxyReqOpts) {
-    proxyReqOpts.headers['Origin'] = cmsDbHost;
-    return proxyReqOpts;
-  }
-}));
-app.use('/uploads', proxy(cmsDbHost, {
-  proxyReqPathResolver: function (req) {
-    return `/uploads${req.url}`;
-  }
-}));
-
-app.use('/uploads', proxy(cmsDbHost, {
-    proxyReqPathResolver: function (req) {
-        return `/uploads${req.url}`;
-    }
-}));
+const cmsDbHost = 'https://cms-test.adventistcluj.ro';
+app.use('/api', function(req, res) {
+  var url = `${cmsDbHost}/api/${req.url}`;
+  req.pipe(request({ qs:req.query, uri: url })).pipe(res);
+});
+app.use('/uploads', function(req, res) {
+  var url = `${cmsDbHost}/uploads/${req.url}`;
+  req.pipe(request({ qs:req.query, uri: url })).pipe(res);
+});
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));

@@ -102,7 +102,7 @@ resource "azurerm_app_service" "webhost" {
   }
 
   app_settings = {
-    "CMS_DB_HOST" = azurerm_app_service.strapi[each.key].default_site_hostname
+    "CMS_DB_HOST" = "https://${azurerm_app_service.strapi[each.key].default_site_hostname}"
   }
 
   connection_string {

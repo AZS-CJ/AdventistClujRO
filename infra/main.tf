@@ -205,7 +205,7 @@ resource "azurerm_app_service_custom_hostname_binding" "test_hostname_binding" {
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "strapi_hostname_binding" {
-  hostname            = "test.adventistcluj.ro"
+  hostname            = "cms.adventistcluj.ro"
   app_service_name    = azurerm_app_service.strapi["prod"].name
   resource_group_name = azurerm_resource_group.website["prod"].name
 }

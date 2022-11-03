@@ -71,7 +71,8 @@ function Home(props) {
             <i className="bi bi-chevron-down"></i>
           </div>
         </div>
-        <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
+        <InfoSection title="Despre noi">
+          {/*ctaTextctaText="Află istoricul bisericii" ctaURL="/despre">*/}
           <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
             <div className="design-lines">
               <div className="shorter" />

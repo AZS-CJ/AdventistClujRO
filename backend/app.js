@@ -2,11 +2,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const passport = require('passport');
-const proxy = require('express-http-proxy');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const nodemailer = require('nodemailer')
 const bodyParser = require('body-parser')
+const { sendEmail } = require('./email')
 require('dotenv').config()
 
 if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
@@ -100,7 +99,7 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost =  process.env.CMS_DB_HOST || 'adventistclujro-strapi-test.azurewebsites.net/';
+const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms-test.adventistcluj.ro';
 app.use('/api', proxy(cmsDbHost, {
   proxyReqPathResolver: function (req) {
     return `/api${req.url}`;
@@ -114,23 +113,12 @@ app.use('/uploads', proxy(cmsDbHost, {
 }));
 
 app.post('/email', async(req, res) => {
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASS }
-    });
-
-    const mailOptions = {
-        from: process.env.EMAIL_ADDRESS,
-        to: process.env.EMAIL_ADDRESS,
-        subject: req.body.title,
-        html: req.body.htmlContent
-    };
-    transporter.sendMail(mailOptions, function(error){
+    sendEmail(req.body, (error) => {
         if (error) {
             res.status(500)
             res.send(error)
         } else res.sendStatus(200)
-    });
+    })
 });
 
 app.get('/*', function (req, res) {

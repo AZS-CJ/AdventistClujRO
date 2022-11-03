@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { EMAIL_TEST_REGEX, InputType, PHONE_TEST_REGEX } from '../../util/constants'
+import { EMAIL_TEST_REGEX, INPUT_MAX_LENGTH, InputType, PHONE_TEST_REGEX, TEXTAREA_MAX_LENGTH } from '../../util/constants'
 import PropTypes from 'prop-types'
 
 import './Input.scss'
@@ -23,10 +23,10 @@ const Input = ({ name, value, type, mandatory, onValueChange, showError }) => {
     if (type === InputType.LONG_TEXT)
       return (
         <div className="textarea-container">
-          <textarea value={currentValue} className="textarea" placeholder={name} onBlur={onBlur} onChange={onChange}></textarea>
+          <textarea value={currentValue} className="textarea" placeholder={name} onBlur={onBlur} onChange={onChange} maxLength={TEXTAREA_MAX_LENGTH} />
         </div>
       )
-    return <input value={currentValue} type="text" className="input" placeholder={name} onBlur={onBlur} onChange={onChange}></input>
+    return <input value={currentValue} type="text" className="input" placeholder={name} onBlur={onBlur} onChange={onChange} maxLength={INPUT_MAX_LENGTH} />
   }
 
   const validate = (value) => {

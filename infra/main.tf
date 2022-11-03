@@ -102,8 +102,7 @@ resource "azurerm_app_service" "webhost" {
   }
 
   app_settings = {
-    "SOME_KEY" = "some-value"
-    "CMS_DB_HOST" = azurerm_app_service.strapi[each.key].default_site_hostname
+    "CMS_DB_HOST" = "https://${azurerm_app_service.strapi[each.key].default_site_hostname}"
   }
 
   connection_string {
@@ -162,6 +161,7 @@ resource "azurerm_app_service" "strapi" {
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
   app_service_plan_id = azurerm_app_service_plan.web-sites-service-plan.id
+  https_only          = true
 
   identity {
     type = "SystemAssigned"
@@ -196,6 +196,24 @@ resource "azurerm_app_service_custom_hostname_binding" "www_hostname_binding" {
   hostname            = "www.adventistcluj.ro"
   app_service_name    = azurerm_app_service.webhost["prod"].name
   resource_group_name = azurerm_resource_group.website["prod"].name
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "test_hostname_binding" {
+  hostname            = "test.adventistcluj.ro"
+  app_service_name    = azurerm_app_service.webhost["test"].name
+  resource_group_name = azurerm_resource_group.website["test"].name
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "strapi_hostname_binding" {
+  hostname            = "cms.adventistcluj.ro"
+  app_service_name    = azurerm_app_service.strapi["prod"].name
+  resource_group_name = azurerm_resource_group.website["prod"].name
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "strapi_test_hostname_binding" {
+  hostname            = "cms-test.adventistcluj.ro"
+  app_service_name    = azurerm_app_service.strapi["test"].name
+  resource_group_name = azurerm_resource_group.website["test"].name
 }
 
 resource "azurerm_role_assignment" "acr" {
@@ -256,6 +274,55 @@ resource "azurerm_dns_cname_record" "adventistclujro-test" {
   record              = azurerm_app_service.webhost["test"].default_site_hostname
 }
 
+resource "azurerm_dns_txt_record" "adventistclujro-prod-test-verif" {
+  name                = "asuid.test"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  
+  record {
+    value = azurerm_app_service.webhost["test"].custom_domain_verification_id
+  }
+}
+
+resource "azurerm_dns_cname_record" "adventistclujro-prod-cms" {
+  name                = "cms"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  record              = azurerm_app_service.strapi["prod"].default_site_hostname
+}
+
+resource "azurerm_dns_txt_record" "adventistclujro-prod-cms-verify" {
+  name                = "asuid.cms"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  
+  record {
+    value = azurerm_app_service.strapi["prod"].custom_domain_verification_id
+  }
+}
+
+resource "azurerm_dns_cname_record" "adventistclujro-prod-cms-test" {
+  name                = "cms-test"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  record              = azurerm_app_service.strapi["test"].default_site_hostname
+}
+
+resource "azurerm_dns_txt_record" "adventistclujro-prod-cms-test-verify" {
+  name                = "asuid.cms-test"
+  zone_name           = azurerm_dns_zone.azscj-zone.name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 300
+  
+  record {
+    value = azurerm_app_service.strapi["test"].custom_domain_verification_id
+  }
+}
+
 resource "azurerm_app_service_managed_certificate" "managed_certificate" {
   custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding.id
 }
@@ -276,12 +343,32 @@ resource "azurerm_app_service_certificate_binding" "www_managed_certificate_bind
   ssl_state           = "SniEnabled"
 }
 
-resource "azurerm_app_service_managed_certificate" "managed_certificate" {
-  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding.id
+resource "azurerm_app_service_managed_certificate" "test_managed_certificate" {
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.test_hostname_binding.id
 }
 
-resource "azurerm_app_service_certificate_binding" "managed_certificate_binding" {
-  hostname_binding_id = azurerm_app_service_custom_hostname_binding.hostname_binding.id
-  certificate_id      = azurerm_app_service_managed_certificate.managed_certificate.id
+resource "azurerm_app_service_certificate_binding" "test_managed_certificate_binding" {
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.test_hostname_binding.id
+  certificate_id      = azurerm_app_service_managed_certificate.test_managed_certificate.id
+  ssl_state           = "SniEnabled"
+}
+
+resource "azurerm_app_service_managed_certificate" "cms_managed_certificate" {
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.strapi_hostname_binding.id
+}
+
+resource "azurerm_app_service_certificate_binding" "cms_managed_certificate_binding" {
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.strapi_hostname_binding.id
+  certificate_id      = azurerm_app_service_managed_certificate.cms_managed_certificate.id
+  ssl_state           = "SniEnabled"
+}
+
+resource "azurerm_app_service_managed_certificate" "cms_test_managed_certificate" {
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.strapi_test_hostname_binding.id
+}
+
+resource "azurerm_app_service_certificate_binding" "cms_test_managed_certificate_binding" {
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.strapi_test_hostname_binding.id
+  certificate_id      = azurerm_app_service_managed_certificate.cms_test_managed_certificate.id
   ssl_state           = "SniEnabled"
 }

@@ -155,4 +155,8 @@
     margin: 0 auto;
     display: block;
   }
+
+  .container-fluid .col-md-8 {
+    width: 100% !important;
+  }
 }

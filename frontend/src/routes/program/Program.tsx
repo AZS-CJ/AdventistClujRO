@@ -4,6 +4,7 @@ import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { useGeneralContext } from '../../contexts/generalState'
 import Divider from '../../components/Divider/Divider'
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 
 import './Program.scss'
 
@@ -48,6 +49,7 @@ function Program() {
         <span className="bold-title">Program</span>
       </div>
       {renderContent()}
+      <ScrollToTop />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import Divider from '../../components/Divider/Divider'
 import Input from '../../components/Input/Input'
 import { getContact, sendEmail } from '../../api/contact'
 import Toast from '../../components/Toast/Toast'
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 
 import './Contact.scss'
 
@@ -155,6 +156,7 @@ function Contact() {
         <span className="bold-title">Contact</span>
       </div>
       {renderContent()}
+      <ScrollToTop />
     </div>
   )
 }

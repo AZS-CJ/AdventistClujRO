@@ -98,6 +98,12 @@
   display: none;
 }
 
+//landscape
+@media screen and (min-aspect-ratio: 13/9) {
+  .navbar.my-nav {
+    margin-top: 1vh;
+  }
+}
 
 @media (max-width: $min-phone-width) {
   .navbar.my-nav {

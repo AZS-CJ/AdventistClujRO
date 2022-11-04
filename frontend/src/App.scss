@@ -4,8 +4,8 @@
 
 .spinner-border {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: calc(50% - 1rem);
+  left: calc(50% - 1rem);
 }
 
 .App {
@@ -46,7 +46,7 @@
 }
 
 .content .page-content {
-  min-height: 100%;
+  min-height: 130vh;
   padding-top: 28.15vh;
   padding-bottom: calc(10vh + 10.18rem);
   background-attachment: fixed;
@@ -66,7 +66,7 @@
 .church-logo {
   position: fixed;
   width: 7.44vw;
-  top: 50%;
+  top: 50vh;
   transform: translate(0,-50%);
 }
 
@@ -135,6 +135,18 @@
 .App ::-webkit-scrollbar-thumb {
   background: $blue;
   border-radius: 1rem;
+}
+
+//landscape
+@media screen and (min-aspect-ratio: 13/9) {
+  .content .page-content {
+    padding-top: 30vh;
+    min-height: 170vh;
+  }
+
+  .spinner-border {
+    top: 35%;
+  }
 }
 
 @media (max-width: $min-phone-width) {

@@ -9,6 +9,11 @@ const bodyParser = require('body-parser')
 const { sendEmail } = require('./email')
 require('dotenv').config()
 
+// because url-join knows only ESM (or only import statements) we 
+// need to dynamically import it
+let urlJoin ;
+import('url-join').then((uj) => urlJoin = uj.default);
+
 if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
   passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_CLIENT_ID,
@@ -103,11 +108,12 @@ app.use(express.static(path.join(__dirname, 'build')));
 const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms-test.adventistcluj.ro';
 
 app.use('/api', function(req, res) {
-  var url = `${cmsDbHost}/api/${req.url}`;
+  var url = urlJoin(cmsDbHost, 'api', req.url);
   req.pipe(request({ qs:req.query, uri: url })).pipe(res);
 });
+
 app.use('/uploads', function(req, res) {
-  var url = `${cmsDbHost}/uploads/${req.url}`;
+  var url = urlJoin(cmsDbHost, 'uploads', req.url);
   req.pipe(request({ qs:req.query, uri: url })).pipe(res);
 });
 

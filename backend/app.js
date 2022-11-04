@@ -53,9 +53,7 @@ passport.deserializeUser(function (obj, cb) {
 });
 
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.text())
 app.use(bodyParser.json())
 
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));

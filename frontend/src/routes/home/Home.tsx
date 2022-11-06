@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InfoSection from '../../components/InfoSection/InfoSection'
 import { Link } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'

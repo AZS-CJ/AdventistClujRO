@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import InfoSection from '../../components/InfoSection/InfoSection'
 import { Link } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
@@ -8,6 +8,7 @@ import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
+import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 
 import './Home.scss'
 
@@ -30,8 +31,24 @@ function Home(props) {
       setProgram(await getProgram())
       const response = await getHomePageContent()
       setContent({ ...response, loading: false })
+      afterOrientationChange()
+      return () => {
+        window.removeEventListener('resize', afterOrientationChange)
+        window.removeEventListener('orientationchange', orientationChangeCallback)
+      }
     })()
   }, [])
+
+  //compute the necessary height for the div to be fullscreen, first time, and on orientation change for mobile
+  const afterOrientationChange = function () {
+    document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`)
+    window.removeEventListener('resize', afterOrientationChange)
+  }
+  const orientationChangeCallback = function () {
+    window.addEventListener('resize', afterOrientationChange)
+  }
+
+  window.addEventListener('orientationchange', orientationChangeCallback)
 
   const scrollDownBtn = () => {
     const headerElement = window.getComputedStyle(props.navbarRef.current)
@@ -71,7 +88,8 @@ function Home(props) {
             <i className="bi bi-chevron-down"></i>
           </div>
         </div>
-        <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
+        <InfoSection title="Despre noi">
+          {/*ctaTextctaText="Află istoricul bisericii" ctaURL="/despre">*/}
           <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
             <div className="design-lines">
               <div className="shorter" />
@@ -101,6 +119,7 @@ function Home(props) {
   return (
     <div className="home-page page-content" style={{ backgroundImage: `url(${backgroundImages.home})` }}>
       {content.loading ? <div className="spinner-border" role="status" /> : returnContent()}
+      <ScrollToTop />
     </div>
   )
 }

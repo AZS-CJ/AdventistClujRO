@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        h1 {color: red}
+        .container {
+            margin:1rem;
+        }
+        .field {
+            margin-bottom:0.625rem;
+        }
+        .last-field {
+            margin-bottom:1rem;
+        }
+        .label {
+            color:#245AA6
+        }
+        .text-container {
+            padding:1rem;
+            border:2px solid #245AA6;
+            border-radius:1.8rem;
+            white-space: pre-wrap;
+            width:fit-content;
+        }
+    </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="field">
+                <span class="label">Nume:</span> {{name}}
+            </div>
+            <div class="field">
+                <span class="label">Telefon:</span> {{phone}}
+            </div>
+            <div class="last-field">
+                <span class="label">E-Mail:</span> {{email}}
+            </div>
+            <div class="text-container"> {{text}} </div>
+        </div>
+    </body>
+</html>

@@ -141,13 +141,14 @@
 }
 
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .navbar-collapse {
     padding-left: 0.5rem !important;
   }
 
   .navbar-collapse .navbar-content {
     flex-direction: column;
+    min-height: 100%;
   }
 
   .navbar-collapse .navbar-resources {

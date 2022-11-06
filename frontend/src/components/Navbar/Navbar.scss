@@ -49,6 +49,7 @@
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
+  margin-right: 1rem
 }
 
 .my-nav .navbar-nav .nav-item {
@@ -97,6 +98,12 @@
   display: none;
 }
 
+//landscape
+@media screen and (min-aspect-ratio: 13/9) {
+  .navbar.my-nav {
+    margin-top: 1vh;
+  }
+}
 
 @media (max-width: $min-phone-width) {
   .navbar.my-nav {
@@ -104,8 +111,8 @@
     width: calc(87% - 0.625rem);
   }
 
-  .navbar.my-nav .desktop-nav,  .navbar.my-nav .main-live{
-    display:none
+  .navbar.my-nav .desktop-nav, .navbar.my-nav .main-live{
+    display: none
   }
   .my-nav .navbar-brand {
     width: 50%;
@@ -126,7 +133,7 @@
   }
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .sidebar-description, .navbar-resources-title, .navbar-collapse .navbar-resources .social-media {
     display:none
   }

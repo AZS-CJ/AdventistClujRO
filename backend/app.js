@@ -5,6 +5,8 @@ const app = express();
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const bodyParser = require('body-parser')
+const { sendEmail } = require('./email')
 require('dotenv').config()
 
 // because url-join knows only ESM (or only import statements) we 
@@ -51,7 +53,9 @@ passport.deserializeUser(function (obj, cb) {
 });
 
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
 app.use((req, res, nxt) => {
@@ -109,6 +113,15 @@ app.use('/api', function(req, res) {
 app.use('/uploads', function(req, res) {
   var url = urlJoin(cmsDbHost, 'uploads', req.url);
   req.pipe(request({ qs:req.query, uri: url })).pipe(res);
+});
+
+app.post('/email', async(req, res) => {
+    sendEmail(req.body, (error) => {
+        if (error) {
+            res.status(500)
+            res.send(error)
+        } else res.sendStatus(200)
+    })
 });
 
 app.get('/*', function (req, res) {

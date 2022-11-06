@@ -38,7 +38,7 @@
   margin-right: 1vw
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .articles-page .article-wrapper {
     width: 100%;
     border-radius: 0;

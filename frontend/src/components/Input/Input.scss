@@ -1,0 +1,85 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.my-input{
+  position: relative;
+  display: block;
+  padding-bottom: 3.2rem;
+}
+
+.my-input input, .my-input textarea, .my-input label{
+  padding-left: 1.66vw;
+  border-radius: 1.8rem;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  border: 0
+}
+
+.my-input input::placeholder, .my-input textarea::placeholder{
+  color: $black;
+  opacity: 0.25;
+}
+
+.my-input input{
+  height: 3.37rem;
+  width: 100%;
+}
+
+.my-input  textarea{
+  height: 30vh;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-right: 1.66vw;
+}
+
+.my-input input:focus {
+  outline: 3px solid $blue;
+  box-shadow: none;
+}
+
+.my-input textarea:focus{
+  outline: none;
+}
+
+.my-input .textarea-container {
+  border-radius: 1.8rem;
+  padding: .3rem 0.6rem .3rem 0;
+  background-color: $white;
+}
+
+.my-input .textarea-container:focus-within{
+  outline: 3px solid $blue;
+}
+
+.my-input .help-block{
+  position: absolute;
+  left: 1.66vw;
+  bottom: 1.8rem;
+  color: $red;
+  font-size: 1rem;
+}
+
+.my-input label{
+  color: $blue;
+}
+
+@media (max-width: $min-phone-width) {
+  .my-input {
+    padding-bottom: 2rem;
+  }
+
+  .my-input input, .my-input textarea, .my-input label{
+    padding-left: 2rem;
+  }
+
+  .my-input  textarea{
+    padding-right: 2rem;
+  }
+
+
+  .my-input .help-block{
+    left: 2rem;
+    bottom: 0.5rem;
+  }
+
+}

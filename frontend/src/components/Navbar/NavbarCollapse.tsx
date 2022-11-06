@@ -23,7 +23,8 @@ function NavbarCollapse(props) {
           <div>
             <img className="nav-church-logo" src={logo} alt="Logo" />
             <p>Biserica Adventistă de Ziua a Șaptea "Speranța" din Cluj-Napoca</p>
-            <p className="sidebar-description">TO EDIT - O descriere mai mica despre Biserica</p>
+            {/*Will be implemented later*/}
+            {/*<p className="sidebar-description">TO EDIT - O descriere mai mica despre Biserica</p>*/}
           </div>
         </ul>
 

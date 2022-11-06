@@ -17,7 +17,6 @@
   display: block;
   text-decoration: none;
   color: $almostBlack;
-  white-space: pre;
 }
 
 .page-footer  a:hover {
@@ -155,5 +154,9 @@
   .footer-copyright a {
     margin: 0 auto;
     display: block;
+  }
+
+  .container-fluid .col-md-8 {
+    width: 100% !important;
   }
 }

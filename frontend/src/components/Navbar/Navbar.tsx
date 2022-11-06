@@ -35,8 +35,8 @@ function Navbar(props) {
     return (
       <div className="link-list">
         {renderLink('acasa', 'Acasă')}
-        {renderLink('despre', 'Despre noi')}
         {/*Will be implemented later*/}
+        {/*{renderLink('despre', 'Despre noi')}*/}
         {/*{renderLink('proiecte', 'Proiecte')}*/}
         {/*{renderLink('articole', 'Articole')}*/}
         {renderLink('program', 'Program')}

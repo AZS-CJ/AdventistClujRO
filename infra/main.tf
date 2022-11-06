@@ -102,7 +102,9 @@ resource "azurerm_app_service" "webhost" {
   }
 
   app_settings = {
-    "CMS_DB_HOST" = "https://${azurerm_app_service.strapi[each.key].default_site_hostname}"
+    "CMS_DB_HOST"   = "https://${azurerm_app_service.strapi[each.key].default_site_hostname}"
+    "EMAIL_ADDRESS" = each.key == "test" ? var.EMAIL_ADDRESS_TEST : var.EMAIL_ADDRESS_PROD
+    "EMAIL_PASSWORD" = each.key == "test" ? var.EMAIL_PASSWORD_TEST : var.EMAIL_PASSWORD_PROD
   }
 
   connection_string {

@@ -48,10 +48,11 @@
   font-size: 1rem;
 }
 
-.container-fluid .social-media .bi {
+.container-fluid .social-media .bi, .instagram-icon-container {
   margin-right: .5em;
   height: 1em;
-  padding: 1em 0.5em
+  padding: 1em 0.5em;
+  display: inline;
 }
 
 .container-fluid .social-media .bi-youtube {
@@ -68,9 +69,16 @@
 }
 
 .container-fluid .social-media .bi-instagram {
-  color: transparent;
+  color: $white;
+  border-radius: 4px;
+  padding: 2px 3px;
+  margin: 0;
   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
-  -webkit-background-clip: text;
+}
+
+.container-fluid .social-media .instagram-icon-container i:before {
+  font-size: 1em;
+  vertical-align: -0.2em;
 }
 
 .footer-copyright {

@@ -24,7 +24,9 @@ function Footer() {
                   <span>Facebook</span>
                 </a>
                 <a className="button" href={LINKS.instagram} target="_blank">
-                  <i className="bi bi-instagram" />
+                  <div className="instagram-icon-container">
+                    <i className="bi bi-instagram" />
+                  </div>
                   <span>Instagram</span>
                 </a>
               </div>

@@ -6,11 +6,11 @@ import logo from '../../assets/logo.svg'
 import './NavbarCollapse.scss'
 
 function NavbarCollapse(props) {
-  const { sidebarOpen, toggleSidebar } = useNavigationContext()
+  const { sidebarOpen, hideSidebar } = useNavigationContext()
   return (
     <div className={`navbar-collapse bg-dark ${sidebarOpen ? 'show' : 'hide'}`} id="navbarCollapse">
       <div className="navbar-content">
-        <div className="close-nav" id="navbarBtn" onClick={toggleSidebar}>
+        <div className="close-nav" id="navbarBtn" onClick={hideSidebar}>
           <p>&times;</p>
         </div>
         <ul className="navbar-nav mr-auto">

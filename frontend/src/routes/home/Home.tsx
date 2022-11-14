@@ -117,7 +117,8 @@ function Home(props) {
   }
 
   return (
-    <div className="home-page page-content" style={{ backgroundImage: `url(${backgroundImages.home})` }}>
+    <div className="home-page page-content">
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.home})` }}></div>
       {content.loading ? <div className="spinner-border" role="status" /> : returnContent()}
       <ScrollToTop />
     </div>

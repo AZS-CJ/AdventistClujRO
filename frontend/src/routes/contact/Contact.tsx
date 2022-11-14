@@ -151,7 +151,8 @@ function Contact() {
   }
 
   return (
-    <div className="contact-page page-content" style={{ backgroundImage: `url(${backgroundImages.contact || backgroundImages.home}` }}>
+    <div className="contact-page page-content">
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.contact || backgroundImages.home}` }}></div>
       <div className="left-title-section with-margin">
         <span className="bold-title">Contact</span>
       </div>

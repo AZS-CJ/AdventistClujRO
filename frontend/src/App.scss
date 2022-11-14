@@ -39,19 +39,21 @@
     position: relative;
 }
 
-.content .blurred {
-  backdrop-filter: blur(30px);
-  filter: blur(30px);
-  pointer-events: none;
+.content .background-image {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background-position: center center;
+  background-size: cover;
 }
 
 .content .page-content {
   min-height: 130vh;
   padding-top: 28.15vh;
   padding-bottom: calc(10vh + 10.18rem);
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
 }
 
 .logo-column {
@@ -171,7 +173,7 @@
     margin: 0 0 13vh 0;
   }
 
-  .content .home-page.page-content, .about-page.page-content {
-    background-position: 73% !important;
+  .content .home-page .background-image, .about-page .background-image {
+    background-position: 73%;
   }
 }

@@ -47,7 +47,7 @@ function Navbar(props) {
 
   return (
     <>
-      <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''} ${sidebarOpen && 'blurred'}`} ref={props.navbarRef}>
+      <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
         <div className="navbar-brand">
           <Link className="brand-name" to="/" onClick={() => setActiveRoute('home')}>
             <div className="brand-title">Biserica Adventistă de Ziua a Șaptea</div>
@@ -64,6 +64,7 @@ function Navbar(props) {
           <img className="menu-btn" src={menuButton} alt="Menu" />
         </div>
       </nav>
+      <div className={`blur-content ${sidebarOpen && 'blurred'}`}></div>
       <NavbarCollapse renderMainLinks={renderMainLinks} />
     </>
   )

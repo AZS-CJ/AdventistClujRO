@@ -11,7 +11,7 @@ function NavbarCollapse(props) {
     <div className={`navbar-collapse bg-dark ${sidebarOpen ? 'show' : 'hide'}`} id="navbarCollapse">
       <div className="navbar-content">
         <div className="close-nav" id="navbarBtn" onClick={toggleSidebar}>
-          <p>X</p>
+          <p>&times;</p>
         </div>
         <ul className="navbar-nav mr-auto">
           {/*Will be implemented later*/}

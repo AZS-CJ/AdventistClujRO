@@ -6,16 +6,14 @@ import Contact from './routes/contact/Contact'
 import Navbar from './components/Navbar/Navbar'
 // import Login from './pages/login/Login'
 // import About from './routes/about/About'
-import { useNavigationContext } from './contexts/navigation'
 
 function Router() {
-  const { sidebarOpen } = useNavigationContext()
   const navbarRef = useRef()
 
   return (
     <BrowserRouter>
       <Navbar navbarRef={navbarRef} />
-      <div className={`router-content ${sidebarOpen && 'blurred'}`}>
+      <div className="router-content">
         <Routes>
           {/*<Route path="/login" element={<Login />} />*/}
           {/*<Route path="/despre" element={<About />} />*/}

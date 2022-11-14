@@ -65,6 +65,10 @@
   left: calc(50% - 1rem)
 }
 
+.contact-page iframe {
+  border-radius: 1.5rem;
+}
+
 @media (orientation: landscape) {
   .contact-page .mobile-br {
     display:none
@@ -114,6 +118,10 @@
     line-height: 1.56rem;
     padding: 1.84vh 9.73vw;
     margin: 0 auto 2vh auto;
+  }
+
+  .contact-page iframe {
+    border-radius: 0;
   }
 
 }

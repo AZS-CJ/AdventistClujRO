@@ -1,14 +1,10 @@
 import React from 'react'
 import { LINKS } from '../../util/constants'
-import { useNavigationContext } from '../../contexts/navigation'
 
 import './Footer.scss'
-
 function Footer() {
-  const { sidebarOpen } = useNavigationContext()
-
   return (
-    <footer className={`page-footer font-small blue ${sidebarOpen && 'blurred'}`}>
+    <footer className={`page-footer font-small blue`}>
       <div className="container-fluid my-menu">
         <div className="row">
           <div className="col-md-8">
@@ -17,17 +13,19 @@ function Footer() {
               <div className="media-links">
                 <a className="button" href={LINKS.youtube} target="_blank">
                   <i className="bi bi-youtube" />
-                  <span>YouTube</span>
+                  <span className="icon-text">YouTube</span>
                 </a>
                 <a className="button" href={LINKS.facebook} target="_blank">
                   <i className="bi bi-facebook" />
-                  <span>Facebook</span>
+                  <span className="icon-text">Facebook</span>
                 </a>
                 <a className="button" href={LINKS.instagram} target="_blank">
                   <div className="instagram-icon-container">
-                    <i className="bi bi-instagram" />
+                    <h3>
+                      <i className="bi bi-instagram" />
+                    </h3>
                   </div>
-                  <span>Instagram</span>
+                  <span className="icon-text">Instagram</span>
                 </a>
               </div>
             </div>

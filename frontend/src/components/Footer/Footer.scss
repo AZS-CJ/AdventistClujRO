@@ -19,7 +19,7 @@
   color: $almostBlack;
 }
 
-.page-footer  a:hover {
+.page-footer a:hover {
   color: $almostBlack;
   text-decoration: underline;
 }
@@ -48,10 +48,11 @@
   font-size: 1rem;
 }
 
-.container-fluid .social-media .bi, .instagram-icon-container {
-  margin-right: .5em;
+.container-fluid .social-media .bi,
+.instagram-icon-container {
+  // margin-right: .5em;
   height: 1em;
-  padding: 1em 0.5em;
+  // padding: 1em 0.5em;
   display: inline;
 }
 
@@ -68,12 +69,30 @@
   color: $skyBlue
 }
 
-.container-fluid .social-media .bi-instagram {
-  color: $white;
-  border-radius: 4px;
-  padding: 2px 3px;
-  margin: 0;
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+// .container-fluid .social-media .bi-instagram {
+//   color: $white;
+//   border-radius: 4px;
+//   padding: 2px 3px;
+//   margin: 0;
+//   background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+// }
+
+.instagram-icon-container h3 {
+  background: #f09433;
+  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1)";
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding-right: 1px;
+  font-size: 1.4rem;
+}
+
+.icon-text {
+  margin-left: 1em;
 }
 
 .container-fluid .social-media .instagram-icon-container i:before {
@@ -135,8 +154,9 @@
     margin-right: 0.625rem;
   }
 
-  .page-footer .links, .social-media p {
-    display:none
+  .page-footer .links,
+  .social-media p {
+    display: none
   }
 
   .container-fluid {

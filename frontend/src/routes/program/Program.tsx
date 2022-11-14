@@ -44,7 +44,8 @@ function Program() {
   }
 
   return (
-    <div className="program-page page-content" style={{ backgroundImage: `url(${backgroundImages.program || backgroundImages.home})` }}>
+    <div className="program-page page-content">
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.program || backgroundImages.home})` }}></div>
       <div className="left-title-section with-margin">
         <span className="bold-title">Program</span>
       </div>

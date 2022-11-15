@@ -1,21 +1,15 @@
-const useScrollBlock = () => {
-  const blockScroll = () => {
-    const html = document.documentElement
-    const { body } = document
+export const blockScroll = () => {
+  const html = document.documentElement
+  const { body } = document
 
-    html.style.overflow = 'hidden'
-    body.style.overflow = 'hidden'
-  }
-
-  const allowScroll = () => {
-    const html = document.documentElement
-    const { body } = document
-
-    html.style.overflow = ''
-    body.style.overflow = ''
-  }
-
-  return [blockScroll, allowScroll]
+  html.style.overflow = 'hidden'
+  body.style.overflow = 'hidden'
 }
 
-export { useScrollBlock }
+export const allowScroll = () => {
+  const html = document.documentElement
+  const { body } = document
+
+  html.style.overflow = ''
+  body.style.overflow = ''
+}

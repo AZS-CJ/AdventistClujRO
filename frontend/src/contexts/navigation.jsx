@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { useScrollBlock } from '../util/disable-scroll'
+import { blockScroll, allowScroll } from '../util/disable-scroll'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const NavigationContext = createContext([{}, () => {}])
@@ -14,7 +14,6 @@ const NavigationProvider = ({ children }) => {
 
 const useNavigationContext = () => {
   const [navState, setNavState] = useContext(NavigationContext)
-  const [blockScroll, allowScroll] = useScrollBlock()
 
   const openSidebar = () => {
     setNavState((state) => ({ ...state, isOpen: true }))

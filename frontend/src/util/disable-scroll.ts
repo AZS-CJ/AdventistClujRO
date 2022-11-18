@@ -1,15 +1,9 @@
 export const blockScroll = () => {
-  const html = document.documentElement
-  const { body } = document
-
-  html.style.overflow = 'hidden'
-  body.style.overflow = 'hidden'
+  document.documentElement.style.overflow = 'hidden'
+  document.body.style.overflow = 'hidden'
 }
 
 export const allowScroll = () => {
-  const html = document.documentElement
-  const { body } = document
-
-  html.style.overflow = ''
-  body.style.overflow = ''
+  document.documentElement.style.overflow = ''
+  document.body.style.overflow = ''
 }

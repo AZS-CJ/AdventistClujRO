@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
 import menuButton from '../../assets/mobile_menu_toggle.svg'
+import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
 
 import './Navbar.scss'
@@ -49,9 +50,8 @@ function Navbar(props) {
     <>
       <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
         <div className="navbar-brand">
-          <Link className="brand-name" to="/" onClick={() => setActiveRoute('home')}>
-            <div className="brand-title">Biserica Adventistă de Ziua a Șaptea</div>
-            <div className="red-box">SPERANȚA CLUJ-NAPOCA</div>
+          <Link className="brand-name" to="/" onClick={() => setActiveRoute('acasa')}>
+            <img className="church-name" src={churchName} alt="Church Name" />
           </Link>
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>

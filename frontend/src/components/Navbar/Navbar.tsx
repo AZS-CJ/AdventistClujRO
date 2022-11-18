@@ -9,7 +9,7 @@ import './Navbar.scss'
 
 function Navbar(props) {
   const [scrolled, setScrolled] = useState(false)
-  const { toggleSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
+  const { openSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
@@ -60,7 +60,7 @@ function Navbar(props) {
         {/*render this only if there is a live streaming*/}
         {/*<div className="main-live live">LIVE</div>*/}
 
-        <div className="navbar-toggler" onClick={toggleSidebar}>
+        <div className="navbar-toggler" onClick={openSidebar}>
           <img className="menu-btn" src={menuButton} alt="Menu" />
         </div>
       </nav>

@@ -67,7 +67,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-testing-library": "^5.0.0-alpha.10",
     "history": "^5.0.1",
-    "husky": "^8.0.2",
+    "husky": "^3.0.5",
     "prettier": "^2.4.1"
   },
   "proxy": "http://localhost:3001",

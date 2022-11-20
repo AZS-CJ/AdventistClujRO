@@ -70,5 +70,11 @@
     "husky": "^7.0.4",
     "prettier": "^2.4.1"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
 }

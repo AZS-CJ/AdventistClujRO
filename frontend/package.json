@@ -36,7 +36,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject",
-    "lint": "eslint --quiet src"
+    "lint": "eslint --color src"
   },
   "eslintConfig": {
     "extends": [

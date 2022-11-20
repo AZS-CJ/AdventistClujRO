@@ -6,6 +6,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const bodyParser = require('body-parser')
+const pino = require('pino-http');
 const { sendEmail } = require('./email')
 require('dotenv').config()
 
@@ -51,6 +52,8 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
+
+app.use(pino);
 
 app.use(require('cookie-parser')());
 app.use(bodyParser.urlencoded({ extended: false }))

@@ -17,7 +17,7 @@ COPY ./ .
 RUN yarn build
 
 # Configure SSH for Azure App Service access
-RUN apk add openssh \
+RUN apt install -y openssh-server \
      && echo "root:Docker!" | chpasswd
 
 COPY sshd_config /etc/ssh/

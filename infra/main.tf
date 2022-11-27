@@ -249,12 +249,12 @@ resource "azurerm_app_service_custom_hostname_binding" "strapi_test_hostname_bin
   resource_group_name = azurerm_resource_group.website["test"].name
 }
 
-resource "azurerm_role_assignment" "acr" {
-  for_each             = var.environments
-  role_definition_name = "AcrPull"
-  scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_linux_web_app.strapi[each.key].identity[0].principal_id
-}
+# resource "azurerm_role_assignment" "acr" {
+#   for_each             = var.environments
+#   role_definition_name = "AcrPull"
+#   scope                = azurerm_container_registry.acr.id
+#   principal_id         = azurerm_linux_web_app.strapi[each.key].identity[0].principal_id
+# }
 
 resource "azurerm_dns_zone" "azscj-zone" {
   name                = "adventistcluj.ro"

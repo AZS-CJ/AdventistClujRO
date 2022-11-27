@@ -53,6 +53,7 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
   backup_retention_days  = 7
   sku_name               = "B_Standard_B1s"
   version                = "8.0.21"
+  zone                   = 1
 }
 
 # Not yet available in the Azure provider, has to be done manually

@@ -136,6 +136,11 @@ resource "azurerm_linux_web_app" "webhost" {
         retention_in_mb = 35
       }
     }
+
+    cors {
+      allowed_origins     = []
+      support_credentials = false
+    }
   }
 }
 
@@ -196,6 +201,7 @@ resource "azurerm_linux_web_app" "strapi" {
       docker_image_tag = "latest"
     }
     use_32_bit_worker = false
+    health_check_path = "/api/under-construction"
     cors {
       allowed_origins     = []
       support_credentials = false
@@ -232,14 +238,14 @@ resource "azurerm_linux_web_app" "strapi" {
     }
   }
 
-  storage_account {
-     access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
-     name         = azurerm_storage_account.cms-storage[each.key].name
-     account_name = azurerm_storage_account.cms-storage[each.key].name
-     share_name   = "strapi${each.key}"
-     type         = "AzureFiles"
-     mount_path   = "/opt/app/public"
-  }
+  # storage_account {
+  #    access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
+  #    name         = azurerm_storage_account.cms-storage[each.key].name
+  #    account_name = azurerm_storage_account.cms-storage[each.key].name
+  #    share_name   = "strapi${each.key}"
+  #    type         = "AzureFiles"
+  #    mount_path   = "/opt/app/public"
+  # }
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
@@ -276,7 +282,7 @@ resource "azurerm_role_assignment" "acr" {
   for_each             = var.environments
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_linux_web_app.strapi[each.key].identity[0].principal_id
+  principal_id         = azurerm_linux_web_app.strapi[each.key].identity.0.principal_id
 }
 
 resource "azurerm_dns_zone" "azscj-zone" {

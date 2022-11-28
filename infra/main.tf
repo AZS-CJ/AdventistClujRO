@@ -233,7 +233,12 @@ resource "azurerm_linux_web_app" "strapi" {
   }
 
   storage_account {
-     access_key = azurerm_storage_account.cms-storage[each.key]
+     access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
+     name         = azurerm_storage_account.cms-storage[each.key].name
+     account_name = azurerm_storage_account.cms-storage[each.key].name
+     share_name   = "strapi${each.key}"
+     type         = "AzureFiles"
+     mount_path   = "/opt/app/public"
   }
 }
 

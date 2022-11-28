@@ -205,7 +205,7 @@ resource "azurerm_linux_web_app" "strapi" {
   name                = "${var.website_name}-strapi-${each.key}"
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
-  service_plan_id = azurerm_service_plan.web-sites-service-plan.id
+  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
   https_only          = true
 
   site_config {
@@ -250,7 +250,7 @@ resource "azurerm_linux_web_app" "strapi" {
 
   storage_account {
      access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
-     name         = azurerm_storage_account.cms-storage[each.key].name
+     name         = "strapibinary"
      account_name = azurerm_storage_account.cms-storage[each.key].name
      share_name   = azurerm_storage_share.cms-storage-share[each.key].name
      type         = "AzureFiles"

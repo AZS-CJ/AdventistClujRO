@@ -85,6 +85,13 @@ resource "azurerm_storage_account" "cms-storage" {
   account_replication_type = "LRS"
 }
 
+resource "azurerm_storage_share" "cms-storage-share" {
+  for_each             = var.environments
+  name                 = "strapish${each.key}"
+  storage_account_name = azurerm_storage_account.cms-storage[each.key].name
+  quota                = 5
+}
+
 resource "azurerm_service_plan" "web-sites-service-plan" {
   name                = "${var.website_name}-ServicePlan"
   location            = azurerm_resource_group.common.location

@@ -107,6 +107,10 @@ resource "azurerm_linux_web_app" "webhost" {
       node_version = "16-lts"
     }
     use_32_bit_worker = false
+    cors {
+      allowed_origins     = []
+      support_credentials = false
+    }
   }
 
   app_settings = {
@@ -135,11 +139,6 @@ resource "azurerm_linux_web_app" "webhost" {
         retention_in_days = 7
         retention_in_mb = 35
       }
-    }
-
-    cors {
-      allowed_origins     = []
-      support_credentials = false
     }
   }
 }

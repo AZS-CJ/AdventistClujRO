@@ -99,6 +99,12 @@ resource "azurerm_storage_share" "cms-storage-share" {
   }
 }
 
+resource "azurerm_storage_share_directory" "uploads" {
+  name                 = "uploads"
+  share_name           = azurerm_storage_share.cms-storage-share.name
+  storage_account_name = azurerm_storage_account.cms-storage.name
+}
+
 resource "azurerm_service_plan" "web-sites-service-plan" {
   name                = "${var.website_name}-ServicePlan"
   location            = azurerm_resource_group.common.location

@@ -90,6 +90,13 @@ resource "azurerm_storage_share" "cms-storage-share" {
   name                 = "strapish${each.key}"
   storage_account_name = azurerm_storage_account.cms-storage[each.key].name
   quota                = 5
+  acl {
+    id = "acl-file-share-strapi-uploads"
+
+    access_policy {
+      permissions = "rwdl"
+    }
+  }
 }
 
 resource "azurerm_service_plan" "web-sites-service-plan" {
@@ -241,14 +248,14 @@ resource "azurerm_linux_web_app" "strapi" {
     }
   }
 
-  # storage_account {
-  #    access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
-  #    name         = azurerm_storage_account.cms-storage[each.key].name
-  #    account_name = azurerm_storage_account.cms-storage[each.key].name
-  #    share_name   = "strapi${each.key}"
-  #    type         = "AzureFiles"
-  #    mount_path   = "/opt/app/public"
-  # }
+  storage_account {
+     access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
+     name         = azurerm_storage_account.cms-storage[each.key].name
+     account_name = azurerm_storage_account.cms-storage[each.key].name
+     share_name   = azurerm_storage_share.cms-storage-share[each.key].name
+     type         = "AzureFiles"
+     mount_path   = "/opt/app/public"
+  }
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {

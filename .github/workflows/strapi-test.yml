@@ -30,16 +30,16 @@ jobs:
       run: |
         tag=$(az acr repository show-tags -n azscjacr --repository azscjstrapi --top 1 --orderby time_desc --query "[0]" -o tsv)
         echo "Latest tag found: ${tag}"
-        echo "::set-output name=tag::${tag}"
+        echo "tag=${tag}" >> $GITHUB_ENV
 
     - name: Set container to webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'adventistclujro-strapi-test'
         publish-profile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}
-        images: 'azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}'
+        images: 'azscjacr.azurecr.io/azscjstrapi:${{ env.tag }}'
 
     - name: Set tag with image
       run: |
-        tagValue='azscjacr.azurecr.io/azscjstrapi:${{ steps.latestTag.outputs.tag }}'
+        tagValue='azscjacr.azurecr.io/azscjstrapi:${{ env.tag }}'
         az webapp update -g adventistclujro-test-rg -n adventistclujro-test --set tags.image=$tagValue

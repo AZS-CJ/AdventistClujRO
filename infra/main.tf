@@ -111,7 +111,6 @@ resource "azurerm_linux_web_app" "webhost" {
       allowed_origins     = []
       support_credentials = false
     }
-    container_registry_use_managed_identity = true
   }
 
   app_settings = {
@@ -202,6 +201,7 @@ resource "azurerm_linux_web_app" "strapi" {
       allowed_origins     = []
       support_credentials = false
     }
+    container_registry_use_managed_identity = true
   }
 
   app_settings = {

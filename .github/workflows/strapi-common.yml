@@ -1,4 +1,4 @@
-name: Strapi - Deploy Test
+name: Strapi - common
 
 on:
   workflow_call:

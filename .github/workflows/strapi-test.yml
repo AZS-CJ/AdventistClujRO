@@ -5,7 +5,7 @@ on:
     branches:
     - main
     paths:
-    - ./frontend
+    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:
@@ -14,32 +14,10 @@ on:
         default: 'warning'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Azure login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CLI_CREDS }}
-
-    - name: Get latest tag
-      id: latestTag
-      run: |
-        tag=$(az acr repository show-tags -n azscjacr --repository azscjstrapi --top 1 --orderby time_desc --query "[0]" -o tsv)
-        echo "Latest tag found: ${tag}"
-        echo "tag=${tag}" >> $GITHUB_ENV
-
-    - name: Set container to webapp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'adventistclujro-strapi-test'
-        publish-profile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}
-        images: 'azscjacr.azurecr.io/azscjstrapi:${{ env.tag }}'
-
-    - name: Set tag with image
-      run: |
-        tagValue='azscjacr.azurecr.io/azscjstrapi:${{ env.tag }}'
-        az webapp update -g adventistclujro-test-rg -n adventistclujro-test --set tags.image=$tagValue
+  deploy:
+    uses: ./.github/workflows/strapi-common.yml
+    with:
+      webAppSuffix: test
+    secrets:
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
+      publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}

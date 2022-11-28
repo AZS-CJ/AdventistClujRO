@@ -99,7 +99,7 @@ resource "azurerm_linux_web_app" "webhost" {
   name                = "${var.website_name}-${each.key}"
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
-  service_plan_id = azurerm_service_plan.web-sites-service-plan.id
+  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
   https_only          = true
 
   site_config {
@@ -111,6 +111,7 @@ resource "azurerm_linux_web_app" "webhost" {
       allowed_origins     = []
       support_credentials = false
     }
+    container_registry_use_managed_identity = true
   }
 
   app_settings = {
@@ -195,10 +196,6 @@ resource "azurerm_linux_web_app" "strapi" {
   https_only          = true
 
   site_config {
-    application_stack {
-      docker_image     = "azscjacr.azurecr.io/azscjstrapi"
-      docker_image_tag = "latest"
-    }
     use_32_bit_worker = false
     health_check_path = "/api/under-construction"
     cors {

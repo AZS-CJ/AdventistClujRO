@@ -192,10 +192,14 @@ resource "azurerm_linux_web_app" "strapi" {
 
   site_config {
     application_stack {
-      docker_image = "azscjacr.azurecr.io/azscjstrapi"
+      docker_image     = "azscjacr.azurecr.io/azscjstrapi"
       docker_image_tag = "latest"
     }
     use_32_bit_worker = false
+    cors {
+      allowed_origins     = []
+      support_credentials = false
+    }
   }
 
   app_settings = {
@@ -228,9 +232,9 @@ resource "azurerm_linux_web_app" "strapi" {
     }
   }
 
-  # storage_account {
-     
-  # }
+  storage_account {
+     access_key = azurerm_storage_account.cms-storage[each.key]
+  }
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {

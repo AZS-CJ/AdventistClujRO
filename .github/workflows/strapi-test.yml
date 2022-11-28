@@ -20,4 +20,4 @@ jobs:
       webAppSuffix: test
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
-      publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}
+      publishProfile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}

@@ -100,9 +100,10 @@ resource "azurerm_storage_share" "cms-storage-share" {
 }
 
 resource "azurerm_storage_share_directory" "uploads" {
+  for_each             = var.environments
   name                 = "uploads"
-  share_name           = azurerm_storage_share.cms-storage-share.name
-  storage_account_name = azurerm_storage_account.cms-storage.name
+  share_name           = azurerm_storage_share.cms-storage-share[each.key].name
+  storage_account_name = azurerm_storage_account.cms-storage[each.key].name
 }
 
 resource "azurerm_service_plan" "web-sites-service-plan" {

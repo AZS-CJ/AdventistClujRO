@@ -77,7 +77,7 @@ resource "azurerm_application_insights" "AZSClujAppInisghts" {
 
 resource "azurerm_storage_account" "cms-storage" {
   for_each            = var.environments
-  name                = "strapi${each.key}"
+  name                = "strapisa${each.key}"
   resource_group_name = azurerm_resource_group.website[each.key].name
 
   location            = azurerm_resource_group.common.location

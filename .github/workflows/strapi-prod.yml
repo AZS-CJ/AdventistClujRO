@@ -1,4 +1,4 @@
-name: Strapi - Deploy Test
+name: Strapi - Deploy Prod
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/strapi-common.yml
     with:
-      webAppSuffix: test
+      webAppSuffix: prod
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
-      publishProfile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}
+      publishProfile: ${{ secrets.AZURE_STRAPI_PROD_PUBLISH_PROFILE }}

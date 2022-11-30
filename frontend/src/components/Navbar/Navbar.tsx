@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
 import menuButton from '../../assets/mobile_menu_toggle.svg'
+import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
 
 import './Navbar.scss'
 
 function Navbar(props) {
   const [scrolled, setScrolled] = useState(false)
-  const { toggleSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
+  const { openSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
@@ -35,8 +36,8 @@ function Navbar(props) {
     return (
       <div className="link-list">
         {renderLink('acasa', 'Acasă')}
-        {renderLink('despre', 'Despre noi')}
         {/*Will be implemented later*/}
+        {/*{renderLink('despre', 'Despre noi')}*/}
         {/*{renderLink('proiecte', 'Proiecte')}*/}
         {/*{renderLink('articole', 'Articole')}*/}
         {renderLink('program', 'Program')}
@@ -47,11 +48,10 @@ function Navbar(props) {
 
   return (
     <>
-      <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''} ${sidebarOpen && 'blurred'}`} ref={props.navbarRef}>
+      <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
         <div className="navbar-brand">
-          <Link className="brand-name" to="/" onClick={() => setActiveRoute('home')}>
-            <div className="brand-title">Biserica Adventistă de Ziua a Șaptea</div>
-            <div className="red-box">SPERANȚA CLUJ-NAPOCA</div>
+          <Link className="brand-name" to="/" onClick={() => setActiveRoute('acasa')}>
+            <img className="church-name" src={churchName} alt="Church Name" />
           </Link>
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>
@@ -60,10 +60,11 @@ function Navbar(props) {
         {/*render this only if there is a live streaming*/}
         {/*<div className="main-live live">LIVE</div>*/}
 
-        <div className="navbar-toggler" onClick={toggleSidebar}>
+        <div className="navbar-toggler" onClick={openSidebar}>
           <img className="menu-btn" src={menuButton} alt="Menu" />
         </div>
       </nav>
+      <div className={`blur-content ${sidebarOpen && 'blurred'}`}></div>
       <NavbarCollapse renderMainLinks={renderMainLinks} />
     </>
   )

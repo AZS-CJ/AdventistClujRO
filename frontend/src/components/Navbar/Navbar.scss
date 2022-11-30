@@ -38,17 +38,16 @@
     color: $almostBlack
 }
 
-.my-nav .navbar-brand .brand-title {
-    font-size: 1.6rem;
-    max-width: 215px;
-    text-align: left;
-    white-space: pre-wrap
+.my-nav .navbar-brand .church-name {
+    height: 7.5rem;
+    padding: .5rem 0;
 }
 
 .navbar-nav.desktop-nav .link-list {
   display: flex;
   justify-content: flex-end;
   flex-direction: row;
+  margin-right: 1rem
 }
 
 .my-nav .navbar-nav .nav-item {
@@ -97,6 +96,22 @@
   display: none;
 }
 
+.blur-content.blurred {
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
+}
+
+//landscape
+@media screen and (min-aspect-ratio: 13/9) {
+  .navbar.my-nav {
+    margin-top: 1vh;
+  }
+}
 
 @media (max-width: $min-phone-width) {
   .navbar.my-nav {
@@ -104,19 +119,15 @@
     width: calc(87% - 0.625rem);
   }
 
-  .navbar.my-nav .desktop-nav,  .navbar.my-nav .main-live{
-    display:none
+  .navbar.my-nav .desktop-nav, .navbar.my-nav .main-live{
+    display: none
   }
   .my-nav .navbar-brand {
     width: 50%;
   }
 
-  .my-nav .navbar-brand .brand-title {
-    font-size: 1rem;
-  }
-
-  .my-nav .navbar-brand .red-box {
-    font-size: 0.7rem;
+  .my-nav .navbar-brand .church-name {
+    height: 5rem;
   }
 
   .my-nav .navbar-toggler {
@@ -126,7 +137,7 @@
   }
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .sidebar-description, .navbar-resources-title, .navbar-collapse .navbar-resources .social-media {
     display:none
   }

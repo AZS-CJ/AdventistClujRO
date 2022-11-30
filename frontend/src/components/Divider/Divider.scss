@@ -1,0 +1,30 @@
+@import '../../util/layout';
+@import '../../util/colors';
+
+.divider {
+  width: 10vw;
+  margin: 4.9vh auto;
+  display: flex;
+}
+
+.divider div{
+  border-bottom: solid 5px $blueLines;
+  border-radius: 15px;
+  height: 0;
+}
+
+.divider .shorter{
+  width: 12%;
+}
+
+.divider .longer {
+  margin-left: 12.5%;
+  width: 75.5%;
+}
+
+
+@media (max-width: $min-phone-width) {
+  .divider {
+    width: 37vw;
+  }
+}

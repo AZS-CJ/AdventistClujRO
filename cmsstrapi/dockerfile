@@ -16,5 +16,17 @@ WORKDIR /opt/app
 COPY ./ .
 RUN yarn build
 
-EXPOSE 80
-CMD ["yarn", "start"]
+# Configure SSH for Azure App Service access
+RUN apt install -y openssh-server \
+     && echo "root:Docker!" | chpasswd
+
+COPY sshd_config /etc/ssh/
+
+RUN mkdir -p /tmp
+COPY ssh_setup.sh /tmp
+RUN chmod +x /tmp/ssh_setup.sh \
+    && (sleep 1;/tmp/ssh_setup.sh 2>&1 > /dev/null)
+
+EXPOSE 80 2222
+
+CMD ["bash", "start_container.sh"]

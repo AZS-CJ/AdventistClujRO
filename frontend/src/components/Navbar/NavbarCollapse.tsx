@@ -6,12 +6,12 @@ import logo from '../../assets/logo.svg'
 import './NavbarCollapse.scss'
 
 function NavbarCollapse(props) {
-  const { sidebarOpen, toggleSidebar } = useNavigationContext()
+  const { sidebarOpen, hideSidebar } = useNavigationContext()
   return (
     <div className={`navbar-collapse bg-dark ${sidebarOpen ? 'show' : 'hide'}`} id="navbarCollapse">
       <div className="navbar-content">
-        <div className="close-nav" id="navbarBtn" onClick={toggleSidebar}>
-          <p>X</p>
+        <div className="close-nav" id="navbarBtn" onClick={hideSidebar}>
+          <p>&times;</p>
         </div>
         <ul className="navbar-nav mr-auto">
           {/*Will be implemented later*/}
@@ -23,7 +23,8 @@ function NavbarCollapse(props) {
           <div>
             <img className="nav-church-logo" src={logo} alt="Logo" />
             <p>Biserica Adventistă de Ziua a Șaptea "Speranța" din Cluj-Napoca</p>
-            <p className="sidebar-description">TO EDIT - O descriere mai mica despre Biserica</p>
+            {/*Will be implemented later*/}
+            {/*<p className="sidebar-description">TO EDIT - O descriere mai mica despre Biserica</p>*/}
           </div>
         </ul>
 

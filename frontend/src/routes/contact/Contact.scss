@@ -1,0 +1,127 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.contact-page .contact-details{
+  font-size: 1.25rem;
+  line-height: 1.68rem;
+  padding-left: 1.35vw;
+}
+
+.contact-page .contact-details .line{
+  display: inline-flex;
+  width: 100%;
+  text-align: left;
+}
+
+.contact-page .contact-details p, .contact-details a{
+  margin-bottom: 1.125rem;
+  text-decoration: none;
+  color: $black;
+}
+
+.contact-page .contact-details .section{
+  width: 5.5rem;
+  color: $blue;
+}
+
+.contact-page .contact-details .value{
+  font-weight: bold;
+  color: $black;
+}
+
+.contact-page iframe {
+  max-width: 100%;
+}
+
+//form
+.contact-page .contact-form {
+  padding: 0 3.75vw;
+}
+
+.contact-page .contact-form .form-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact-page .contact-form .form-line .my-input{
+  width: 45%;
+}
+
+.contact-page .contact-form .default-red-button {
+  font-size: 1.93rem;
+  line-height: 2.375rem;
+  padding: 1vh 3vw;
+  margin: 0 auto 1.75vh auto;
+}
+
+.contact-page .contact-form .default-red-button.disabled {
+  position: relative;
+  color: transparent;
+}
+
+.contact-page .contact-form .default-red-button .spinner-border {
+  color: $white;
+  top: calc(50% - 1rem);
+  left: calc(50% - 1rem)
+}
+
+.contact-page iframe {
+  border-radius: 1.5rem;
+}
+
+@media (orientation: landscape) {
+  .contact-page .mobile-br {
+    display:none
+  }
+}
+
+@media (max-width: $min-phone-width) {
+  .contact-page .default-container{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .contact-page .contact-details{
+    padding-left: 7vw;
+    padding-right: 7vw;
+  }
+
+  .contact-page .contact-details .line{
+    display: block;
+    margin-bottom: 1.375rem;
+    text-align: center;
+  }
+
+  .contact-page .contact-details .section{
+    width: 100%;
+  }
+
+  .contact-page .contact-details p, .contact-details a{
+    margin-bottom: 0;
+  }
+
+  //form
+  .contact-page .contact-form {
+    padding: 0 8.5vw;
+  }
+
+  .contact-page .contact-form .form-line {
+    display: block;
+  }
+
+  .contact-page .contact-form .form-line .my-input{
+    width: 100%;
+  }
+
+  .contact-page .contact-form .default-red-button {
+    font-size: 1.31rem;
+    line-height: 1.56rem;
+    padding: 1.84vh 9.73vw;
+    margin: 0 auto 2vh auto;
+  }
+
+  .contact-page iframe {
+    border-radius: 0;
+  }
+
+}

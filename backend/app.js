@@ -1,11 +1,20 @@
 const express = require('express');
+const request = require('request');
 const path = require('path');
 const app = express();
 const passport = require('passport');
-const proxy = require('express-http-proxy');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
+const bodyParser = require('body-parser')
+const { sendEmail } = require('./email')
+const winston = require('winston')
+const expressWinston = require('express-winston')
 require('dotenv').config()
+
+// because url-join knows only ESM (or only import statements) we 
+// need to dynamically import it
+let urlJoin ;
+import('url-join').then((uj) => urlJoin = uj.default);
 
 if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
   passport.use(new FacebookStrategy({
@@ -45,13 +54,27 @@ passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
 
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.Console()
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  ),
+  meta: true, // optional: control whether you want to log the meta data about the request (default to true)
+  msg: "HTTP {{req.method}} {{req.url}}", // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
+  expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
+  colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
+  ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
+}));
+
 app.use(require('cookie-parser')());
-app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 
-app.use((req, res, nxt) => {
-  nxt();
-});
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -94,16 +117,40 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = process.env.CMS_DB_HOST || 'adventistclujro-strapi-test.azurewebsites.net/';
-app.use('/api', proxy(cmsDbHost, {
-  proxyReqPathResolver: function (req) {
-    return `/api${req.url}`;
-  }
-}));
+const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms-test.adventistcluj.ro';
+
+app.use('/api', function(req, res) {
+  var url = urlJoin(cmsDbHost, 'api', req.url);
+  req.pipe(request({ qs:req.query, uri: url })).pipe(res);
+});
+
+app.use('/uploads', function(req, res) {
+  var url = urlJoin(cmsDbHost, 'uploads', req.url);
+  req.pipe(request({ qs:req.query, uri: url })).pipe(res);
+});
+
+app.post('/email', async(req, res) => {
+    sendEmail(req.body, (error) => {
+        if (error) {
+            res.status(500)
+            res.send(error)
+        } else res.sendStatus(200)
+    })
+});
 
 app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+app.use(expressWinston.errorLogger({
+  transports: [
+    new winston.transports.Console()
+  ],
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.json()
+  )
+}));
 
 app.listen(normalizePort(process.env.PORT || '3001'));
 

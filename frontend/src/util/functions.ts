@@ -60,7 +60,7 @@ export const getDayName = (dayNumber) => {
 //sunset time in Cluj-Napoca
 export const getSunsetForDay = (date) => {
   const times = SunCalc.getTimes(date, 46.763, 23.58)
-  return `${times.sunset.getHours()}:${times.sunset.getMinutes()}`
+  return `${times.sunset.getHours()}:${times.sunset.getMinutes() < 10 ? '0' : ''}${times.sunset.getMinutes()}`
 }
 
 export const getFormattedPeriod = (startDate: string, endDate: string) => {

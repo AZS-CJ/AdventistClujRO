@@ -26,15 +26,16 @@ const OneDayProgram = (props: { programs: ProgramType[]; dayNumber: number }) =>
   return (
     <div className="program-day">
       <span className="day-title bold">
-        <span className="day-name">{formatToLocalDayName(day)}</span> {formatToLocalDate(day)}
+        <span className="day-name">{formatToLocalDayName(day)}</span>
+        <span className="day-date"> {formatToLocalDate(day)} </span>
       </span>
       {renderSunset(props.dayNumber, day)}
-      {programsForDay.map((prog) => (
-        <div className="program-line" key={prog.id}>
+      {programsForDay.map((dayProgram) => (
+        <div className="program-line" key={dayProgram.id}>
           <p>
-            {formatTime(prog.time)} {prog.live ? ' (LIVE) ' : ''}
+            {formatTime(dayProgram.time)} {dayProgram.live ? ' (LIVE) ' : ''}
           </p>
-          {prog.name}
+          {dayProgram.name}
         </div>
       ))}
     </div>

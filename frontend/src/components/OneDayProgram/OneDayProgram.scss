@@ -30,8 +30,12 @@
   font-weight: bold;
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .program-day {
     text-align: center;
+  }
+
+  .program-day .day-title .day-date {
+    display: block;
   }
 }

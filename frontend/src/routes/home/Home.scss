@@ -2,7 +2,7 @@
 @import '../../util/layout';
 
 .home-page .fullscreen-wrapper {
-  height: 71.85vh;
+  height: calc(var(--app-height) - 28.15vh);;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -23,6 +23,7 @@
   border-radius: 50%;
   cursor: pointer;
   margin: 0 auto 5vh auto;
+  text-align: center;
 }
 
 .scroll-arrow .bi-chevron-down::before {
@@ -85,7 +86,7 @@
 }
 
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .home-page .parag {
     margin-right: 0;
   }
@@ -97,7 +98,7 @@
 
   .scroll-arrow .bi-chevron-down::before {
     font-size: 2.5rem;
-    margin-top: 0.8rem;
+    margin-top: 0.6rem;
   }
 
   .home-page .description.closed .text {

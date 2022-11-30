@@ -9,9 +9,6 @@ on:
       webAppPackagePath:
         type: string
         required: true
-      azureHost:
-        type: string
-        required: true
       nodeVersion:
         type: string
         required: true
@@ -23,9 +20,9 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ inputs.nodeVersion }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.nodeVersion }}
     - name: Install yarn
@@ -34,7 +31,7 @@ jobs:
     - name: Build frontend
       working-directory: './frontend'
       env: 
-        REACT_APP: ${{ inputs.azureHost }}
+        REACT_APP: react_app
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.

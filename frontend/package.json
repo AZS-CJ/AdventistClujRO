@@ -37,7 +37,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject",
-    "lint": "eslint --quiet src"
+    "lint": "eslint --color src"
   },
   "eslintConfig": {
     "extends": [
@@ -68,8 +68,13 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-testing-library": "^5.0.0-alpha.10",
     "history": "^5.0.1",
-    "husky": "^7.0.4",
+    "husky": "^3.0.5",
     "prettier": "^2.4.1"
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  }
 }

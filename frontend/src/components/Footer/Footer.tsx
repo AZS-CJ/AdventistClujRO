@@ -1,14 +1,10 @@
 import React from 'react'
 import { LINKS } from '../../util/constants'
-import { useNavigationContext } from '../../contexts/navigation'
 
 import './Footer.scss'
-
 function Footer() {
-  const { sidebarOpen } = useNavigationContext()
-
   return (
-    <footer className={`page-footer font-small blue ${sidebarOpen && 'blurred'}`}>
+    <footer className={`page-footer font-small blue`}>
       <div className="container-fluid my-menu">
         <div className="row">
           <div className="col-md-8">
@@ -17,20 +13,24 @@ function Footer() {
               <div className="media-links">
                 <a className="button" href={LINKS.youtube} target="_blank">
                   <i className="bi bi-youtube" />
-                  <span>YouTube</span>
+                  <span className="icon-text">YouTube</span>
                 </a>
                 <a className="button" href={LINKS.facebook} target="_blank">
                   <i className="bi bi-facebook" />
-                  <span>Facebook</span>
+                  <span className="icon-text">Facebook</span>
                 </a>
                 <a className="button" href={LINKS.instagram} target="_blank">
-                  <i className="bi bi-instagram" />
-                  <span>Instagram</span>
+                  <div className="instagram-icon-container">
+                    <h3>
+                      <i className="bi bi-instagram" />
+                    </h3>
+                  </div>
+                  <span className="icon-text">Instagram</span>
                 </a>
               </div>
             </div>
             <div className="footer-copyright">
-              © {new Date().getFullYear()} Biserica Adventistă de Ziua a Șaptea "Speranța" Cluj-Napoca
+              © {new Date().getFullYear()} Biserica Adventistă de Ziua a Șaptea "Speranța" Cluj-Napoca &nbsp;
               <a className="address-link" href="https://goo.gl/maps/G9tndGkL8TA7hpsV8" target="_blank">
                 Strada Moților 47 Cluj-Napoca | România
               </a>
@@ -48,11 +48,11 @@ function Footer() {
                 <a href={LINKS.respiro} target="_blank">
                   Revista Respiro
                 </a>
-                <a href={LINKS.cookies} className="last-one" target="_blank">
-                  Politica privind cookies
-                </a>
+                {/*<a href={LINKS.cookies} className="last-one" target="_blank">*/}
+                {/*  Politica privind cookies*/}
+                {/*</a>*/}
               </div>
-              <div className="col-md-5">
+              <div className="col-md-7">
                 <ul className="list-unstyled">
                   <a href={LINKS.speranta} className="longer" target="_blank">
                     Speranța TV
@@ -63,9 +63,9 @@ function Footer() {
                   <a href={LINKS.adra} target="_blank">
                     ADRA
                   </a>
-                  <a href={LINKS.confidential} className="last-one" target="_blank">
-                    Politica de confidențialitate
-                  </a>
+                  {/*<a href={LINKS.confidential} className="last-one" target="_blank">*/}
+                  {/*  Politica de confidențialitate*/}
+                  {/*</a>*/}
                 </ul>
               </div>
             </div>

@@ -3,7 +3,6 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { EventType } from '../../data/event'
 import getEvents from '../../api/event'
-import { host } from '../../util/constants'
 import { getFormattedPeriod } from '../../util/functions'
 
 import './EventsCarousel.scss'
@@ -47,7 +46,7 @@ function EventsCarousel() {
 
   const renderEventCard = (item) => {
     return (
-      <div className={`event-card ${initialActiveId === item.id ? 'active-element' : ''}`} key={item.id} style={{ backgroundImage: `url(${host}${item.smallImg}` }}>
+      <div className={`event-card ${initialActiveId === item.id ? 'active-element' : ''}`} key={item.id} style={{ backgroundImage: `url(${item.smallImg}` }}>
         <div className="event-card-body">
           <h5 className="event-card-period">{getFormattedPeriod(item.startDate, item.endDate)}</h5>
           <h5 className="event-card-title">{item.title}</h5>
@@ -102,7 +101,7 @@ function EventsCarousel() {
       deviceType={isMobile ? 'mobile' : 'desktop'}
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item-padding-40-px"
-      customButtonGroup={<ButtonGroup next={null} previous={null} />}
+      customButtonGroup={eventsData.events.length > 3 ? <ButtonGroup next={null} previous={null} /> : null}
       renderButtonGroupOutside={true}
       arrows={false}
       customDot={<CustomDot onClick={undefined} active={undefined} />}
@@ -112,7 +111,9 @@ function EventsCarousel() {
     </Carousel>
   )
 
-  return eventsData.loading ? <div className="spinner-border" role="status" /> : renderCarousel()
+  if (eventsData.loading) return <div className="spinner-border" role="status" />
+  if (!eventsData.events.length) return <div className="no-events">Momentan nu sunt evenimente</div>
+  return renderCarousel()
 }
 
 export default EventsCarousel

@@ -115,16 +115,10 @@ resource "azurerm_key_vault" "webhost-kv" {
     tenant_id = azurerm_linux_web_app.webhost[each.key].identity.0.tenant_id
     object_id = azurerm_linux_web_app.webhost[each.key].identity.0.principal_id
 
-    key_permissions = [
-      "Get",
-    ]
-
     secret_permissions = [
       "Get",
-    ]
-
-    storage_permissions = [
-      "Get",
+      "List",
+      "Set"
     ]
   }
 }

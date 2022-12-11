@@ -99,6 +99,36 @@ resource "azurerm_storage_share" "cms-storage-share" {
   }
 }
 
+resource "azurerm_key_vault" "webhost-kv" {
+  for_each                    = var.environments
+  name                        = "azscj${each.key}"
+  location                    = azurerm_resource_group.website[each.key].location
+  resource_group_name         = azurerm_resource_group.website[each.key].name
+  enabled_for_disk_encryption = true
+  tenant_id                   = azurerm_linux_web_app.webhost[each.key].identity.0.tenant_id
+  soft_delete_retention_days  = 7
+  purge_protection_enabled    = false
+
+  sku_name = "standard"
+
+  access_policy {
+    tenant_id = azurerm_linux_web_app.webhost[each.key].identity.0.tenant_id
+    object_id = azurerm_linux_web_app.webhost[each.key].identity.0.principal_id
+
+    key_permissions = [
+      "Get",
+    ]
+
+    secret_permissions = [
+      "Get",
+    ]
+
+    storage_permissions = [
+      "Get",
+    ]
+  }
+}
+
 resource "azurerm_storage_share_directory" "uploads" {
   for_each             = var.environments
   name                 = "uploads"
@@ -138,12 +168,6 @@ resource "azurerm_linux_web_app" "webhost" {
     "CMS_DB_HOST"   = "https://${azurerm_linux_web_app.strapi[each.key].default_hostname}"
     "EMAIL_ADDRESS" = each.key == "test" ? var.EMAIL_ADDRESS_TEST : var.EMAIL_ADDRESS_PROD
     "EMAIL_PASSWORD" = each.key == "test" ? var.EMAIL_PASSWORD_TEST : var.EMAIL_PASSWORD_PROD
-  }
-
-  connection_string {
-    name  = "Database"
-    type  = "Custom"
-    value = "NoConnectionStringNeededYet"
   }
 
   identity {

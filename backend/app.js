@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const { sendEmail } = require('./email')
 const winston = require('winston')
 const expressWinston = require('express-winston')
+const kv = require('./kv');
 require('dotenv').config()
 
 // because url-join knows only ESM (or only import statements) we 
@@ -155,3 +156,8 @@ app.use(expressWinston.errorLogger({
 app.listen(normalizePort(process.env.PORT || '3001'));
 
 console.log(`Server started on port ${process.env.PORT || '3001'}`);
+
+// kv.setSecret("test-secret", "some-secret-value");
+
+// const valuePromise = kv.getSecret("test-secret");
+// valuePromise.then((v) => console.log(`Value retrieved: ${v.value}`));

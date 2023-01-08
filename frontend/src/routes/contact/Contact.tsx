@@ -137,8 +137,7 @@ function Contact() {
         {renderContactDetails()}
         <Divider />
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2732.9267602304976!2d23.578147215477273!3d46.76634007913797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490e838cb267e1%3A0x5c5ba645a780a9a8!2sCalea%20Mo%C8%9Bilor%2047%2C%20Cluj-Napoca%20400000!5e0!3m2!1sen!2sro!4v1658478337807!5m2!1sen!2sro"
-          width="1136"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2980.3008644078113!2d23.579282225268546!3d46.765918108266774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490fe788c415fb%3A0xd8c80481a5251003!2sBiserica%20Adventist%C4%83%20Speran%C8%9Ba!5e0!3m2!1sro!2sde!4v1673177154988!5m2!1sro!2sd"
           height="432"
           allowFullScreen={false}
           loading="lazy"

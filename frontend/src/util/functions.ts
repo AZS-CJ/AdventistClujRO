@@ -35,6 +35,8 @@ export const range = (from, to, step = 1) => {
 // for example for 6, the date of the next friday (1-sunday)
 export const getNextDate = (dayOfWeek) => {
   const date = new Date()
+  // if today is saturday, consider that today is friday
+  if (date.getDay() == 6) date.setDate(date.getDate() - 1)
   date.setDate(date.getDate() + ((dayOfWeek + 6 - date.getDay()) % 7))
   return date
 }

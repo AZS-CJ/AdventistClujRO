@@ -39,28 +39,32 @@ function Footer() {
           <div className="col-md-4 links">
             <div className="row">
               <div className="col-md-5">
-                <a href={LINKS.adventist} target="_blank">
+                <a href={LINKS.adventist} className="line" target="_blank">
                   Adventist.ro
                 </a>
-                <a href={LINKS.semnele} className="longer" target="_blank">
-                  Semnele Timpului
-                </a>
-                <a href={LINKS.respiro} target="_blank">
-                  Revista Respiro
-                </a>
+                <div className="line longer">
+                  <a href={LINKS.semnele} target="_blank">
+                    Semnele Timpului
+                  </a>
+                  <a href={LINKS.respiro} target="_blank">
+                    Revista Respiro
+                  </a>
+                </div>
                 {/*<a href={LINKS.cookies} className="last-one" target="_blank">*/}
                 {/*  Politica privind cookies*/}
                 {/*</a>*/}
               </div>
               <div className="col-md-7">
                 <ul className="list-unstyled">
-                  <a href={LINKS.speranta} className="longer" target="_blank">
-                    Speranța TV
-                  </a>
-                  <a href={LINKS.radio} target="_blank">
-                    Radio Vocea Speranței
-                  </a>
-                  <a href={LINKS.adra} target="_blank">
+                  <div className="line longer">
+                    <a href={LINKS.speranta} target="_blank">
+                      Speranța TV
+                    </a>
+                    <a href={LINKS.radio} target="_blank">
+                      Radio Vocea Speranței
+                    </a>
+                  </div>
+                  <a href={LINKS.adra} className="line" target="_blank">
                     ADRA
                   </a>
                   {/*<a href={LINKS.confidential} className="last-one" target="_blank">*/}

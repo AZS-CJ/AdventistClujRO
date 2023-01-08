@@ -30,7 +30,8 @@
 }
 
 .contact-page iframe {
-  max-width: 100%;
+  width: 100%;
+  border-radius: 1.5rem;
 }
 
 //form
@@ -63,10 +64,6 @@
   color: $white;
   top: calc(50% - 1rem);
   left: calc(50% - 1rem)
-}
-
-.contact-page iframe {
-  border-radius: 1.5rem;
 }
 
 @media (orientation: landscape) {

@@ -3,7 +3,7 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { EventType } from '../../data/event'
 import getEvents from '../../api/event'
-import { getFormattedPeriod } from '../../util/functions'
+import { getFormattedPeriod, reorderEvents } from '../../util/functions'
 
 import './EventsCarousel.scss'
 
@@ -37,16 +37,17 @@ function EventsCarousel() {
   useEffect(() => {
     ;(async () => {
       const events: EventType[] = await getEvents()
-      const lastEl = events.pop()
-      if (lastEl) events.unshift(lastEl)
-      setEventsData({ events, loading: false })
-      setInitialActiveId(!isMobile && events.length > 1 ? events[1].id : null)
+      const newOrderEvents = reorderEvents(events, isMobile)
+      setInitialActiveId(!isMobile && newOrderEvents.length > 1 ? newOrderEvents[1].id : newOrderEvents.length === 1 ? newOrderEvents[0].id : null)
+      setEventsData({ events: newOrderEvents, loading: false })
     })()
   }, [])
 
   const renderEventCard = (item) => {
+    const isPastEvent = new Date(item.endDate) < new Date()
+    const shouldBeActive = initialActiveId === item.id
     return (
-      <div className={`event-card ${initialActiveId === item.id ? 'active-element' : ''}`} key={item.id} style={{ backgroundImage: `url(${item.smallImg}` }}>
+      <div className={`event-card ${shouldBeActive ? 'active-element' : ''} ${isPastEvent ? 'past' : ''}`} key={item.id} style={{ backgroundImage: `url(${item.smallImg}` }}>
         <div className="event-card-body">
           <h5 className="event-card-period">{getFormattedPeriod(item.startDate, item.endDate)}</h5>
           <h5 className="event-card-title">{item.title}</h5>
@@ -56,19 +57,25 @@ function EventsCarousel() {
   }
 
   const afterSlideChange = () => {
+    if (isMobile) return
+    // this is for desktop, where there are 3 active items but only 1 should be really active
     if (initialActiveId) setInitialActiveId(null)
-    const elements = document.getElementsByClassName('react-multi-carousel-item--active')
-    if (elements.length === 3) {
-      elements[0].children[0].classList.remove('active-element')
-      elements[1].children[0].classList.add('active-element')
-      elements[2].children[0].classList.remove('active-element')
+    // remove active class from every item
+    const items = document.getElementsByClassName('react-multi-carousel-item')
+    for (let i = 0; i < items.length; i++) {
+      items[i].children[0].classList.remove('active-element')
+    }
+    //add active class to the middle one
+    const activeItems = document.getElementsByClassName('react-multi-carousel-item--active')
+    if (activeItems.length > 1) {
+      activeItems[1].children[0].classList.add('active-element')
     }
   }
 
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 3,
+      items: eventsData.events.length === 2 ? 2 : 3,
       slidesToSlide: 1
     },
     tablet: {
@@ -85,23 +92,24 @@ function EventsCarousel() {
   const renderCarousel = () => (
     <Carousel
       centerMode={isMobile}
+      focusOnSelect={isMobile}
       additionalTransfrom={10}
       swipeable={true}
       draggable={false}
-      showDots={true}
+      showDots={eventsData.events.length > 1}
       responsive={responsive}
       ssr={true}
-      infinite={true}
+      infinite={eventsData.events.length > 1}
       autoPlay={false}
       autoPlaySpeed={1000}
       keyBoardControl={true}
       customTransition="transform 200ms ease-in-out"
       transitionDuration={200}
-      containerClass={`carousel-container ${eventsData.events.length < 3 ? 'center' : ''}`}
+      containerClass={`carousel-container ${eventsData.events.length === 1 ? 'center' : ''}`}
       deviceType={isMobile ? 'mobile' : 'desktop'}
       dotListClass="custom-dot-list-style"
       itemClass="carousel-item-padding-40-px"
-      customButtonGroup={eventsData.events.length > 3 ? <ButtonGroup next={null} previous={null} /> : null}
+      customButtonGroup={eventsData.events.length > 1 ? <ButtonGroup next={null} previous={null} /> : null}
       renderButtonGroupOutside={true}
       arrows={false}
       customDot={<CustomDot onClick={undefined} active={undefined} />}

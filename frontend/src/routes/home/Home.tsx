@@ -75,9 +75,6 @@ function Home(props) {
   const returnContent = () => {
     return (
       <>
-        <InfoSection title="Evenimente" customCSS="event-container">
-          <EventsCarousel />
-        </InfoSection>
         <div className="fullscreen-wrapper">
           <div className="left-title-section">
             <span className="bold-title">{content.title}</span>

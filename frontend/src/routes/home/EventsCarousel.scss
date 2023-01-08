@@ -64,6 +64,11 @@
   width: 19rem;
 }
 
+.carousel-container .event-card.past {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
 .carousel-container .event-card.active-element .event-card-body {
   justify-content: space-between;
   backdrop-filter: none;
@@ -106,10 +111,10 @@
 }
 
 .no-events {
-
+  margin-top: 1rem;
 }
 
-@media (orientation: portrait) and (max-width: $min-phone-width) {
+@media (max-width: $min-phone-width) {
   .default-container.event-container {
     padding-left: 0;
     padding-right: 0;
@@ -123,9 +128,9 @@
     display: none
   }
 
-  .carousel-container .event-card {
-    width: 7.56rem;
-    height: 7.56rem;
+  .carousel-container .react-multi-carousel-item.react-multi-carousel-item--active .event-card {
+    width: 10rem;
+    height: 10rem;
     padding: 0;
   }
 
@@ -137,9 +142,9 @@
     font-size: 0.9rem;
   }
 
-  .carousel-container .react-multi-carousel-item--active .event-card {
-    width: 10rem;
-    height: 10rem;
+  .carousel-container .react-multi-carousel-item .event-card {
+    width: 7.56rem;
+    height: 7.56rem;
   }
 
   .carousel-container .react-multi-carousel-item--active .event-card-body {
@@ -156,5 +161,8 @@
     font-size: 1.18rem;
   }
 
+  .no-events {
+    text-align: center;
+  }
 
 }

@@ -7,7 +7,7 @@ const eventsLimit = 7
 const getEvents: () => Promise<EventType[]> = async () => {
   const query = qs.stringify(
     {
-      sort: 'startDate:desc',
+      sort: 'startDate:asc',
       pagination: {
         limit: eventsLimit
       },

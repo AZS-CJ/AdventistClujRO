@@ -1,4 +1,5 @@
 import SunCalc from 'suncalc'
+import { EventType } from '../data/event'
 
 export function formatToLocalDate(date) {
   return new Date(date).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' }).replace(/ \w/, (c) => c.toUpperCase())
@@ -72,7 +73,7 @@ export const getFormattedPeriod = (startDate: string, endDate: string) => {
   // event is just one day
   if (formattedStartDate === formattedEndDate) return formattedStartDate
   // event is multiple days in the same month
-  if (startD.getFullYear() === endD.getFullYear() && startD.getMonth() === endD.getMonth()) return `${startD.getDay()} - ${formattedEndDate}`
+  if (startD.getFullYear() === endD.getFullYear() && startD.getMonth() === endD.getMonth()) return `${startD.getDate()} - ${formattedEndDate}`
   // event is multiple days in different months
   if (startD.getFullYear() === endD.getFullYear()) {
     const dayMonthStart = startD.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' }).replace(/ \w/, (c) => c.toUpperCase())
@@ -80,4 +81,33 @@ export const getFormattedPeriod = (startDate: string, endDate: string) => {
   }
   // event is in different years
   return `${formattedStartDate} - ${formattedEndDate}`
+}
+
+export const reorderEvents = (events, isMobile) => {
+  // if there are less than 3 events or all are future events don't do anything
+  if (events.length < 3 || new Date(events[0].endDate) > new Date()) return events
+
+  let firstFutureEventIndex = 0
+  let i = 1
+  while (firstFutureEventIndex === 0 && i < events.length) {
+    if (new Date(events[i].endDate) > new Date()) {
+      // if it's a future/current event
+      firstFutureEventIndex = i
+    }
+    i = i + 1
+  }
+  if (firstFutureEventIndex === 0) firstFutureEventIndex = events.length - 1
+  const futureEvents: EventType[] = events.splice(firstFutureEventIndex, events.length)
+  const oldEvents: EventType[] = events.splice(0, firstFutureEventIndex)
+  // start with future events then the old events
+  const newList: EventType[] = futureEvents.concat(oldEvents)
+  // the current events is the middle(second one)
+  if (!isMobile) {
+    const lastEl = newList.pop()
+    if (lastEl) newList.unshift(lastEl)
+  }
+  // if all events all past, the active item will be the most recent one
+  // if only one event is in the future, that one will be the active item
+  // if there are multiple past and multiple future events, the active one will be the first future event
+  return newList
 }

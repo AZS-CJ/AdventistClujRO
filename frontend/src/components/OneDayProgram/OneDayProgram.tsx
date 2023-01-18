@@ -1,6 +1,7 @@
 import React from 'react'
-import { formatTime, formatToLocalDate, formatToLocalDayName, getDayName, getNextDate, getSunsetForDay } from '../../util/functions'
+import { formatToLocalDate, formatToLocalDayName, getDayName, getNextDate, getSunsetForDay } from '../../util/functions'
 import { ProgramType } from '../../data/program'
+import { LINKS } from '../../util/constants'
 
 import './OneDayProgram.scss'
 
@@ -23,6 +24,19 @@ const OneDayProgram = (props: { programs: ProgramType[]; dayNumber: number }) =>
     )
   }
 
+  const renderLive = (dayProgram: ProgramType) => {
+    if (!dayProgram.live) return ''
+    return (
+      <span>
+        &#40;
+        <a href={LINKS.YOUTUBE_LIVE} target="_blank">
+          LIVE
+        </a>
+        &#41;{' '}
+      </span>
+    )
+  }
+
   return (
     <div className="program-day">
       <span className="day-title bold">
@@ -30,10 +44,10 @@ const OneDayProgram = (props: { programs: ProgramType[]; dayNumber: number }) =>
         <span className="day-date"> {formatToLocalDate(day)} </span>
       </span>
       {renderSunset(props.dayNumber, day)}
-      {programsForDay.map((dayProgram) => (
+      {programsForDay.map((dayProgram: ProgramType) => (
         <div className="program-line" key={dayProgram.id}>
           <p>
-            {formatTime(dayProgram.time)} {dayProgram.live ? ' (LIVE) ' : ''}
+            {dayProgram.time} {renderLive(dayProgram)}
           </p>
           {dayProgram.name}
         </div>

@@ -11,15 +11,15 @@ function Footer() {
             <div className="social-media">
               <p>Social Media:</p>
               <div className="media-links">
-                <a className="button" href={LINKS.youtube} target="_blank">
+                <a className="button" href={LINKS.YOUTUBE} target="_blank">
                   <i className="bi bi-youtube" />
                   <span className="icon-text">YouTube</span>
                 </a>
-                <a className="button" href={LINKS.facebook} target="_blank">
+                <a className="button" href={LINKS.FACEBOOK} target="_blank">
                   <i className="bi bi-facebook" />
                   <span className="icon-text">Facebook</span>
                 </a>
-                <a className="button" href={LINKS.instagram} target="_blank">
+                <a className="button" href={LINKS.INSTAGRAM} target="_blank">
                   <div className="instagram-icon-container">
                     <h3>
                       <i className="bi bi-instagram" />
@@ -39,35 +39,35 @@ function Footer() {
           <div className="col-md-4 links">
             <div className="row">
               <div className="col-md-5">
-                <a href={LINKS.adventist} className="line" target="_blank">
+                <a href={LINKS.ADVENTIST} className="line" target="_blank">
                   Adventist.ro
                 </a>
                 <div className="line longer">
-                  <a href={LINKS.semnele} target="_blank">
+                  <a href={LINKS.SEMNELE} target="_blank">
                     Semnele Timpului
                   </a>
-                  <a href={LINKS.respiro} target="_blank">
+                  <a href={LINKS.RESPIRO} target="_blank">
                     Revista Respiro
                   </a>
                 </div>
-                {/*<a href={LINKS.cookies} className="last-one" target="_blank">*/}
+                {/*<a href={LINKS.COOKIES} className="last-one" target="_blank">*/}
                 {/*  Politica privind cookies*/}
                 {/*</a>*/}
               </div>
               <div className="col-md-7">
                 <ul className="list-unstyled">
                   <div className="line longer">
-                    <a href={LINKS.speranta} target="_blank">
+                    <a href={LINKS.SPERANTA} target="_blank">
                       Speranța TV
                     </a>
-                    <a href={LINKS.radio} target="_blank">
+                    <a href={LINKS.RADIO} target="_blank">
                       Radio Vocea Speranței
                     </a>
                   </div>
-                  <a href={LINKS.adra} className="line" target="_blank">
+                  <a href={LINKS.ADRA} className="line" target="_blank">
                     ADRA
                   </a>
-                  {/*<a href={LINKS.confidential} className="last-one" target="_blank">*/}
+                  {/*<a href={LINKS.CONFIDENTIAL} className="last-one" target="_blank">*/}
                   {/*  Politica de confidențialitate*/}
                   {/*</a>*/}
                 </ul>

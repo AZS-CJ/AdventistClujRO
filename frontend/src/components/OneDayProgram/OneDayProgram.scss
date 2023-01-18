@@ -30,6 +30,15 @@
   font-weight: bold;
 }
 
+.program-day .program-line a {
+  color: $black;
+  text-decoration: none;
+}
+.program-day .program-line a:hover {
+  text-decoration: underline;
+}
+
+
 @media (max-width: $min-phone-width) {
   .program-day {
     text-align: center;

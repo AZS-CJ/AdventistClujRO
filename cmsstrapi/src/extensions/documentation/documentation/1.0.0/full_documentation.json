@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2022-11-09T17:04:05.134Z"
+    "x-generation-date": "2023-01-18T08:39:33.108Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -5901,8 +5901,8 @@
             "required": [
               "name",
               "live",
-              "time",
-              "day"
+              "day",
+              "time"
             ],
             "type": "object",
             "properties": {
@@ -5911,11 +5911,6 @@
               },
               "live": {
                 "type": "boolean"
-              },
-              "time": {
-                "type": "string",
-                "format": "time",
-                "example": "12:54.000"
               },
               "day": {
                 "type": "string",
@@ -5932,6 +5927,9 @@
               "expirationDate": {
                 "type": "string",
                 "format": "date"
+              },
+              "time": {
+                "type": "string"
               }
             }
           }
@@ -5957,11 +5955,6 @@
                     "live": {
                       "type": "boolean"
                     },
-                    "time": {
-                      "type": "string",
-                      "format": "time",
-                      "example": "12:54.000"
-                    },
                     "day": {
                       "type": "string",
                       "enum": [
@@ -5977,6 +5970,9 @@
                     "expirationDate": {
                       "type": "string",
                       "format": "date"
+                    },
+                    "time": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -6323,11 +6319,6 @@
                   "live": {
                     "type": "boolean"
                   },
-                  "time": {
-                    "type": "string",
-                    "format": "time",
-                    "example": "12:54.000"
-                  },
                   "day": {
                     "type": "string",
                     "enum": [
@@ -6343,6 +6334,9 @@
                   "expirationDate": {
                     "type": "string",
                     "format": "date"
+                  },
+                  "time": {
+                    "type": "string"
                   },
                   "createdAt": {
                     "type": "string",

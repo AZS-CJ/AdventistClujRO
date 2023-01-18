@@ -8,12 +8,6 @@ export function formatToLocalDayName(date) {
   return new Date(date).toLocaleDateString('ro-RO', { weekday: 'long' }).replace(/^\w/, (c) => c.toUpperCase())
 }
 
-export function formatTime(time: string) {
-  const hours = time.substring(0, 2)
-  const minutes = time.substring(3, 5)
-  return `${hours}:${minutes}`
-}
-
 /**
  * Helper method for creating a range of numbers
  * range(1, 5) => [1, 2, 3, 4, 5]

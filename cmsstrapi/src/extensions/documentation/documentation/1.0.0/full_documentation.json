@@ -7381,8 +7381,8 @@
             "required": [
               "name",
               "live",
-              "time",
-              "day"
+              "day",
+              "time"
             ],
             "type": "object",
             "properties": {
@@ -7391,11 +7391,6 @@
               },
               "live": {
                 "type": "boolean"
-              },
-              "time": {
-                "type": "string",
-                "format": "time",
-                "example": "12:54.000"
               },
               "day": {
                 "type": "string",
@@ -7412,6 +7407,9 @@
               "expirationDate": {
                 "type": "string",
                 "format": "date"
+              },
+              "time": {
+                "type": "string"
               }
             }
           }
@@ -7437,11 +7435,6 @@
                     "live": {
                       "type": "boolean"
                     },
-                    "time": {
-                      "type": "string",
-                      "format": "time",
-                      "example": "12:54.000"
-                    },
                     "day": {
                       "type": "string",
                       "enum": [
@@ -7457,6 +7450,9 @@
                     "expirationDate": {
                       "type": "string",
                       "format": "date"
+                    },
+                    "time": {
+                      "type": "string"
                     },
                     "createdAt": {
                       "type": "string",
@@ -7803,11 +7799,6 @@
                   "live": {
                     "type": "boolean"
                   },
-                  "time": {
-                    "type": "string",
-                    "format": "time",
-                    "example": "12:54.000"
-                  },
                   "day": {
                     "type": "string",
                     "enum": [
@@ -7823,6 +7814,9 @@
                   "expirationDate": {
                     "type": "string",
                     "format": "date"
+                  },
+                  "time": {
+                    "type": "string"
                   },
                   "createdAt": {
                     "type": "string",

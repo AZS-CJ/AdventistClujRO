@@ -21,11 +21,6 @@
       "default": false,
       "required": true
     },
-    "time": {
-      "type": "time",
-      "required": true,
-      "default": "11:00"
-    },
     "day": {
       "type": "enumeration",
       "enum": [
@@ -41,6 +36,14 @@
     },
     "expirationDate": {
       "type": "date"
+    },
+    "time": {
+      "type": "string",
+      "regex": "^([0-1][0-9]|2[0-3]):[0-5][0-9]$",
+      "required": true,
+      "default": "10:00",
+      "minLength": 5,
+      "maxLength": 5
     }
   }
 }

@@ -1,15 +1,16 @@
 export const LINKS = {
-  youtube: 'https://www.youtube.com/c/AdventistCluj',
-  facebook: 'https://www.facebook.com/BisericaSperantaCluj',
-  instagram: 'https://www.instagram.com/adventistcluj',
-  adventist: 'https://adventist.ro',
-  semnele: 'https://semneletimpului.ro',
-  respiro: 'https://respiro.ro',
-  speranta: 'http://www.sperantatv.ro',
-  radio: 'https://rvs.ro',
-  adra: 'https://adra.ro',
-  cookies: '',
-  confidential: ''
+  YOUTUBE: 'https://www.youtube.com/c/AdventistCluj',
+  YOUTUBE_LIVE: 'https://www.youtube.com/c/AdventistCluj/streams',
+  FACEBOOK: 'https://www.facebook.com/BisericaSperantaCluj',
+  INSTAGRAM: 'https://www.instagram.com/adventistcluj',
+  ADVENTIST: 'https://adventist.ro',
+  SEMNELE: 'https://semneletimpului.ro',
+  RESPIRO: 'https://respiro.ro',
+  SPERANTA: 'http://www.sperantatv.ro',
+  RADIO: 'https://rvs.ro',
+  ADRA: 'https://adra.ro',
+  COOKIES: '',
+  CONFIDENTIAL: ''
 }
 
 export enum InputType {

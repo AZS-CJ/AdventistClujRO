@@ -1,5 +1,9 @@
 @import 'util/colors';
 @import 'util/layout';
+:root {
+  --blurAmount: 0px;
+  --scaleAmount: 1;
+}
 
 
 .spinner-border {
@@ -36,6 +40,8 @@
   z-index: -1;
   background-position: center center;
   background-size: cover;
+  filter: blur(var(--blurAmount));
+  transform: scale(var(--scaleAmount));
 }
 
 .content .page-content {
@@ -46,11 +52,32 @@
 
 .logo-column {
   width: 13%;
-  background-image: linear-gradient(163deg, #f89f6d 0%, #cd4c27 100%);
+  background-image: linear-gradient(-45deg, #cd4c27 0%, #f89f6d 100%);
   transition: opacity 0.5s linear;
   cursor: pointer;
   display: flex;
   justify-content: center;
+  height: 100vh;
+  position: fixed;
+  left: 87vw;
+  opacity: 1;
+}
+
+.logo-column:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  background-image: linear-gradient(-45deg, #f89f6d 0%, #cd4c27 100%);
+  transition: .3s linear;
+  opacity: 0;
+}
+
+.logo-column:hover:before {
+  opacity: 1;
+  transition: .3s linear;
 }
 
 .church-logo {

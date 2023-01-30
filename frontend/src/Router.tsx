@@ -1,14 +1,21 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './routes/home/Home'
 import Program from './routes/program/Program'
 import Contact from './routes/contact/Contact'
 import Navbar from './components/Navbar/Navbar'
+import { handleImageBlur } from './util/scroll-blur'
 // import Login from './pages/login/Login'
 // import About from './routes/about/About'
 
 function Router() {
   const navbarRef = useRef()
+  useEffect(() => {
+    window.addEventListener('scroll', handleImageBlur)
+    return () => {
+      window.removeEventListener('scroll', handleImageBlur)
+    }
+  })
 
   return (
     <BrowserRouter>

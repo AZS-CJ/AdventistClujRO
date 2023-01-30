@@ -33,8 +33,10 @@
 }
 
 .my-input input:focus {
-  outline: 3px solid $blue;
+  border: 3px solid $blue;
+  border-radius: 1.8rem;
   box-shadow: none;
+  outline: none;
 }
 
 .my-input textarea:focus{
@@ -48,7 +50,8 @@
 }
 
 .my-input .textarea-container:focus-within{
-  outline: 3px solid $blue;
+  border: 3px solid $blue;
+  border-radius: 1.8rem;
 }
 
 .my-input .help-block{

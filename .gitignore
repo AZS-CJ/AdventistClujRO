@@ -1,6 +1,7 @@
 **/build
 **/node_modules
 **/yarn-error.log
+**/.yarn
 .idea/
 backend/.debug.env
 backend/.env

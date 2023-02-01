@@ -40,6 +40,9 @@
         "videos",
         "audios"
       ]
+    },
+    "intro": {
+      "type": "text"
     }
   }
 }

@@ -26,3 +26,5 @@ export const PHONE_TEST_REGEX = /^[\s()+-]*([0-9][\s()+-]*){10,16}$/
 
 export const TEXTAREA_MAX_LENGTH = 90000
 export const INPUT_MAX_LENGTH = 50
+export const EVENT_CAROUSEL_LIMIT = 7
+export const PAGE_SIZE = 5

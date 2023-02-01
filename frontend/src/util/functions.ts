@@ -66,19 +66,17 @@ export const getSunsetForDay = (date) => {
   return `${times.sunset.getHours()}:${times.sunset.getMinutes() < 10 ? '0' : ''}${times.sunset.getMinutes()}`
 }
 
-export const getFormattedPeriod = (startDate: string, endDate: string) => {
-  const startD = new Date(startDate)
-  const endD = new Date(endDate)
+export const getFormattedPeriod = (startDate: Date, endDate: Date) => {
   const formattedStartDate = formatToLocalDate(startDate)
   const formattedEndDate = formatToLocalDate(endDate)
 
   // event is just one day
   if (formattedStartDate === formattedEndDate) return formattedStartDate
   // event is multiple days in the same month
-  if (startD.getFullYear() === endD.getFullYear() && startD.getMonth() === endD.getMonth()) return `${startD.getDate()} - ${formattedEndDate}`
+  if (startDate.getFullYear() === endDate.getFullYear() && startDate.getMonth() === endDate.getMonth()) return `${startDate.getDate()} - ${formattedEndDate}`
   // event is multiple days in different months
-  if (startD.getFullYear() === endD.getFullYear()) {
-    const dayMonthStart = startD.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' }).replace(/ \w/, (c) => c.toUpperCase())
+  if (startDate.getFullYear() === endDate.getFullYear()) {
+    const dayMonthStart = startDate.toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' }).replace(/ \w/, (c) => c.toUpperCase())
     return `${dayMonthStart} - ${formattedEndDate}`
   }
   // event is in different years
@@ -112,4 +110,8 @@ export const reorderEvents = (events, isMobile) => {
   // if only one event is in the future, that one will be the active item
   // if there are multiple past and multiple future events, the active one will be the first future event
   return newList
+}
+
+export const getSummary = (content: string) => {
+  return content.length > 150 ? `${content.slice(0, 150)}...` : content
 }

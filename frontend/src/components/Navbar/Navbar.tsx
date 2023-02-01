@@ -22,10 +22,15 @@ function Navbar(props) {
     return activeRoute.includes(route)
   }
 
+  const onRouteClick = (to) => {
+    setActiveRoute(to)
+    hideSidebar()
+  }
+
   const renderLink = (to: string, text: string) => {
     return (
-      <li className="nav-item" onClick={hideSidebar}>
-        <Link className={`nav-link ${isActiveRoute(to) ? 'active' : ''}`} to={`/${to}`} onClick={() => setActiveRoute(to)}>
+      <li className="nav-item">
+        <Link className={`nav-link ${isActiveRoute(to) ? 'active' : ''}`} to={`/${to}`} onClick={() => onRouteClick(to)}>
           {text}
         </Link>
       </li>
@@ -39,7 +44,7 @@ function Navbar(props) {
         {/*Will be implemented later*/}
         {/*{renderLink('despre', 'Despre noi')}*/}
         {/*{renderLink('proiecte', 'Proiecte')}*/}
-        {/*{renderLink('articole', 'Articole')}*/}
+        {renderLink('evenimente', 'Evenimente')}
         {renderLink('program', 'Program')}
         {renderLink('contact', 'Contact')}
       </div>
@@ -64,7 +69,7 @@ function Navbar(props) {
           <img className="menu-btn" src={menuButton} alt="Menu" />
         </div>
       </nav>
-      <div className={`blur-content ${sidebarOpen && 'blurred'}`}></div>
+      <div className={`blur-content ${sidebarOpen && 'blurred'}`} />
       <NavbarCollapse renderMainLinks={renderMainLinks} />
     </>
   )

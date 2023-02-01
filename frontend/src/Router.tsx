@@ -4,7 +4,8 @@ import Home from './routes/home/Home'
 import Program from './routes/program/Program'
 import Contact from './routes/contact/Contact'
 import Navbar from './components/Navbar/Navbar'
-// import Login from './pages/login/Login'
+import Events from './routes/events/Events'
+import EventPage from './routes/events/EventPage'
 // import About from './routes/about/About'
 
 function Router() {
@@ -15,9 +16,10 @@ function Router() {
       <Navbar navbarRef={navbarRef} />
       <div className="router-content">
         <Routes>
-          {/*<Route path="/login" element={<Login />} />*/}
           {/*<Route path="/despre" element={<About />} />*/}
           <Route path="/program" element={<Program />} />
+          <Route path="/evenimente" element={<Events />} />
+          <Route path="/evenimente/:eventId" element={<EventPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/*" element={<Home navbarRef={navbarRef} />} />
         </Routes>

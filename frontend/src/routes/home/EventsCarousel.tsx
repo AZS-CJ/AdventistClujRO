@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import { EventType } from '../../data/event'
-import getEvents from '../../api/event'
+import { getLastEvents } from '../../api/event'
+import { useNavigate } from 'react-router-dom'
 import { getFormattedPeriod, reorderEvents } from '../../util/functions'
 
 import './EventsCarousel.scss'
@@ -33,21 +34,31 @@ function EventsCarousel() {
   const [eventsData, setEventsData] = useState<EventState>({ events: [], loading: true })
   const [initialActiveId, setInitialActiveId] = useState<number | null>(null)
   const isMobile = window.innerWidth < 850
+  const navigate = useNavigate()
 
   useEffect(() => {
     ;(async () => {
-      const events: EventType[] = await getEvents()
+      const { events: events } = await getLastEvents()
       const newOrderEvents = reorderEvents(events, isMobile)
       setInitialActiveId(!isMobile && newOrderEvents.length > 1 ? newOrderEvents[1].id : newOrderEvents.length === 1 ? newOrderEvents[0].id : null)
       setEventsData({ events: newOrderEvents, loading: false })
     })()
   }, [])
 
+  const goToEventPage = (id: number) => {
+    navigate(`/evenimente/${id}`)
+  }
+
   const renderEventCard = (item) => {
     const isPastEvent = new Date(item.endDate) < new Date()
     const shouldBeActive = initialActiveId === item.id
     return (
-      <div className={`event-card ${shouldBeActive ? 'active-element' : ''} ${isPastEvent ? 'past' : ''}`} key={item.id} style={{ backgroundImage: `url(${item.smallImg}` }}>
+      <div
+        className={`event-card ${shouldBeActive ? 'active-element' : ''} ${isPastEvent ? 'past' : ''}`}
+        key={item.id}
+        style={{ backgroundImage: `url(${item.smallImg}` }}
+        onClick={() => goToEventPage(item.id)}
+      >
         <div className="event-card-body">
           <h5 className="event-card-period">{getFormattedPeriod(item.startDate, item.endDate)}</h5>
           <h5 className="event-card-title">{item.title}</h5>

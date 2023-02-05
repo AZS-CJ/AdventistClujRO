@@ -31,35 +31,35 @@ function NavbarCollapse(props) {
         <div className="navbar-resources">
           <div className="navbar-resources-title"> Resurse: </div>
           <div className="resources-list">
-            <a href={LINKS.adventist} target="_blank">
+            <a href={LINKS.ADVENTIST} target="_blank">
               Adventist.ro
             </a>
-            <a href={LINKS.semnele} className="longer" target="_blank">
+            <a href={LINKS.SEMNELE} className="longer" target="_blank">
               Semnele Timpului
             </a>
-            <a href={LINKS.respiro} target="_blank">
+            <a href={LINKS.RESPIRO} target="_blank">
               Revista Respiro
             </a>
-            <a href={LINKS.speranta} className="longer" target="_blank">
+            <a href={LINKS.SPERANTA} className="longer" target="_blank">
               Speranța TV
             </a>
-            <a href={LINKS.radio} target="_blank">
+            <a href={LINKS.RADIO} target="_blank">
               Radio Vocea Speranței
             </a>
-            <a href={LINKS.adra} target="_blank">
+            <a href={LINKS.ADRA} target="_blank">
               ADRA
             </a>
           </div>
           <div className="social-media">
             <div className="navbar-resources-title"> Social Media: </div>
             <div className="resources-list">
-              <a className="button" href={LINKS.youtube} target="_blank">
+              <a className="button" href={LINKS.YOUTUBE} target="_blank">
                 YouTube
               </a>
-              <a className="button" href={LINKS.facebook} target="_blank">
+              <a className="button" href={LINKS.FACEBOOK} target="_blank">
                 Facebook
               </a>
-              <a className="button" href={LINKS.instagram} target="_blank">
+              <a className="button" href={LINKS.INSTAGRAM} target="_blank">
                 Instagram
               </a>
             </div>

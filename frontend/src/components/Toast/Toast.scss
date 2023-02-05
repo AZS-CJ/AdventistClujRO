@@ -8,13 +8,12 @@
   font-size: 1.3rem;
   left: 43.5%;
   transform: translate(-50%, 0);
-  bottom: 0.5rem;
+  bottom: 2.5rem;
+  border-radius: 1.8rem;
+  padding: 0 5px;
+  text-align: center;
 }
 
 .toast .btn-close{
   color: $white;
-}
-
-.toast .toast-bdy {
-  text-align: center;
 }

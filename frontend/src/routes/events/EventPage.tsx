@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useGeneralContext } from '../../contexts/generalState'
 import { EventType } from '../../data/event'
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { getEvent } from '../../api/event'
 import { getFormattedPeriod } from '../../util/functions'
 import BackButton from '../../components/BackButton/BackButton'
@@ -19,6 +19,8 @@ function EventPage() {
   const { backgroundImages } = useGeneralContext()
   const { eventId } = useParams()
   const navigate = useNavigate()
+  const location = useLocation()
+  console.log('location.state.name ', location.state)
 
   useEffect(() => {
     ;(async () => {

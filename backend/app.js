@@ -126,7 +126,7 @@ app.use('/api', function(req, res) {
 
 app.use('/uploads', function(req, res) {
   var url = urlJoin(cmsDbHost, 'uploads', req.url);
-  req.pipe(request({ qs:req.query, uri: url }), function(error) {}).pipe(res);
+  req.pipe(request({ qs:req.query, uri: url })).pipe(res);
 });
 
 app.post('/email', async(req, res) => {

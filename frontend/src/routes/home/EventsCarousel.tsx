@@ -46,7 +46,7 @@ function EventsCarousel() {
   }, [])
 
   const goToEventPage = (id: number) => {
-    navigate(`/evenimente/${id}`)
+    navigate(`/evenimente/${id}`, { state: { from: 'acasa' } })
   }
 
   const renderEventCard = (item) => {

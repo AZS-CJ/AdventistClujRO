@@ -6,7 +6,7 @@ import UnderConstruction from './pages/underConstruction/underConstruction'
 import underConstructionAPI from './api/underConstruction'
 import { GeneralProvider } from './contexts/generalState'
 import Content from './Content'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 import './App.scss'
 
@@ -19,7 +19,7 @@ function App() {
     (async () => {
 
       ReactGA.initialize('G-R730Q5P12D')
-      ReactGA.pageview(window.location.pathname)
+      ReactGA.send({ hitType: 'pageview', page: '/home' })
 
       const underConstruction = await underConstructionAPI()
       setIsUnderConstruction(underConstruction)

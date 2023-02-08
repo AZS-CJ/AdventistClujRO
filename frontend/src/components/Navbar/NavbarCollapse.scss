@@ -19,10 +19,6 @@
   z-index: 9;
 }
 
-.menu-window .close-nav.collapsing {
-  left: -7%;
-}
-
 .menu-window .close-nav.show {
   left: 4%;
   transition: left 300ms ease-in-out;
@@ -44,10 +40,6 @@
   text-align: left;
   transition: right 300ms ease-in-out;
   overflow-y: scroll;
-}
-
-.navbar-collapse.collapsing {
-  right: -75%;
 }
 
 .navbar-collapse.show {

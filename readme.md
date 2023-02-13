@@ -7,18 +7,21 @@
 ## Develop
 ### Things you need to install:
 
-1. [Visual Studio Code](code.visualstudio.com/)
+1. [Visual Studio Code](code.visualstudio.com/), latest version
 1. [Node](nodejs.org), latest 16.* version
+1. [MySQL](https://dev.mysql.com/downloads/installer), version 8.0
 
 ### Install, run and test locally
 
 1. Open any terminal and install `yarn` package manager: `npm install -g yarn`
 1. In Visual Studio Code open the repository
+1. Install MySQL Developer Default setup type. During setup create a new user (with db admin role) and password and put them in the .env file for CMSSTRAPI. Use Legacy Authentication when asked. More details on [Strapi blog.](https://strapi.io/blog/configuring-strapi-mysql-database). Open MySQL Workbench and add a new schema called `cms-db-test`.
 1. Open a terminal from Terminal menu
-1. Run `yarn install` to install all the node dependencies in `backend` and `frontend` folders
-1. From Debug pane of Code start the backend and the frontend debugging sessions
+1. Run `yarn install` to install all the node dependencies in `cmsstrapi`, `backend` and `frontend` folders
+1. From Debug pane of Code start the CMS, the backend and the frontend debugging sessions
 1. Your default browser should automatically open `localhost:3000` with this application
 1. The API is available at `localhost:3001`
+1. The CMS Strapi instance will be started at `localhost:3002`
 
 ### Workflow
 1. Create `feature` branch from `main`

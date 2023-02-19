@@ -3,6 +3,7 @@
 
 .carousel-container {
   padding: 5.55vh 0;
+  z-index: 2;
 }
 
 .react-multi-carousel-track {
@@ -42,7 +43,9 @@
   border-radius: 1rem;
   background-size: cover;
   background-position: center;
+  background-color: grey; // in case of missing background image
   transition: all 0.5s;
+  cursor: pointer;
 }
 
 .carousel-container .event-card-body {
@@ -96,6 +99,7 @@
   transform: translate(0, -50%);
   left: 2.5rem;
   right: 2.5rem;
+  z-index: 1;
 }
 
 .carousel-button-group .custom-arrow {
@@ -108,6 +112,7 @@
   font-size: 1.68rem;
   line-height: 3.125rem;
   text-align: center;
+  cursor: pointer;
 }
 
 .no-events {

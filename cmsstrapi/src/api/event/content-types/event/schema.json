@@ -28,7 +28,8 @@
       "type": "string"
     },
     "content": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "cover": {
       "type": "media",
@@ -40,6 +41,9 @@
         "videos",
         "audios"
       ]
+    },
+    "intro": {
+      "type": "text"
     }
   }
 }

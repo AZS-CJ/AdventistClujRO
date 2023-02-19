@@ -10,6 +10,7 @@ import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import EventsCarousel from './EventsCarousel'
+import { v4 as uuid } from 'uuid'
 
 import './Home.scss'
 
@@ -109,7 +110,7 @@ function Home(props) {
           <div className="program-section">
             <div className="next">urmează:</div>
             {getNext2Days().map((dayN) => (
-              <OneDayProgram dayNumber={dayN} programs={program} key={dayN} />
+              <OneDayProgram dayNumber={dayN} programs={program} key={uuid()} />
             ))}
           </div>
         </InfoSection>

@@ -4,6 +4,8 @@ export type EventType = {
   startDate: Date
   endDate: Date
   type: string
-  coverUrl: string
+  smallImg: string
+  largeImg: string
+  intro: string
   content: string
 }

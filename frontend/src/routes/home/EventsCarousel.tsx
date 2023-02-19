@@ -5,6 +5,7 @@ import { EventType } from '../../data/event'
 import { getLastEvents } from '../../api/event'
 import { useNavigate } from 'react-router-dom'
 import { getFormattedPeriod, reorderEvents } from '../../util/functions'
+import { v4 as uuid } from 'uuid'
 
 import './EventsCarousel.scss'
 
@@ -46,7 +47,7 @@ function EventsCarousel() {
   }, [])
 
   const goToEventPage = (id: number) => {
-    navigate(`/evenimente/${id}`, { state: { from: 'acasa' } })
+    navigate(`/evenimente/${id}`, { state: { from: 'home' } })
   }
 
   const renderEventCard = (item) => {
@@ -55,7 +56,7 @@ function EventsCarousel() {
     return (
       <div
         className={`event-card ${shouldBeActive ? 'active-element' : ''} ${isPastEvent ? 'past' : ''}`}
-        key={item.id}
+        key={uuid()}
         style={{ backgroundImage: `url(${item.smallImg}` }}
         onClick={() => goToEventPage(item.id)}
       >

@@ -28,7 +28,8 @@
       "type": "string"
     },
     "content": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "cover": {
       "type": "media",

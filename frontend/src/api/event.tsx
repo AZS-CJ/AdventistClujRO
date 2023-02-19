@@ -52,8 +52,8 @@ const buildEvent = (id: number, attributes): EventType => {
     startDate: new Date(attributes.startDate),
     endDate: new Date(attributes.endDate),
     type: attributes.type,
-    smallImg: attributes.cover.data ? attributes.cover.data.attributes.formats.small.url : '',
-    largeImg: attributes.cover.data ? attributes.cover.data.attributes.formats.large.url : '',
+    smallImg: attributes.cover.data ? attributes.cover.data.attributes.formats.small?.url : '',
+    largeImg: attributes.cover.data ? attributes.cover.data.attributes.formats.large?.url : '',
     intro: attributes.intro || '',
     content: attributes.content || ''
   }

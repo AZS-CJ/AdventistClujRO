@@ -13,6 +13,9 @@ interface EventState {
   event: EventType | null
   loading: boolean
 }
+interface CustomState {
+  from: string
+}
 
 function EventPage() {
   const [eventRequest, setEventRequest] = useState<EventState>({ event: null, loading: true })
@@ -20,7 +23,8 @@ function EventPage() {
   const { eventId } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
-  console.log('location.state.name ', location.state)
+
+  const backBtnText = location.state && (location.state as CustomState).from === 'home' ? 'Acasă' : 'Evenimente'
 
   useEffect(() => {
     ;(async () => {
@@ -40,8 +44,8 @@ function EventPage() {
   if (loading || !event) return <div className="spinner-border" role="status" />
   return (
     <div className="event-page page-content">
-      <div className="background-image" style={{ backgroundImage: `url(${event ? event.largeImg : backgroundImages.home})` }} />
-      <BackButton text="Evenimente" onAction={goBack} />
+      <div className="background-image" style={{ backgroundImage: `url(${event.largeImg ? event.largeImg : backgroundImages.home})` }} />
+      <BackButton text={backBtnText} onAction={goBack} />
       <div className="left-title-section">
         <span className="bold-title"> {event.title} </span>
         <div className="event-date-type">
@@ -52,7 +56,7 @@ function EventPage() {
       <div className="event-content">
         <div className="content-intro">{event.intro}</div>
         <div className="content-text">{event.content}</div>
-        <BackButton text="Evenimente" onAction={goBack} bottom={true} />
+        <BackButton text={backBtnText} onAction={goBack} bottom={true} />
       </div>
       <ScrollToTop />
     </div>

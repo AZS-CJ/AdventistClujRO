@@ -151,10 +151,10 @@
   border-radius: 1rem;
 }
 
-//landscape
-@media screen and (min-aspect-ratio: 13/9) {
+//mobile landscape
+@media (max-width: $min-phone-width) and (min-aspect-ratio: 13/9) {
   .content .page-content {
-    padding-top: 30vh;
+    padding-top: 33vh;
     min-height: 170vh;
   }
 
@@ -185,7 +185,7 @@
     margin: 0 0 13vh 0;
   }
 
-  .content .home-page .background-image, .about-page .background-image {
+  .content .home-page .background-image, .about-page .background-image, .events-page .background-image {
     background-position: 73%;
   }
 }

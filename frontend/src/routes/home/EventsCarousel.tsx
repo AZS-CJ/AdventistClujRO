@@ -34,7 +34,7 @@ const CustomDot = ({ onClick, active }) => {
 function EventsCarousel() {
   const [eventsData, setEventsData] = useState<EventState>({ events: [], loading: true })
   const [initialActiveId, setInitialActiveId] = useState<number | null>(null)
-  const isMobile = window.innerWidth < 850
+  const isMobile = window.innerWidth < 464
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -91,11 +91,12 @@ function EventsCarousel() {
       slidesToSlide: 1
     },
     tablet: {
-      breakpoint: { max: 1024, min: 850 },
-      items: 3
+      breakpoint: { max: 1024, min: 464 },
+      items: eventsData.events.length === 2 ? 2 : 3,
+      slidesToSlide: 1
     },
     mobile: {
-      breakpoint: { max: 849, min: 0 },
+      breakpoint: { max: 464, min: 0 },
       items: 1,
       slidesToSlide: 1
     }

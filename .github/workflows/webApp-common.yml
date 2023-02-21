@@ -34,7 +34,6 @@ jobs:
       working-directory: './frontend'
       env: 
         REACT_APP_GOOGLE_ANALYTICS: ${{ secrets.googleAnalytics }}
-
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.

@@ -30,11 +30,16 @@ const getEvents: (pagination, sort: string) => Promise<{ events: EventType[]; pa
     }
   )
   const url = `/api/events?${query}`
-  const { data: response } = await axios.get(url)
-  const eventList = response.data.map((event) => {
-    return buildEvent(event.id, event.attributes)
-  })
-  return { events: eventList, pageCount: response.meta.pagination.pageCount }
+  return axios
+    .get(url)
+    .then((response) => {
+      const eventList = response.data.data.map((event) => buildEvent(event.id, event.attributes))
+      return { events: eventList, pageCount: response.data.meta.pagination.pageCount }
+    })
+    .catch((error) => {
+      console.log('Error when loading the events ', error)
+      return { events: [], pageCount: 0 }
+    })
 }
 
 export const getEvent: (id: string) => Promise<EventType | null> = async (id: string) => {
@@ -42,7 +47,10 @@ export const getEvent: (id: string) => Promise<EventType | null> = async (id: st
   return axios
     .get(url)
     .then((response) => buildEvent(response.data.data.id, response.data.data.attributes))
-    .catch(() => null)
+    .catch((error) => {
+      console.log('Error when loading Event ', error)
+      return null
+    })
 }
 
 const buildEvent = (id: number, attributes): EventType => {
@@ -52,8 +60,8 @@ const buildEvent = (id: number, attributes): EventType => {
     startDate: new Date(attributes.startDate),
     endDate: new Date(attributes.endDate),
     type: attributes.type,
-    smallImg: attributes.cover.data ? attributes.cover.data.attributes.formats.small?.url : '',
-    largeImg: attributes.cover.data ? attributes.cover.data.attributes.formats.large?.url : '',
+    smallImg: attributes.cover.data ? attributes.cover.data.attributes.formats?.small?.url : '',
+    largeImg: attributes.cover.data ? attributes.cover.data.attributes.formats?.large?.url : '',
     intro: attributes.intro || '',
     content: attributes.content || ''
   }

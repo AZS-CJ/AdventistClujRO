@@ -41,9 +41,7 @@ function Contact() {
   let toastTimeout
 
   useEffect(() => {
-    ;(async () => {
-      getContact().then((contact: ContactType) => setContactRequest({ contact, loading: false }))
-    })()
+    getContact().then((contact: ContactType) => setContactRequest({ contact, loading: false }))
     return () => {
       clearTimeout(toastTimeout)
     }

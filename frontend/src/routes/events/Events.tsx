@@ -22,14 +22,12 @@ function Events() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    ;(async () => {
-      window.scroll({ top: 0, behavior: 'smooth' })
-      setEventRequest({ events: [], loading: true })
-      getPaginatedEvents(page).then((response) => {
-        setEventRequest({ events: response.events, loading: false })
-        setTotalPages(response.pageCount)
-      })
-    })()
+    window.scroll({ top: 0, behavior: 'smooth' })
+    setEventRequest({ events: [], loading: true })
+    getPaginatedEvents(page).then((response) => {
+      setEventRequest({ events: response.events, loading: false })
+      setTotalPages(response.pageCount)
+    })
   }, [page])
 
   const goToEventPage = (id: number) => {

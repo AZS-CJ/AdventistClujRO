@@ -18,12 +18,15 @@ function App() {
     // eslint-disable-next-line prettier/prettier
     (async () => {
 
-      ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS || '')
-      ReactGA.send({ hitType: 'pageview', page: '/home' })
-
       const underConstruction = await underConstructionAPI()
       setIsUnderConstruction(underConstruction)
       setLoading(false)
+
+      const { REACT_APP_GOOGLE_ANALYTICS } = process.env
+      if (REACT_APP_GOOGLE_ANALYTICS) {
+        ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS as string)
+        ReactGA.send({ hitType: 'pageview', page: '/home' })
+      }
     })()
   }, [])
 

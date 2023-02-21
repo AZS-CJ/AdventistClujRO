@@ -18,7 +18,7 @@ function App() {
     // eslint-disable-next-line prettier/prettier
     (async () => {
 
-      ReactGA.initialize('G-R730Q5P12D')
+      ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS || '')
       ReactGA.send({ hitType: 'pageview', page: '/home' })
 
       const underConstruction = await underConstructionAPI()

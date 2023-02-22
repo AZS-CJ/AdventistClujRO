@@ -18,9 +18,9 @@ function Program() {
   const { backgroundImages } = useGeneralContext()
 
   useEffect(() => {
-    ;(async () => {
-      getPrograms().then((programs) => setProgramRequest({ programs, loading: false }))
-    })()
+    getPrograms().then((programs) => {
+      setProgramRequest({ programs, loading: false })
+    })
   }, [])
 
   const renderContent = () => {

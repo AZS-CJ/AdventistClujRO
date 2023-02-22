@@ -8,6 +8,11 @@ export function formatToLocalDate(date) {
 export function formatToLocalDayName(date) {
   return new Date(date).toLocaleDateString('ro-RO', { weekday: 'long' }).replace(/^\w/, (c) => c.toUpperCase())
 }
+export function formatToYYYYMMDD(date: Date) {
+  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+  const month = date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+  return `${date.getFullYear()}-${month}-${day}`
+}
 
 /**
  * Helper method for creating a range of numbers

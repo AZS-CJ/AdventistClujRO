@@ -10,7 +10,6 @@ import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
 import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import EventsCarousel from './EventsCarousel'
-import { v4 as uuid } from 'uuid'
 
 import './Home.scss'
 
@@ -29,16 +28,13 @@ function Home(props) {
   const { backgroundImages } = useGeneralContext()
 
   useEffect(() => {
-    ;(async () => {
-      setProgram(await getProgram())
-      const response = await getHomePageContent()
-      setContent({ ...response, loading: false })
-      afterOrientationChange()
-      return () => {
-        window.removeEventListener('resize', afterOrientationChange)
-        window.removeEventListener('orientationchange', orientationChangeCallback)
-      }
-    })()
+    getProgram().then((program) => setProgram(program))
+    getHomePageContent().then((response) => setContent({ ...response, loading: false }))
+    afterOrientationChange()
+    return () => {
+      window.removeEventListener('resize', afterOrientationChange)
+      window.removeEventListener('orientationchange', orientationChangeCallback)
+    }
   }, [])
 
   //compute the necessary height for the div to be fullscreen, first time, and on orientation change for mobile
@@ -109,8 +105,8 @@ function Home(props) {
         <InfoSection title="Program" ctaText={'Vezi întregul program'} ctaURL="/program">
           <div className="program-section">
             <div className="next">urmează:</div>
-            {getNext2Days().map((dayN) => (
-              <OneDayProgram dayNumber={dayN} programs={program} key={uuid()} />
+            {getNext2Days().map((dayN, index) => (
+              <OneDayProgram dayNumber={dayN} programs={program} key={index} />
             ))}
           </div>
         </InfoSection>

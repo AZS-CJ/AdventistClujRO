@@ -38,12 +38,11 @@ function EventsCarousel() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    ;(async () => {
-      const { events: events } = await getLastEvents()
-      const newOrderEvents = reorderEvents(events, isMobile)
+    getLastEvents().then((response) => {
+      const newOrderEvents = reorderEvents(response.events, isMobile)
       setInitialActiveId(!isMobile && newOrderEvents.length > 1 ? newOrderEvents[1].id : newOrderEvents.length === 1 ? newOrderEvents[0].id : null)
       setEventsData({ events: newOrderEvents, loading: false })
-    })()
+    })
   }, [])
 
   const goToEventPage = (id: number) => {

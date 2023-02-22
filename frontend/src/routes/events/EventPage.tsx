@@ -27,12 +27,11 @@ function EventPage() {
   const backBtnText = location.state && (location.state as CustomState).from === 'home' ? 'Acasă' : 'Evenimente'
 
   useEffect(() => {
-    ;(async () => {
-      if (!eventId) return
-      const event = await getEvent(eventId)
+    if (!eventId) return
+    getEvent(eventId).then((event) => {
       if (!event) navigate(`/evenimente`)
       else setEventRequest({ event: event, loading: false })
-    })()
+    })
   }, [])
 
   const goBack = () => {

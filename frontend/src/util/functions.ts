@@ -100,7 +100,7 @@ export const reorderEvents = (events, isMobile) => {
   const oldEvents: EventType[] = events.splice(0, firstFutureEventIndex)
   // start with future events then the old events
   const newList: EventType[] = futureEvents.concat(oldEvents)
-  // the current events is the middle(second one)
+  // the current event is the middle one(second one)
   if (!isMobile) {
     const lastEl = newList.pop()
     if (lastEl) newList.unshift(lastEl)
@@ -113,4 +113,20 @@ export const reorderEvents = (events, isMobile) => {
 
 export const getSummary = (content: string) => {
   return content.length > 150 ? `${content.slice(0, 150)}...` : content
+}
+
+const replaceStringList = (str: string, characterList: string[], replaceList: string[]) => {
+  let result = str
+  characterList.forEach((char, index) => {
+    result = result.replaceAll(char, replaceList[index])
+  })
+  return result
+}
+
+export const getUrlFromTitle = (title: string) => {
+  let result = title.toLowerCase()
+  result = replaceStringList(result, ['ă', 'â', 'î', 'ș', 'ț', ' '], ['a', 'a', 'i', 's', 't', '-'])
+  //remove special characters
+  result = result.replace(/[^a-z\-]/g, '')
+  return result
 }

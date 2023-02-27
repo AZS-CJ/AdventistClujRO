@@ -28,7 +28,7 @@ function Router() {
           {/*<Route path="/despre" element={<About />} />*/}
           <Route path="/program" element={<Program />} />
           <Route path="/evenimente" element={<Events />} />
-          <Route path="/evenimente/:eventId" element={<EventPage />} />
+          <Route path="/evenimente/:idAndTitle" element={<EventPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/*" element={<Home navbarRef={navbarRef} />} />
         </Routes>

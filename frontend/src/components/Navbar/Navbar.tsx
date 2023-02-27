@@ -20,8 +20,9 @@ function Navbar(props) {
   }, [])
 
   const isActiveRoute = (route: string) => {
-    if (location.pathname === '/' && route === 'acasa') return true
-    return location.pathname.includes(route)
+    const path: string = location.pathname.replace('/', '')
+    if (path === '' && route === 'acasa') return true
+    return path.startsWith(route)
   }
 
   const renderLink = (to: string, text: string) => {

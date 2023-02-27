@@ -4,7 +4,7 @@ import 'react-multi-carousel/lib/styles.css'
 import { EventType } from '../../data/event'
 import { getLastEvents } from '../../api/event'
 import { useNavigate } from 'react-router-dom'
-import { getFormattedPeriod, reorderEvents } from '../../util/functions'
+import { getFormattedPeriod, getUrlFromTitle, reorderEvents } from '../../util/functions'
 import { v4 as uuid } from 'uuid'
 
 import './EventsCarousel.scss'
@@ -45,8 +45,9 @@ function EventsCarousel() {
     })
   }, [])
 
-  const goToEventPage = (id: number) => {
-    navigate(`/evenimente/${id}`, { state: { from: 'home' } })
+  const goToEventPage = (event: EventType) => {
+    const url = `/evenimente/${event.id}-${getUrlFromTitle(event.title)}`
+    navigate(url, { state: { from: 'home' } })
   }
 
   const renderEventCard = (item) => {
@@ -57,7 +58,7 @@ function EventsCarousel() {
         className={`event-card ${shouldBeActive ? 'active-element' : ''} ${isPastEvent ? 'past' : ''}`}
         key={uuid()}
         style={{ backgroundImage: `url(${item.smallImg}` }}
-        onClick={() => goToEventPage(item.id)}
+        onClick={() => goToEventPage(item)}
       >
         <div className="event-card-body">
           <h5 className="event-card-period">{getFormattedPeriod(item.startDate, item.endDate)}</h5>

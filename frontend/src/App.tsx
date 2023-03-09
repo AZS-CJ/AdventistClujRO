@@ -6,6 +6,7 @@ import UnderConstruction from './pages/underConstruction/underConstruction'
 import underConstructionAPI from './api/underConstruction'
 import { GeneralProvider } from './contexts/generalState'
 import Content from './Content'
+import ReactGA from 'react-ga4'
 
 import './App.scss'
 
@@ -16,9 +17,16 @@ function App() {
   useEffect(() => {
     // eslint-disable-next-line prettier/prettier
     (async () => {
+
       const underConstruction = await underConstructionAPI()
       setIsUnderConstruction(underConstruction)
       setLoading(false)
+
+      const { REACT_APP_GOOGLE_ANALYTICS } = process.env
+      if (REACT_APP_GOOGLE_ANALYTICS) {
+        ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS as string)
+        ReactGA.send({ hitType: 'pageview', page: '/home' })
+      }
     })()
   }, [])
 

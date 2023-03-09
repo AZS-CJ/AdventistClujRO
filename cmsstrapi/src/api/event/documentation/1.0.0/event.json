@@ -1,5 +1,5 @@
 {
-  "/articles": {
+  "/events": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ArticleListResponse"
+                "$ref": "#/components/schemas/EventListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Article"
+        "Event"
       ],
       "parameters": [
         {
@@ -169,7 +169,7 @@
           }
         }
       ],
-      "operationId": "get/articles"
+      "operationId": "get/events"
     },
     "post": {
       "responses": {
@@ -178,7 +178,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ArticleResponse"
+                "$ref": "#/components/schemas/EventResponse"
               }
             }
           }
@@ -235,23 +235,23 @@
         }
       },
       "tags": [
-        "Article"
+        "Event"
       ],
       "parameters": [],
-      "operationId": "post/articles",
+      "operationId": "post/events",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ArticleRequest"
+              "$ref": "#/components/schemas/EventRequest"
             }
           }
         }
       }
     }
   },
-  "/articles/{id}": {
+  "/events/{id}": {
     "get": {
       "responses": {
         "200": {
@@ -259,7 +259,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ArticleResponse"
+                "$ref": "#/components/schemas/EventResponse"
               }
             }
           }
@@ -316,7 +316,7 @@
         }
       },
       "tags": [
-        "Article"
+        "Event"
       ],
       "parameters": [
         {
@@ -330,7 +330,7 @@
           }
         }
       ],
-      "operationId": "get/articles/{id}"
+      "operationId": "get/events/{id}"
     },
     "put": {
       "responses": {
@@ -339,7 +339,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ArticleResponse"
+                "$ref": "#/components/schemas/EventResponse"
               }
             }
           }
@@ -396,7 +396,7 @@
         }
       },
       "tags": [
-        "Article"
+        "Event"
       ],
       "parameters": [
         {
@@ -410,13 +410,13 @@
           }
         }
       ],
-      "operationId": "put/articles/{id}",
+      "operationId": "put/events/{id}",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ArticleRequest"
+              "$ref": "#/components/schemas/EventRequest"
             }
           }
         }
@@ -487,7 +487,7 @@
         }
       },
       "tags": [
-        "Article"
+        "Event"
       ],
       "parameters": [
         {
@@ -501,7 +501,7 @@
           }
         }
       ],
-      "operationId": "delete/articles/{id}"
+      "operationId": "delete/events/{id}"
     }
   }
 }

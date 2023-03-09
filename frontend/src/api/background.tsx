@@ -14,7 +14,7 @@ const getBackgroundImages = async (): Promise<BackgroundImages> => {
       }
     })
     .catch((err) => {
-      console.log('error ', err)
+      console.log('Error when loading background images ', err)
       return { home: '' }
     })
 }

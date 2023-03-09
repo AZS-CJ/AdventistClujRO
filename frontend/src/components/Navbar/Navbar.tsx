@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
 import menuButton from '../../assets/mobile_menu_toggle.svg'
 import churchName from '../../assets/church_name_logo.svg'
@@ -9,7 +9,8 @@ import './Navbar.scss'
 
 function Navbar(props) {
   const [scrolled, setScrolled] = useState(false)
-  const { openSidebar, hideSidebar, activeRoute, setActiveRoute, sidebarOpen } = useNavigationContext()
+  const { openSidebar, hideSidebar, sidebarOpen } = useNavigationContext()
+  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
@@ -19,13 +20,14 @@ function Navbar(props) {
   }, [])
 
   const isActiveRoute = (route: string) => {
-    return activeRoute.includes(route)
+    if (location.pathname === '/' && route === 'acasa') return true
+    return location.pathname.includes(route)
   }
 
   const renderLink = (to: string, text: string) => {
     return (
-      <li className="nav-item" onClick={hideSidebar}>
-        <Link className={`nav-link ${isActiveRoute(to) ? 'active' : ''}`} to={`/${to}`} onClick={() => setActiveRoute(to)}>
+      <li className="nav-item">
+        <Link className={`nav-link ${isActiveRoute(to) ? 'active' : ''}`} to={`/${to}`} onClick={hideSidebar}>
           {text}
         </Link>
       </li>
@@ -39,7 +41,7 @@ function Navbar(props) {
         {/*Will be implemented later*/}
         {/*{renderLink('despre', 'Despre noi')}*/}
         {/*{renderLink('proiecte', 'Proiecte')}*/}
-        {/*{renderLink('articole', 'Articole')}*/}
+        {renderLink('evenimente', 'Evenimente')}
         {renderLink('program', 'Program')}
         {renderLink('contact', 'Contact')}
       </div>
@@ -50,7 +52,7 @@ function Navbar(props) {
     <>
       <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
         <div className="navbar-brand">
-          <Link className="brand-name" to="/" onClick={() => setActiveRoute('acasa')}>
+          <Link className="brand-name" to="/">
             <img className="church-name" src={churchName} alt="Church Name" />
           </Link>
         </div>
@@ -64,7 +66,7 @@ function Navbar(props) {
           <img className="menu-btn" src={menuButton} alt="Menu" />
         </div>
       </nav>
-      <div className={`blur-content ${sidebarOpen && 'blurred'}`}></div>
+      <div className={`blur-content ${sidebarOpen && 'blurred'}`} />
       <NavbarCollapse renderMainLinks={renderMainLinks} />
     </>
   )

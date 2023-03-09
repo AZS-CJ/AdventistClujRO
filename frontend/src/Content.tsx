@@ -10,11 +10,10 @@ function Content() {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    ;(async () => {
-      const bgImages = await getBackgroundImages()
+    getBackgroundImages().then((bgImages) => {
       setBackgroundImages(bgImages)
       setLoading(false)
-    })()
+    })
   }, [])
 
   return loading ? (

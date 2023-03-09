@@ -1,0 +1,221 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.no-events {
+  margin-top: 1rem;
+}
+
+.carousel-container {
+  padding: 5.55vh 0;
+  z-index: 2;
+
+  &.center{
+    justify-content: center;
+  }
+
+  .react-multi-carousel-track {
+    min-height: 19rem;
+  }
+
+  .react-multi-carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .react-multi-carousel-dot-list {
+    width: 50%;
+    margin-left: 25%;
+    background-color: $blueLines;
+    border-radius: 1rem;
+  }
+
+  .custom-line {
+    height: 0.6875rem;
+    width: 100%;
+    &.active {
+      background-color: $blue;
+      border-radius: 1rem;
+    }
+  }
+
+  .event-card {
+    height: 13rem;
+    width: 13rem;
+    border-radius: 1rem;
+    background-size: cover;
+    background-position: center;
+    background-color: grey; // in case of missing background image
+    transition: all 0.5s;
+    cursor: pointer;
+
+    &.active-element {
+      height: 19rem;
+      width: 19rem;
+
+      .event-card-body {
+        justify-content: space-between;
+        backdrop-filter: none;
+        .event-card-title {
+          font-size: 2.18rem;
+          opacity: 1;
+        }
+      }
+    }
+
+    &.past {
+      filter: grayscale(100%);
+    }
+
+    .event-card-body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      border-radius: 1rem;
+      flex-direction: column;
+      justify-content: center;
+      color: $white;
+      text-align: center;
+      padding: 1.5rem 0.4rem;
+      backdrop-filter: blur(3px);
+
+      .event-card-period {
+        font-size: 1.125rem;
+      }
+      .event-card-title {
+        transition: opacity 0.2s linear 0.3s;
+        font-size: 0.1rem;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.carousel-button-group {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 2.5rem;
+  right: 2.5rem;
+  z-index: 1;
+
+  .custom-arrow {
+    height: 3.125rem;
+    width: 3.125rem;
+    color: $lightgrey;
+    background-color: $blue;
+    border-radius: 50%;
+    box-shadow: 0 5px 5px $almostWhite;
+    font-size: 1.68rem;
+    line-height: 3.125rem;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+@media (max-width: $min-laptop-width) {
+  .carousel-container {
+    .event-card {
+      width: 11rem;
+      height: 11rem;
+      &.active-element {
+        width: 15rem;
+        height: 15rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $min-tablet-width) {
+  .default-container.event-container {
+    padding-left: 11vw;
+    padding-right: 11vw;
+  }
+
+  .carousel-container {
+    .react-multi-carousel-track {
+      min-height: 11rem;
+    }
+    .event-card {
+      width: 8rem;
+      height: 8rem;
+      &.active-element {
+        width: 11rem;
+        height: 11rem;
+      }
+    }
+  }
+}
+
+@media (max-width: $min-phone-width) {
+  .default-container.event-container {
+    padding-left: 14vw;
+    padding-right: 14vw;
+  }
+
+  .carousel-container {
+    .event-card {
+      width: 6rem;
+      height: 6rem;
+
+      &.active-element {
+        width: 8rem;
+        height: 8rem;
+        .event-card-body .event-card-title {
+          font-size: 1.18rem;
+        }
+      }
+      .event-card-body {
+        padding: 0.5rem 0.1rem;
+
+        .event-card-period {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $min-portrait-phone-width) {
+  .default-container.event-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .no-events {
+    text-align: center;
+  }
+
+  .carousel-button-group {
+    display: none
+  }
+
+  .carousel-container {
+    .react-multi-carousel-track {
+      min-height: 10rem;
+    }
+
+    .react-multi-carousel-item.react-multi-carousel-item--active .event-card {
+      width: 10rem;
+      height: 10rem;
+      padding: 0;
+    }
+
+    .react-multi-carousel-item .event-card {
+      width: 7.56rem;
+      height: 7.56rem;
+    }
+    .react-multi-carousel-item--active .event-card-body {
+      backdrop-filter: none;
+      justify-content: space-between;
+
+      .event-card-body, .event-card-title {
+        opacity: 1;
+        font-size: 1.18rem;
+      }
+    }
+  }
+}

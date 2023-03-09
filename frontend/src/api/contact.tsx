@@ -1,8 +1,13 @@
 import axios from 'axios'
 
 export const getContact = async () => {
-  const { data: response } = await axios.get(`/api/contact`)
-  return response.data ? response.data.attributes : {}
+  return axios
+    .get(`/api/contact`)
+    .then((response) => response.data.data.attributes)
+    .catch((error) => {
+      console.log('Error when loading Contact ', error)
+      return {}
+    })
 }
 
 export const sendEmail = async (message) => {

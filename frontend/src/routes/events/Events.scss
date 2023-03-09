@@ -1,0 +1,71 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.events-page {
+  .event-card {
+    padding: 1.8em 2em;
+    box-shadow: 0 3px 6px $almostWhite;
+    margin-top: 2.4em;
+    border-radius: 28px;
+    text-align: left;
+    display: flex;
+    cursor: pointer;
+
+    .cover-img {
+      margin-right: 2.5rem;
+
+      img {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 12px;
+      }
+    }
+    .event-title {
+      font-weight: bold;
+      font-size: 2rem;
+      line-height: 3.25rem;
+      text-decoration: underline;
+      color: $almostBlack;
+    }
+    .event-date-type {
+      font-weight: bold;
+      text-transform: capitalize;
+      color: $darkRed;
+      font-size: 1.12rem;
+      line-height: 1.75rem;
+
+      span {
+        margin-right: 0.75em;
+      }
+    }
+  }
+}
+
+@media (max-width: $min-phone-width) {
+  .events-page .event-wrapper {
+    width: 100%;
+    border-radius: 0;
+    margin: 0 0 6.66vh 0;
+  }
+
+  .events-page {
+    .event-card {
+      flex-direction: column;
+      text-align: center;
+
+      .event-title {
+        font-size: 1.5rem;
+        line-height: 2rem;
+        text-align: center;
+      }
+      .cover-img {
+        display: flex;
+        justify-content: center;
+        margin-right: 0;
+      }
+      .event-date-type span {
+        display: block;
+      }
+    }
+  }
+}

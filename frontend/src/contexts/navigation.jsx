@@ -6,8 +6,7 @@ const NavigationContext = createContext([{}, () => {}])
 
 const NavigationProvider = ({ children }) => {
   const [navigationState, setNavigationState] = useState({
-    isOpen: false,
-    activeRoute: window.location.pathname
+    isOpen: false
   })
   return <NavigationContext.Provider value={[navigationState, setNavigationState]}>{children}</NavigationContext.Provider>
 }
@@ -25,16 +24,10 @@ const useNavigationContext = () => {
     allowScroll()
   }
 
-  const setActiveRoute = (route) => {
-    setNavState((state) => ({ ...state, activeRoute: route }))
-  }
-
   return {
     openSidebar,
     hideSidebar,
-    setActiveRoute,
-    sidebarOpen: navState.isOpen,
-    activeRoute: navState.activeRoute
+    sidebarOpen: navState.isOpen
   }
 }
 

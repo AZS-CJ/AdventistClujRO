@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import getProgram from '../../api/program'
+import getPrograms from '../../api/program'
 import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { useGeneralContext } from '../../contexts/generalState'
@@ -18,9 +18,9 @@ function Program() {
   const { backgroundImages } = useGeneralContext()
 
   useEffect(() => {
-    ;(async () => {
-      getProgram().then((programs) => setProgramRequest({ programs, loading: false }))
-    })()
+    getPrograms().then((programs) => {
+      setProgramRequest({ programs, loading: false })
+    })
   }, [])
 
   const renderContent = () => {
@@ -45,7 +45,7 @@ function Program() {
 
   return (
     <div className="program-page page-content">
-      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.program || backgroundImages.home})` }}></div>
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.program || backgroundImages.home})` }} />
       <div className="left-title-section with-margin">
         <span className="bold-title">Program</span>
       </div>

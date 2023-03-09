@@ -5,6 +5,8 @@ import Program from './routes/program/Program'
 import Contact from './routes/contact/Contact'
 import Navbar from './components/Navbar/Navbar'
 import { handleImageBlur } from './util/scroll-blur'
+import Events from './routes/events/Events'
+import EventPage from './routes/events/EventPage'
 // import Login from './pages/login/Login'
 // import About from './routes/about/About'
 
@@ -25,6 +27,8 @@ function Router() {
           {/*<Route path="/login" element={<Login />} />*/}
           {/*<Route path="/despre" element={<About />} />*/}
           <Route path="/program" element={<Program />} />
+          <Route path="/evenimente" element={<Events />} />
+          <Route path="/evenimente/:eventId" element={<EventPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/*" element={<Home navbarRef={navbarRef} />} />
         </Routes>

@@ -20,22 +20,24 @@ interface CustomState {
 function EventPage() {
   const [eventRequest, setEventRequest] = useState<EventState>({ event: null, loading: true })
   const { backgroundImages } = useGeneralContext()
-  const { eventId } = useParams()
+  const { idAndTitle } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const backBtnText = location.state && (location.state as CustomState).from === 'home' ? 'Acasă' : 'Evenimente'
+  const from = location.state ? (location.state as CustomState).from : ''
+  const backBtnText = from === 'home' ? 'Acasă' : 'Evenimente'
 
   useEffect(() => {
-    if (!eventId) return
-    getEvent(eventId).then((event) => {
+    if (!idAndTitle) return
+    const id = idAndTitle.split('-')[0]
+    getEvent(id).then((event) => {
       if (!event) navigate(`/evenimente`)
       else setEventRequest({ event: event, loading: false })
     })
   }, [])
 
   const goBack = () => {
-    navigate(-1)
+    from ? navigate(-1) : navigate('/evenimente')
   }
 
   const { loading, event } = eventRequest

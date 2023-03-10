@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import NumberPagination from '../../components/NumberPagination/NumberPagination'
-import { getFormattedPeriod, getSummary } from '../../util/functions'
+import { getFormattedPeriod, getSummary, getUrlFromTitle } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
 import { getPaginatedEvents } from '../../api/event'
 import { EventType } from '../../data/event'
@@ -30,8 +30,9 @@ function Events() {
     })
   }, [page])
 
-  const goToEventPage = (id: number) => {
-    navigate(`/evenimente/${id}`)
+  const goToEventPage = (event: EventType) => {
+    const url = `/evenimente/${event.id}-${getUrlFromTitle(event.title)}`
+    navigate(url, { state: { from: 'events' } })
   }
 
   const { loading, events } = eventRequest
@@ -41,7 +42,7 @@ function Events() {
       <div className="event-wrapper default-container">
         {events.map((event) => {
           return (
-            <div className="event-card" key={event.id} onClick={() => goToEventPage(event.id)}>
+            <div className="event-card" key={event.id} onClick={() => goToEventPage(event)}>
               <div className="cover-img">
                 <img src={`${event.smallImg}`} alt="cover" />
               </div>

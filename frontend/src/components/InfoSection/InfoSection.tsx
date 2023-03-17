@@ -1,12 +1,10 @@
 import React from 'react'
-import { useNavigationContext } from '../../contexts/navigation'
 import { Link } from 'react-router-dom'
 
 import './InfoSection.scss'
 
 const InfoSection = (props) => {
   const { title, ctaText, ctaURL, children: content, sectionRef, customCSS } = props
-  const { setActiveRoute } = useNavigationContext()
 
   return (
     <div className={`info-section default-container ${customCSS}`} ref={sectionRef}>
@@ -14,9 +12,7 @@ const InfoSection = (props) => {
       {content}
       {ctaText && (
         <div className="default-red-button">
-          <Link to={ctaURL} onClick={() => setActiveRoute(ctaURL)}>
-            {ctaText}
-          </Link>
+          <Link to={ctaURL}>{ctaText}</Link>
         </div>
       )}
     </div>

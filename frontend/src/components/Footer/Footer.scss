@@ -5,179 +5,172 @@
   position: absolute;
   width: calc(100% - 1rem);
   font-size: 0.8em;
-}
 
-.page-footer .emptyDiv {
-  height: 2em;
-  width: 100%;
-}
+  .emptyDiv {
+    height: 2em;
+    width: 100%;
+  }
+  a {
+    text-align: left;
+    display: block;
+    text-decoration: none;
+    color: $almostBlack;
 
-.page-footer a {
-  text-align: left;
-  display: block;
-  text-decoration: none;
-  color: $almostBlack;
-}
+    &:hover {
+      color: $almostBlack;
+      text-decoration: underline;
+    }
+  }
 
-.page-footer a:hover {
-  color: $almostBlack;
-  text-decoration: underline;
-}
+  .container-fluid {
+    padding: 3.7vh 0 !important;
 
-.container-fluid {
-  padding: 3.7vh 0 !important;
-}
+    .social-media {
+      display: flex;
+      align-items: center;
+      padding-left: 14vw;
 
-.container-fluid .social-media {
-  display: flex;
-  align-items: center;
-  padding-left: 14vw;
-}
+      p {
+        font-weight: bold;
+        color: $almostBlack;
+        font-size: 0.93rem;
+        margin-right: 1.72vw;
+      }
+      a {
+        width: fit-content;
+        padding-bottom: 0.8125rem;
+        font-size: 1rem;
 
-.container-fluid .social-media p {
-  font-weight: bold;
-  color: $almostBlack;
-  font-size: 0.93rem;
-  margin-right: 1.72vw;
-}
+        .icon-text {
+          margin-left: 1em;
+        }
+      }
 
-.container-fluid .social-media a {
-  width: fit-content;
-  width: -moz-fit-content;
-  padding-bottom: 0.8125rem;
-  font-size: 1rem;
-}
+      .instagram-icon-container {
+        display: inline;
 
-.container-fluid .social-media .bi,
-.instagram-icon-container {
-  height: 1em;
-  display: inline;
-}
+        i:before {
+          font-size: 1em;
+          vertical-align: -0.2em;
+        }
 
-.container-fluid .social-media .bi-youtube {
-  color: $yRed
-}
+        h3 {
+          background: #f09433;
+          background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+          filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1)";
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          display: inline-block;
+          padding-right: 1px;
+          font-size: 1.4rem;
+        }
+      }
 
-.container-fluid .social-media i:before {
-  font-size: 1.4em;
-  vertical-align: -0.3em
-}
+      .bi-youtube {
+        color: $yRed
+      }
+      .bi-facebook {
+        color: $facebookBlue
+      }
+      i:before {
+        font-size: 1.4em;
+        vertical-align: -0.3em
+      }
+    }
+  }
 
-.container-fluid .social-media .bi-facebook {
-  color: $facebookBlue
-}
+  .footer-copyright {
+    margin: 2.3vh 0 0 7vw;
+    font-size: 0.6875rem;
+    text-align: left;
+    display: block;
 
-.instagram-icon-container h3 {
-  background: #f09433;
-  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  filter: "progid: DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1)";
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-  padding-right: 1px;
-  font-size: 1.4rem;
-}
+    a {
+      padding: 0;
+      width: fit-content;
+      display: inline-block;
+    }
+  }
 
-.icon-text {
-  margin-left: 1em;
-}
+  .links {
+    a {
+      padding: 0 0 0.625vw 1.57vh;
+      position: relative;
+      font-size: 1rem;
+    }
 
-.container-fluid .social-media .instagram-icon-container i:before {
-  font-size: 1em;
-  vertical-align: -0.2em;
-}
+    ul {
+      margin-bottom: 0;
+    }
 
-.footer-copyright {
-  margin: 2.3vh 0 0 7vw;
-  font-size: 0.6875rem;
-  text-align: left;
-  display: block;
-}
+    .line {
+      &:before {
+        background-color: $darkRed;
+        content: '';
+        position: absolute;
+        top: 3px;
+        left: -4px;
+        width: 6px;
+        height: 1rem;
+        border-radius: 15px;
+      }
 
-.footer-copyright a {
-  padding: 0;
-  width: fit-content;
-  width: -moz-fit-content;
-  display: inline-block;
-}
+      &.longer {
+        position: relative;
 
-.page-footer .links a {
-  padding: 0 0 0.625vw 1.57vh;
-  position: relative;
-  font-size: 1rem;
-}
+        &:before {
+          height: calc(100% - 1rem);
+        }
+      }
+    }
 
-.page-footer .links ul {
-  margin-bottom: 0;
-}
-
-.page-footer .links .line:before {
-  background-color: $darkRed;
-  content: '';
-  position: absolute;
-  top: 3px;
-  left: -4px;
-  width: 6px;
-  height: 1rem;
-  border-radius: 15px;
-}
-
-.page-footer .links .line.longer:before {
-  height: calc(100% - 1rem);
-}
-.page-footer .links .line.longer {
-  position: relative;
-}
-
-.page-footer .links .last-one {
-  margin-top: 3.6vh;
-}
-
-.page-footer .links .last-one:before {
-  height: 6px;
-  border-radius: 50%;
-  top: 9px;
+    .last-one {
+      margin-top: 3.6vh;
+      &:before {
+        height: 6px;
+        border-radius: 50%;
+        top: 9px;
+      }
+    }
+  }
 }
 
 @media (max-width: $min-phone-width) {
   .page-footer {
     margin-right: 0.625rem;
-  }
 
-  .page-footer .links,
-  .social-media p {
-    display: none
-  }
+    .links, .social-media p {
+      display: none
+    }
 
-  .container-fluid {
-    padding: 2.8vh 0 !important;
-  }
+    .container-fluid {
+      padding: 2.8vh 0 !important;
 
-  .container-fluid .social-media {
-    width: fit-content;
-    margin: 0 auto;
-    padding-left: 0;
-  }
+      .social-media {
+        width: fit-content;
+        margin: 0 auto;
+        padding-left: 0;
 
-  .container-fluid .social-media a {
-    margin-left: unset
-  }
+        a {
+          margin-left: unset
+        }
+      }
 
-  .footer-copyright {
-    text-align: center;
-    padding: 0 9.72vw;
-    margin: 1vh 0 0 0;
-  }
+      .footer-copyright {
+        text-align: center;
+        padding: 0 9.72vw;
+        margin: 1vh 0 0 0;
 
-  .footer-copyright a {
-    margin: 0 auto;
-    display: block;
-  }
+        a {
+          margin: 0 auto;
+          display: block;
+        }
 
-  .container-fluid .col-md-8 {
-    width: 100% !important;
+        .col-md-8 {
+          width: 100% !important;
+        }
+      }
+    }
   }
 }

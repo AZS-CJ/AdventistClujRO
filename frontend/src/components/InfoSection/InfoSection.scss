@@ -4,39 +4,41 @@
 .info-section {
   position: relative;
   margin-top: 3.4rem !important;
-}
 
-.info-section .info-section-title {
-  background-color: $blue;
-  border-radius: 20px;
-  position: absolute;
-  height: 3.4rem;
-  top: -1.7rem;
-  left: 7vw;
-  color: $lightgrey;
-  padding: 0 1.66vw;
-  font-size: 2.37rem;
-  line-height: 3.4rem;
-}
-
-.info-section .default-red-button {
-  margin: 0 auto;
-  font-size: 1.93rem;
-  line-height: 2.37rem;
-}
-
-
-@media (max-width: $min-phone-width) {
-  .info-section .default-red-button {
-    font-size: 1rem;
-    line-height: 1.5rem;
+  .info-section-title {
+    background-color: $blue;
+    border-radius: 20px;
+    position: absolute;
+    height: 3.4rem;
+    top: -1.7rem;
+    left: 7vw;
+    color: $lightgrey;
+    padding: 0 1.66vw;
+    font-size: 2.37rem;
+    line-height: 3.4rem;
   }
 
-  .info-section .info-section-title {
-    border-radius: 10px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    padding: 0 5.33vw;
-    font-size: 1.75rem;
+  .default-red-button {
+    margin: 0 auto;
+    font-size: 1.93rem;
+    line-height: 2.37rem;
+  }
+
+}
+
+@media (max-width: $min-phone-width) {
+  .info-section {
+    .info-section-title {
+      border-radius: 10px;
+      left: 50%;
+      transform: translate(-50%, 0);
+      padding: 0 5.33vw;
+      font-size: 1.75rem;
+    }
+  }
+
+  .default-red-button {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 }

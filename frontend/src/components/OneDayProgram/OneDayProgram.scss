@@ -4,47 +4,46 @@
 .program-day {
   text-align: left;
   margin-bottom: 4.9vh;
-}
 
-.program-day .bold {
-  font-weight: bold;
-}
+  .bold {
+    font-weight: bold;
+  }
+  .day-title {
+    color: $blue;
 
-.program-day .day-title {
-  color: $blue
-}
+    .day-name {
+      font-size: 2.125rem;
+      line-height: 2.31rem;
+    }
+  }
 
-.program-day .day-title .day-name {
-  font-size: 2.125rem;
-  line-height: 2.31rem;
-}
+  .bi-sunset::before {
+    color: $darkRed;
+    font-size: 2rem;
+    vertical-align: -0.7rem;
+  }
+  .program-line {
+    p {
+      display: inline;
+      font-weight: bold;
+    }
+    a {
+      color: $black;
+      text-decoration: none;
 
-.program-day .bi-sunset::before {
-  color: $darkRed;
-  font-size: 2rem;
-  vertical-align: -0.7rem;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
-
-.program-day .program-line p {
-  display: inline;
-  font-weight: bold;
-}
-
-.program-day .program-line a {
-  color: $black;
-  text-decoration: none;
-}
-.program-day .program-line a:hover {
-  text-decoration: underline;
-}
-
 
 @media (max-width: $min-phone-width) {
   .program-day {
     text-align: center;
-  }
 
-  .program-day .day-title .day-date {
-    display: block;
+    .day-title .day-date {
+      display: block;
+    }
   }
 }

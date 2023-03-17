@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useGeneralContext } from '../../contexts/generalState'
 import { EventType } from '../../data/event'
-import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { getEvent } from '../../api/event'
 import { getFormattedPeriod } from '../../util/functions'
@@ -59,7 +58,6 @@ function EventPage() {
         <div className="content-text">{event.content}</div>
         <BackButton text={backBtnText} onAction={goBack} bottom={true} />
       </div>
-      <ScrollToTop />
     </div>
   )
 }

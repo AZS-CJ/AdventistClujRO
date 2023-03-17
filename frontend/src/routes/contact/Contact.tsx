@@ -6,7 +6,6 @@ import Divider from '../../components/Divider/Divider'
 import Input from '../../components/Input/Input'
 import { getContact, sendEmail } from '../../api/contact'
 import Toast from '../../components/Toast/Toast'
-import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 
 import './Contact.scss'
 
@@ -149,12 +148,11 @@ function Contact() {
 
   return (
     <div className="contact-page page-content">
-      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.contact || backgroundImages.home}` }}></div>
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.contact || backgroundImages.home}` }} />
       <div className="left-title-section with-margin">
         <span className="bold-title">Contact</span>
       </div>
       {renderContent()}
-      <ScrollToTop />
     </div>
   )
 }

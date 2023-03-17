@@ -5,30 +5,30 @@
   margin-top: 5vh;
   display: flex;
   justify-content: center;
-}
 
-.pagination div {
-  height: 2.875rem;
-  width: 2.875rem;
-  font-size: 26px;
-  font-weight: bold;
-  color: black;
-  margin: 0.5rem;
-  border-radius: 50%;
-  cursor: pointer;
-}
+  div {
+    height: 2.875rem;
+    width: 2.875rem;
+    font-size: 26px;
+    font-weight: bold;
+    color: black;
+    margin: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 
-.pagination .page-number{
-  border: solid 4px transparent;
-  text-align: center;
-}
+  .page-number{
+    border: solid 4px transparent;
+    text-align: center;
+  }
 
-.pagination .arrow{
-  padding: 2.5px;
-}
+  .arrow{
+    padding: 2.5px;
+  }
 
-.pagination .current {
-  border-color: $darkRed;
+  .current {
+    border-color: $darkRed;
+  }
 }
 
 @media (max-width: $min-phone-width) {

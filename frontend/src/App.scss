@@ -150,6 +150,11 @@
   background: $blue;
   border-radius: 1rem;
 }
+// firefox
+.App {
+  scrollbar-width: thin;
+  scrollbar-color: $blue transparent;
+}
 
 //mobile landscape
 @media (max-width: $min-phone-width) and (min-aspect-ratio: 13/9) {

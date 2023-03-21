@@ -60,6 +60,8 @@ function Home(props) {
   const getNext2Days = () => {
     const nextDays: number[] = []
     let dayNumber = new Date().getDay() + 1
+    // if today is saturday, consider that today is friday
+    if (dayNumber === 7) dayNumber = 6
     while (nextDays.length < 2 && program.length) {
       const hasProgram = program.some((p) => p.day === getDayName(dayNumber))
       if (hasProgram) nextDays.push(dayNumber)

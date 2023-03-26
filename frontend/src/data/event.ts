@@ -8,4 +8,5 @@ export type EventType = {
   largeImg: string
   intro: string
   content: string
+  facebookLink?: string
 }

@@ -63,6 +63,7 @@ const buildEvent = (id: number, attributes): EventType => {
     smallImg: attributes.cover.data ? attributes.cover.data.attributes.formats?.small?.url : '',
     largeImg: attributes.cover.data ? attributes.cover.data.attributes.formats?.large?.url : '',
     intro: attributes.intro || '',
-    content: attributes.content || ''
+    content: attributes.content || '',
+    facebookLink: attributes.facebookLink
   }
 }

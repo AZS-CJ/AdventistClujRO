@@ -25,13 +25,12 @@ function About() {
   useEffect(() => {
     getHistory().then((histories: HistoryEntry[]) => {
       setHistoryRequest({ histories, loading: false })
-      if (histories.length) setSelectedPeriod(histories[histories.length - 1])
-      // scroll to the end of the periodList
-      if (periodList.current) periodList.current.scrollLeft = periodList.current.scrollWidth
+      if (histories.length) setSelectedPeriod(histories[0])
     })
   }, [])
 
   useEffect(() => {
+    //scroll to the selected period if it's mobile
     if (!selectedPeriod || !isMobile) return
     const element = document.getElementById(selectedPeriod.id.toString())
     element?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
@@ -60,6 +59,7 @@ function About() {
     )
   }
   const backgroundFilterClass = () => {
+    // period with id 1 is the oldest; and the higher the id, the more recent the event
     switch (selectedPeriod?.id) {
       case 1:
         return 'black-white'

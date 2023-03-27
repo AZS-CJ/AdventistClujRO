@@ -62,11 +62,13 @@ function About() {
     // period with id 1 is the oldest; and the higher the id, the more recent the event
     switch (selectedPeriod?.id) {
       case 1:
-        return 'black-white'
+        return 'sec19'
       case 2:
-        return 'sepia60'
+        return 'sec20'
       case 3:
-        return 'sepia30'
+        return 'sec20-1'
+      case 4:
+        return 'sec20-2'
       default:
         return ''
     }

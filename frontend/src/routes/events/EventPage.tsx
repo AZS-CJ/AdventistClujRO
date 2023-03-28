@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useGeneralContext } from '../../contexts/generalState'
 import { EventType } from '../../data/event'
-import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { getEvent } from '../../api/event'
 import { getFormattedPeriod } from '../../util/functions'
@@ -43,6 +42,17 @@ function EventPage() {
   const { loading, event } = eventRequest
 
   if (loading || !event) return <div className="spinner-border" role="status" />
+
+  const renderFacebookLink = () => {
+    return (
+      <div className="fb-link">
+        <i className="bi bi-facebook" />
+        <a href={event.facebookLink} target="_blank">
+          Vezi pagina de facebook a evenimentului
+        </a>
+      </div>
+    )
+  }
   return (
     <div className="event-page page-content">
       <div className="background-image" style={{ backgroundImage: `url(${event.largeImg ? event.largeImg : backgroundImages.home})` }} />
@@ -56,10 +66,11 @@ function EventPage() {
       </div>
       <div className="event-content">
         <div className="content-intro">{event.intro}</div>
-        <div className="content-text">{event.content}</div>
+        <div className="content-text">
+          {event.content} {event.facebookLink ? renderFacebookLink() : ''}
+        </div>
         <BackButton text={backBtnText} onAction={goBack} bottom={true} />
       </div>
-      <ScrollToTop />
     </div>
   )
 }

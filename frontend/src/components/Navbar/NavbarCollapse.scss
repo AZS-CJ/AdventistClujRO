@@ -40,6 +40,10 @@
   text-align: left;
   transition: right 300ms ease-in-out;
   overflow-y: scroll;
+  scrollbar-width: none; // firefox
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .navbar-collapse.show {
@@ -74,7 +78,6 @@
   overflow-y: scroll;
   padding-left: 1rem;
   display: flex;
-  scrollbar-width: none;
 }
 
 .navbar-collapse .navbar-content::-webkit-scrollbar {

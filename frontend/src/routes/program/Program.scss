@@ -2,33 +2,35 @@
 @import '../../util/layout';
 
 
-.program-page .week {
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.25rem;
-  line-height: 2.125rem;
-  color: $black;
-}
+.program-page {
+  .week {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.25rem;
+    line-height: 2.125rem;
+    color: $black;
 
-.program-page .week .column {
-  width: 48%;
-}
-
-.program-page .week .divider {
-  display: none
+    .column {
+      width: 48%;
+    }
+    .divider {
+      display: none
+    }
+  }
 }
 
 @media (max-width: $min-phone-width) {
-  .program-page .week {
-    flex-direction: column;
-  }
+  .program-page {
+    .week {
+      flex-direction: column;
 
-  .program-page .week .column {
-    width: 100%;
-  }
-
-  .program-page .week .divider {
-    display: flex;
-    margin-top: 0
+      .column {
+        width: 100%;
+      }
+      .divider {
+        display: flex;
+        margin-top: 0
+      }
+    }
   }
 }

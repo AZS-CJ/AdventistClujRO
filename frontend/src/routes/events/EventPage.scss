@@ -38,6 +38,25 @@
       color: $almostBlack;
       font-size: 1.2rem;
     }
+    .fb-link {
+      margin: 1rem 0;
+      .bi-facebook {
+        color: $facebookBlue;
+        margin-right: 1em;
+      }
+      i:before {
+        font-size: 1.4em;
+      }
+      a {
+        width: fit-content;
+        text-decoration: none;
+        color: $almostBlack;
+        &:hover {
+          color: $almostBlack;
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }
 
@@ -75,6 +94,9 @@
       }
       .content-text {
         font-size: 0.9rem;
+      }
+      .fb-link {
+        text-align: left;
       }
     }
   }

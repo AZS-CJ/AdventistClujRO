@@ -44,6 +44,10 @@
     },
     "intro": {
       "type": "text"
+    },
+    "facebookLink": {
+      "type": "string",
+      "regex": "^((https?|ftp|smtp):\\/\\/)?(www.)?[a-z0-9]+\\.[a-z]+(\\/[a-zA-Z0-9#]+\\/?)*$"
     }
   }
 }

@@ -8,7 +8,6 @@ import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
-import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import EventsCarousel from './EventsCarousel'
 
 import './Home.scss'
@@ -61,6 +60,8 @@ function Home(props) {
   const getNext2Days = () => {
     const nextDays: number[] = []
     let dayNumber = new Date().getDay() + 1
+    // if today is saturday, consider that today is friday
+    if (dayNumber === 7) dayNumber = 6
     while (nextDays.length < 2 && program.length) {
       const hasProgram = program.some((p) => p.day === getDayName(dayNumber))
       if (hasProgram) nextDays.push(dayNumber)
@@ -86,8 +87,7 @@ function Home(props) {
             <i className="bi bi-chevron-down"></i>
           </div>
         </div>
-        <InfoSection title="Despre noi">
-          {/*ctaTextctaText="Află istoricul bisericii" ctaURL="/despre">*/}
+        <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
           <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
             <div className="design-lines">
               <div className="shorter" />
@@ -119,9 +119,8 @@ function Home(props) {
 
   return (
     <div className="home-page page-content">
-      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.home})` }}></div>
+      <div className="background-image" style={{ backgroundImage: `url(${backgroundImages.home})` }} />
       {content.loading ? <div className="spinner-border" role="status" /> : returnContent()}
-      <ScrollToTop />
     </div>
   )
 }

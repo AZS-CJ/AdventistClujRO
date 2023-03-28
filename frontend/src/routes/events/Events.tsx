@@ -4,7 +4,6 @@ import { getFormattedPeriod, getSummary, getUrlFromTitle } from '../../util/func
 import { useGeneralContext } from '../../contexts/generalState'
 import { getPaginatedEvents } from '../../api/event'
 import { EventType } from '../../data/event'
-import ScrollToTop from '../../components/ScrollToTop/ScrollToTop'
 import { useNavigate } from 'react-router-dom'
 
 import './Events.scss'
@@ -69,7 +68,6 @@ function Events() {
         <span className="bold-title">Evenimente</span>
       </div>
       {loading ? <div className="spinner-border" role="status" /> : renderEventContainer()}
-      <ScrollToTop />
     </div>
   )
 }

@@ -10,6 +10,7 @@ const { sendEmail } = require('./email')
 const winston = require('winston')
 const expressWinston = require('express-winston')
 const kv = require('./kv');
+const { getLiveStatus } = require('./live');
 require('dotenv').config()
 
 // because url-join knows only ESM (or only import statements) we 
@@ -129,6 +130,10 @@ app.use('/uploads', function(req, res) {
   var url = urlJoin(cmsDbHost, 'uploads', req.url);
   req.pipe(request({ qs:req.query, uri: url })).pipe(res);
 });
+
+app.use('/live', async function(req, res) {
+  return await getLiveStatus();
+})
 
 app.post('/email', async(req, res) => {
     sendEmail(req.body, (error) => {

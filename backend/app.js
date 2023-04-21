@@ -10,7 +10,7 @@ const { sendEmail } = require('./email')
 const winston = require('winston')
 const expressWinston = require('express-winston')
 const kv = require('./kv');
-const { getLiveStatus } = require('./live');
+const { getLiveStatus } = require('./liveDirect');
 require('dotenv').config()
 
 // because url-join knows only ESM (or only import statements) we 

@@ -16,6 +16,7 @@ const getLiveStatus = async () => {
   const jwtinputraw = fs.readFileSync('./jwtinput.json');
   const jwtinput = JSON.parse(jwtinputraw);
   const authClient = await auth.fromJSON(jwtinput);
+  // const authClient = await auth.fromAPIKey('AIzaSyCRjuKCa-MPOezSBBIfrZqz5mYLD3J4iKU');
 
 
   const lbs = await youtube.liveBroadcasts.list({

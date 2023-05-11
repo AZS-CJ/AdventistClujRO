@@ -49,6 +49,8 @@
     .slider-wrapper {
       display: flex;
       transition: transform 0.5s ease-in-out;
+      height: 100%;
+
       .img-container {
         flex: 0 0 100%;
         display: flex;

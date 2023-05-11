@@ -1,0 +1,84 @@
+@import '../../util/colors';
+@import '../../util/layout';
+
+.gallery-slider {
+  width: 100%;
+  height: 100%;
+  background: $black;
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+
+  .slider-content {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+
+    .close-btn {
+      position: fixed;
+      top: 1.25rem;
+      left: 2.5rem;
+    }
+
+    .close-btn, .arrow {
+      width: 3rem;
+      height: 3rem;
+      color: $lightgrey;
+      border-radius: 50%;
+      background-color: $orange;
+      font-size: 1.7rem;
+      line-height: 3rem;
+      text-align: center;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .arrow {
+      position: absolute;
+      top: 50vh;
+
+      &.prev {
+        left: 2.5rem
+      }
+      &.next {
+        right: 2.5rem;
+      }
+    }
+
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      .img-container {
+        flex: 0 0 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+
+@media (max-width: $min-phone-width) {
+  .gallery-slider {
+    .slider-content {
+      overflow: scroll;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      .arrow {
+        display: none;
+      }
+
+      .slider-wrapper {
+        display: block;
+        transform: none !important;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

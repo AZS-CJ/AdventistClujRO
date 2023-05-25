@@ -10,6 +10,14 @@
   top: 0;
   left: 0;
 
+  .spinner-border {
+    width: 6rem;
+    height: 6rem;
+    color: $white;
+    z-index: 10;
+    top: calc(50% - 3rem);
+    left: calc(50% - 3rem);
+  }
   .slider-content {
     position: relative;
     overflow: hidden;

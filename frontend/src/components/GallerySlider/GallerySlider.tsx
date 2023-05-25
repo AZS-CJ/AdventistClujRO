@@ -1,10 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import './GallerySlider.scss'
 
 const GallerySlider = ({ toggleGallery, images }) => {
   const [currentImgIndex, setCurrentImgIndex] = useState(images.length - 1)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const sliderWrapper = document.querySelector('.slider-wrapper')
+    if (!sliderWrapper) return
+    const images = Array.from(sliderWrapper.querySelectorAll('img'))
+    let loadedImagesCount = 0
+
+    const handleImageLoad = () => {
+      loadedImagesCount = loadedImagesCount + 1
+      if (loadedImagesCount === images.length - 1) setIsLoading(false)
+    }
+
+    images.forEach((image) => {
+      image.addEventListener('load', handleImageLoad)
+      image.addEventListener('error', handleImageLoad)
+    })
+
+    return () => {
+      images.forEach((image) => {
+        image.removeEventListener('load', handleImageLoad)
+        image.removeEventListener('error', handleImageLoad)
+      })
+    }
+  }, [])
 
   const handlePrevious = () => {
     if (currentImgIndex === 0) {
@@ -24,6 +49,7 @@ const GallerySlider = ({ toggleGallery, images }) => {
 
   return (
     <div className="gallery-slider">
+      {isLoading ? <div className="spinner-border" role="status" /> : ''}
       <div className="slider-content">
         <div className="close-btn" onClick={toggleGallery}>
           &times;
@@ -32,9 +58,9 @@ const GallerySlider = ({ toggleGallery, images }) => {
           &lt;
         </div>
         <div className="slider-wrapper" style={{ transform: `translateX(-${currentImgIndex * 100}%)` }}>
-          {images.map((img) => (
-            <div className="img-container">
-              <img key={img.id} className="gallery-img" src={img.large || img.small} alt="img" />
+          {images.map((img, index) => (
+            <div className="img-container" key={index}>
+              <img className="gallery-img" src={img.large || img.small} alt="img" />
             </div>
           ))}
         </div>

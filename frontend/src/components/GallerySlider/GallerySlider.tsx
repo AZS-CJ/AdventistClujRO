@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './GallerySlider.scss'
 
 const GallerySlider = ({ toggleGallery, images }) => {
-  const [currentImgIndex, setCurrentImgIndex] = useState(images.length - 1)
+  const [currentImgIndex, setCurrentImgIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {

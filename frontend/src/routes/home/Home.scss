@@ -42,31 +42,12 @@
   white-space: pre-wrap;
 }
 
-.home-page .description .design-lines {
-  position: absolute;
-  top: 0;
-  left: -1.56vw;
-  height: 11vh;
-  max-height: 50%;
-}
-
 .home-page .description .moreButton, .home-page .description .lessButton {
   display: none
 }
 
-.home-page .description .design-lines div{
-  border-left: solid 5px $blueLines;
-  border-radius: 15px;
-  width: 0;
-}
-
-.home-page .description .design-lines .shorter{
-  height: 2.77vh;
-}
-
-.home-page .description .design-lines .longer {
-  margin-top: 1rem;
-  height: 100%;
+.home-page .description .design-lines {
+  height: 40%;
 }
 
 .home-page .program-section {
@@ -104,7 +85,7 @@
   .home-page .description.closed .text {
     max-height: 31vh;
     overflow: hidden;
-    padding: 2vh 0 0 4vw;
+    padding-left: 1.5rem;
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
   }
 
@@ -119,9 +100,8 @@
   }
 
   .home-page .description.closed .design-lines {
-    position: absolute;
     left: 0;
-    height: 28vh;
+    height: 80%;
   }
 
   .home-page .description.open .design-lines {

@@ -98,7 +98,7 @@ function About() {
       <InfoSection title="Galerie">
         <div className="gallery-section">
           <div className="img-container">
-            <img onClick={toggleGallery} src={galleryRequest.images[galleryRequest.images.length - 1].small} alt="image" />
+            <img onClick={toggleGallery} src={galleryRequest.images[0].small} alt="image" />
           </div>
           <div className="description">
             <DesignLines />

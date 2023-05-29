@@ -12,7 +12,7 @@
 
 .navbar.my-nav {
     position: fixed;
-    z-index: 9;
+    z-index: 3;
     margin-top: 3.79vh;
     flex-wrap: nowrap;
     width: calc(87% - 1rem);
@@ -96,6 +96,7 @@
   display: none;
 }
 
+// when the sidebar menu is opened
 .blur-content.blurred {
   position: fixed;
   z-index: 9;

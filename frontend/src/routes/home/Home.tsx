@@ -9,6 +9,7 @@ import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
 import EventsCarousel from './EventsCarousel'
+import DesignLines from '../../components/DesignLines/DesignLines'
 
 import './Home.scss'
 
@@ -89,10 +90,7 @@ function Home(props) {
         </div>
         <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
           <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
-            <div className="design-lines">
-              <div className="shorter" />
-              <div className="longer" />
-            </div>
+            <DesignLines />
             <div className="text">{content.aboutUs}</div>
             <div className="moreButton" onClick={() => setHistoryOpen(true)}>
               Citește mai mult

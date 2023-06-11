@@ -140,12 +140,6 @@ resource "azurerm_linux_web_app" "webhost" {
     "EMAIL_PASSWORD" = each.key == "test" ? var.EMAIL_PASSWORD_TEST : var.EMAIL_PASSWORD_PROD
   }
 
-  connection_string {
-    name  = "Database"
-    type  = "Custom"
-    value = "NoConnectionStringNeededYet"
-  }
-
   identity {
     type = "SystemAssigned"
   }

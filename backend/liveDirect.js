@@ -26,7 +26,7 @@ const queryYoutube = async () => {
   const html = htmlParser.parse(plainText);
   const urlTag = html.querySelector('link[rel=canonical]');
   const url = urlTag.getAttribute('href');
-  cache.isLive = url.includes('/wathc?v=');
+  cache.isLive = url.includes('/watch?v=');
 }
 
 const getLiveStatus = async () => {

@@ -27,6 +27,7 @@ const queryYoutube = async () => {
   const urlTag = html.querySelector('link[rel=canonical]');
   const url = urlTag.getAttribute('href');
   cache.isLive = url.includes('/watch?v=');
+  cache.url = url;
 }
 
 const getLiveStatus = async () => {
@@ -44,15 +45,20 @@ const getLiveStatus = async () => {
     if (uniquePromise !== null) {
       await uniquePromise;
     } else {
-      // Nobody triggered this so we go ahead do it ourselves
+      // Nobody triggered this so we go ahead and do it as part
+      // of the current call.
       uniquePromise = queryYoutube();
       await uniquePromise;
+
+      // Make sure we reset this to null so that next calls won't
+      // believe there is still an unfinished promise.
       uniquePromise = null;
     }
     cache.lastDateTimeQuery = now;
   }
   const response = {
-    isLive: cache.isLive
+    isLive: cache.isLive,
+    url: cache.url
   }
   return response;
 }

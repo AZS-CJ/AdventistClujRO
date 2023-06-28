@@ -15,9 +15,6 @@ function NavbarCollapse(props) {
       <div className={`navbar-collapse bg-dark ${sidebarOpen ? 'show' : 'hide'}`} id="navbarCollapse">
         <div className="navbar-content">
           <ul className="navbar-nav mr-auto">
-            {/*Will be implemented later*/}
-            {/*render this only if there is a live streaming*/}
-            {/*<div className="sidebar-live live">LIVE</div>*/}
             {props.renderMainLinks()}
             {/*Will be implemented later*/}
             {/*{renderLink('login', 'Log in')}*/}

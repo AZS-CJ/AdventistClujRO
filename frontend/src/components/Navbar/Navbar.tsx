@@ -4,20 +4,40 @@ import { useNavigationContext } from '../../contexts/navigation'
 import menuButton from '../../assets/mobile_menu_toggle.svg'
 import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
+import { getLiveStatus } from '../../api/homePage'
 
 import './Navbar.scss'
+
+interface LiveState {
+  isLive: boolean
+  url: string
+}
 
 function Navbar(props) {
   const [scrolled, setScrolled] = useState(false)
   const { openSidebar, hideSidebar, sidebarOpen } = useNavigationContext()
   const location = useLocation()
+  const [liveState, setLiveState] = useState<LiveState>({ isLive: false, url: '' })
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
     window.removeEventListener('scroll', onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+
+    requestLiveStatus()
+    const liveRequestInterval = setInterval(() => {
+      requestLiveStatus()
+    }, 30000)
+
+    return () => {
+      clearInterval(liveRequestInterval)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
+
+  const requestLiveStatus = () => {
+    getLiveStatus().then((result) => setLiveState(result))
+  }
 
   const isActiveRoute = (route: string) => {
     const path: string = location.pathname.replace('/', '')
@@ -47,6 +67,10 @@ function Navbar(props) {
     )
   }
 
+  const openLive = () => {
+    window.open(liveState.url, '_blank')
+  }
+
   return (
     <>
       <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
@@ -57,9 +81,10 @@ function Navbar(props) {
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>
 
-        {/*Will be implemented later*/}
-        {/*render this only if there is a live streaming*/}
-        {/*<div className="main-live live">LIVE</div>*/}
+        <div className={`live-btn ${liveState.isLive ? 'live' : ''}`} onClick={openLive}>
+          <i className="bi bi-play-circle"></i>
+          LIVE
+        </div>
 
         <div className="navbar-toggler" onClick={openSidebar}>
           <img className="menu-btn" src={menuButton} alt="Menu" />

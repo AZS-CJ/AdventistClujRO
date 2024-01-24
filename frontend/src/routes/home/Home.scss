@@ -25,7 +25,7 @@
       text-align: center;
 
       .bi-chevron-down::before {
-        color: $darkRed;
+        color: var(--primary-color);
         font-size: 4.375rem;
         margin-top: 0.9375rem;
       }
@@ -58,7 +58,7 @@
       max-width: 40%;
     }
     .next {
-      color: $blue;
+      color: var(--accent-color);
       font-size: 1.25rem;
       font-weight: bold;
     }
@@ -115,7 +115,7 @@
         display: block;
         cursor: pointer;
         margin: 0 auto;
-        border: solid 2px $blue;
+        border: solid 2px var(--accent-color);
         border-radius: 21px;
         color: black;
         font-size: 1.12rem;

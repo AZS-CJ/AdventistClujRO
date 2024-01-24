@@ -3,7 +3,7 @@
 .toast {
   z-index: 11;
   width: unset;
-  background-color: $blue;
+  background-color: var(--accent-color);
   color: white;
   font-size: 1.3rem;
   left: 43.5%;

@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "styles",
+  "info": {
+    "singularName": "style",
+    "pluralName": "styles",
+    "displayName": "Style",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "primaryColor": {
+      "type": "string",
+      "required": true,
+      "default": "#C0351B"
+    },
+    "secondPrimaryColor": {
+      "type": "string",
+      "required": true,
+      "default": "#F78A58"
+    },
+    "accentColor": {
+      "type": "string",
+      "required": true,
+      "default": "#245AA6"
+    },
+    "secondAccentColor": {
+      "type": "string",
+      "required": true,
+      "default": "#739BD2"
+    }
+  }
+}

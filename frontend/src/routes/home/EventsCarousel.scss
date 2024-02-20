@@ -26,7 +26,7 @@
   .react-multi-carousel-dot-list {
     width: 50%;
     margin-left: 25%;
-    background-color: $blueLines;
+    background-color: var(--second-accent-color);
     border-radius: 1rem;
   }
 
@@ -34,7 +34,7 @@
     height: 0.6875rem;
     width: 100%;
     &.active {
-      background-color: $blue;
+      background-color: var(--accent-color);
       border-radius: 1rem;
     }
   }
@@ -106,7 +106,7 @@
     height: 3.125rem;
     width: 3.125rem;
     color: $lightgrey;
-    background-color: $blue;
+    background-color: var(--accent-color);
     border-radius: 50%;
     box-shadow: 0 5px 5px $almostWhite;
     font-size: 1.68rem;

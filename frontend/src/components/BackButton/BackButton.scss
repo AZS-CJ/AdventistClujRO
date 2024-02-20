@@ -20,7 +20,7 @@
   }
   &.bottom {
     margin: 7vh 0;
-    background-color: $darkRed;
+    background-color: var(--primary-color);
     color: $white;
   }
 }

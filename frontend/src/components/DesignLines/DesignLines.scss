@@ -8,7 +8,7 @@
   height: 100%;
 
   div {
-    border-left: solid 5px $blueLines;
+    border-left: solid 5px var(--second-accent-color);
     border-radius: 15px;
     width: 0;
   }

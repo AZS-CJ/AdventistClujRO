@@ -64,7 +64,7 @@
         white-space: pre;
 
         &:hover, &.active {
-          background-color: $orange;
+          background-color: var(--second-primary-color);
           color: $lightgrey;
           opacity: 0.8;
         }

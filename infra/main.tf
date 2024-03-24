@@ -122,7 +122,7 @@ resource "azurerm_container_app_environment" "platform" {
   log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
 
   workload_profile {
-    name                  = "Default"
+    name                  = "Consumption"
     workload_profile_type = "Consumption"
     maximum_count         = 4
     minimum_count         = 0
@@ -144,12 +144,12 @@ resource "azurerm_container_app" "strapi" {
 
   identity {
     type = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.strapi-apps-identity.id]
+    identity_ids = [azurerm_user_assigned_identity.strapi-apps-identity.principal_id]
   }
 
   registry {
     server = azurerm_container_registry.acr.name
-    identity = azurerm_user_assigned_identity.strapi-apps-identity.id
+    identity = azurerm_user_assigned_identity.strapi-apps-identity.principal_id
   }
 
   template {
@@ -223,7 +223,7 @@ resource "azurerm_service_plan" "web-sites-service-plan" {
   location            = azurerm_resource_group.common.location
   resource_group_name = azurerm_resource_group.common.name
 
-  os_type     = "Linux"
+  os_type     = ""
   sku_name    = "B1"
 }
 

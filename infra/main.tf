@@ -119,7 +119,7 @@ resource "azurerm_container_app_environment" "platform" {
   name                       = "AzsPlatform-Environment"
   location                   = azurerm_resource_group.common.location
   resource_group_name        = azurerm_resource_group.common.name
-  log_analytics_workspace_id = azurerm_application_insights.workspace_id.id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
 
   workload_profile {
     name                  = "Default"

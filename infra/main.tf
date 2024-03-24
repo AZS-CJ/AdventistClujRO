@@ -24,24 +24,12 @@ resource "azurerm_resource_group" "common" {
   location = "Germany West Central"
 }
 
-resource "random_password" "acr-admin-login-user" {
-  length  = 32
-  special = true
-}
-
-resource "random_password" "acr-admin-login-pass" {
-  length  = 32
-  special = true
-}
-
 resource "azurerm_container_registry" "acr" {
   name                = "azscjacr"
   resource_group_name = azurerm_resource_group.common.name
   location            = azurerm_resource_group.common.location
   sku                 = "Basic"
   admin_enabled       = true
-  admin_username      = random_password.acr-admin-login-user.result
-  admin_password      = random_password.acr-admin-login-pass.result
 }
 
 resource "azurerm_resource_group" "website" {
@@ -162,8 +150,8 @@ resource "azurerm_container_app" "strapi" {
   depends_on = [ azurerm_role_assignment.acr-container-apps ]
 
   secret {
-    name = "acr-admin-login-pass"
-    value = random_password.acr-admin-login-pass.result
+    name = "adminpassword"
+    value = azurerm_container_registry.acr.admin_password
   }
 
   identity {
@@ -173,8 +161,8 @@ resource "azurerm_container_app" "strapi" {
 
   registry {
     server = azurerm_container_registry.acr.name
-    username = random_password.acr-admin-login-user
-    password_secret_name = "acr-admin-login-pass"
+    username = azurerm_container_registry.acr.admin_username
+    password_secret_name = "adminpassword"
   }
 
   template {

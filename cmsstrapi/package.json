@@ -11,11 +11,15 @@
     "transfer": "strapi transfer"
   },
   "dependencies": {
-    "@strapi/plugin-documentation": "4.11.4",
-    "@strapi/plugin-i18n": "4.11.4",
-    "@strapi/plugin-users-permissions": "4.11.4",
-    "@strapi/strapi": "4.11.4",
-    "mysql": "2.18.1"
+    "@strapi/plugin-documentation": "4.15.5",
+    "@strapi/plugin-i18n": "4.15.5",
+    "@strapi/plugin-users-permissions": "4.15.5",
+    "@strapi/strapi": "4.15.5",
+    "mysql": "2.18.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "5.3.4",
+    "styled-components": "5.3.3"
   },
   "author": {
     "name": "A Strapi developer"
@@ -24,7 +28,7 @@
     "uuid": "46c768db-7e0f-4eb4-a8b0-bacf54260eca"
   },
   "engines": {
-    "node": ">=12.x.x <=16.x.x",
+    "node": ">=18.x.x <=20.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"

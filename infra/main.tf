@@ -144,7 +144,7 @@ resource "azurerm_container_app" "strapi" {
 
   identity {
     type = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.strapi-apps-identity.principal_id]
+    identity_ids = [azurerm_user_assigned_identity.strapi-apps-identity.id]
   }
 
   registry {

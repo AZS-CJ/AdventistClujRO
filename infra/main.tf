@@ -162,7 +162,7 @@ resource "azurerm_container_app" "strapi" {
   template {
     container {
       name   = "strapi"
-      image  = "azscjacr.azurecr.io/azscjstrapi:latest"
+      image  = "${azurerm_container_registry.acr.login_server}/azscjstrapi:latest"
       cpu    = 0.25
       memory = "0.5Gi"
       liveness_probe {

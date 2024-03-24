@@ -153,7 +153,7 @@ resource "azurerm_container_app" "strapi" {
   }
 }
 
-resource "azurerm_role_assignment" "acr" {
+resource "azurerm_role_assignment" "acr-container-apps" {
   for_each             = var.environments
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id

@@ -149,7 +149,7 @@ resource "azurerm_container_app" "strapi" {
 
   registry {
     server = azurerm_container_registry.acr.name
-    identity = azurerm_user_assigned_identity.strapi-apps-identity.principal_id
+    identity = azurerm_user_assigned_identity.strapi-apps-identity.id
   }
 
   template {

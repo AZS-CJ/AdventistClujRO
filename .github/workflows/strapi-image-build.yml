@@ -29,9 +29,10 @@ jobs:
         working-directory: ./cmsstrapi
         run: |
           docker build -t azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }} .
+          docker image tag azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }} azscjacr.azurecr.io/azscjstrapi:latest
           
       - name: docker push
         run: |
-          docker push azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }}
+          docker push --all-tags azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }}
       
     

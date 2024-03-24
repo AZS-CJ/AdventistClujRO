@@ -106,6 +106,60 @@ resource "azurerm_storage_share_directory" "uploads" {
   storage_account_name = azurerm_storage_account.cms-storage[each.key].name
 }
 
+resource "azurerm_container_app_environment" "platform" {
+  name                       = "AzsPlatform-Environment"
+  location                   = azurerm_resource_group.common.location
+  resource_group_name        = azurerm_resource_group.common.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
+
+  workload_profile {
+    name                  = "Default"
+    workload_profile_type = "Consumption"
+    maximum_count         = 4
+    minimum_count         = 0
+  }
+}
+
+resource "azurerm_user_assigned_identity" "strapi-apps-identity" {
+  name                = "strapi-apps-identity"
+  resource_group_name = azurerm_resource_group.common
+  location            = azurerm_resource_group.location
+}
+
+resource "azurerm_container_app" "strapi" {
+  for_each                     = var.environments
+  name                         = "cms-${each.key}-app"
+  container_app_environment_id = azurerm_container_app_environment.platform.id
+  resource_group_name          = azurerm_resource_group.common.name
+  revision_mode                = "Single"
+
+  identity {
+    type = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.strapi-apps-identity.id]
+  }
+
+  registry {
+    server = azurerm_container_registry.acr.name
+    identity = azurerm_user_assigned_identity.strapi-apps-identity.id
+  }
+
+  template {
+    container {
+      name   = "azurerm_container_registry"
+      image  = "azscjacr.azurecr.io/azscjstrapi:latest"
+      cpu    = 0.25
+      memory = "0.5Gi"
+    }
+  }
+}
+
+resource "azurerm_role_assignment" "acr" {
+  for_each             = var.environments
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = azurerm_user_assigned_identity.strapi-apps-identity.id
+}
+
 resource "azurerm_service_plan" "web-sites-service-plan" {
   name                = "${var.website_name}-ServicePlan"
   location            = azurerm_resource_group.common.location
@@ -266,6 +320,13 @@ resource "azurerm_linux_web_app" "strapi" {
   }
 }
 
+resource "azurerm_role_assignment" "acr" {
+  for_each             = var.environments
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = azurerm_linux_web_app.strapi[each.key].identity.0.principal_id
+}
+
 resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
   hostname            = "adventistcluj.ro"
   app_service_name    = azurerm_linux_web_app.webhost["prod"].name
@@ -294,13 +355,6 @@ resource "azurerm_app_service_custom_hostname_binding" "strapi_test_hostname_bin
   hostname            = "cms-test.adventistcluj.ro"
   app_service_name    = azurerm_linux_web_app.strapi["test"].name
   resource_group_name = azurerm_resource_group.website["test"].name
-}
-
-resource "azurerm_role_assignment" "acr" {
-  for_each             = var.environments
-  role_definition_name = "AcrPull"
-  scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_linux_web_app.strapi[each.key].identity.0.principal_id
 }
 
 resource "azurerm_dns_zone" "azscj-zone" {

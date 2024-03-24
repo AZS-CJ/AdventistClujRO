@@ -154,10 +154,59 @@ resource "azurerm_container_app" "strapi" {
 
   template {
     container {
-      name   = "azurerm_container_registry"
+      name   = "strapi"
       image  = "azscjacr.azurecr.io/azscjstrapi:latest"
       cpu    = 0.25
       memory = "0.5Gi"
+      liveness_probe {
+        path = "/api/under-construction"
+        port = 80
+        transport = HTTP
+      }
+      env {
+        name = "DATABASE_CLIENT"
+        value = "mysql"
+      }
+      env {
+        name = "DATABASE_HOST"
+        value = "azurerm_mysql_flexible_server.cms-db.fqdn"
+      }
+      env {
+        name = "DATABASE_PORT"
+        value = "3306"
+      }
+      env {
+        name = "DATABASE_NAME"
+        value = "cms-db-${each.key}"
+      }
+      env {
+        name = "DATABASE_USERNAME"
+        value = "mysqladminuser"
+      }
+      env {
+        name = "DATABASE_PASSWORD"
+        value = random_password.admin-login-pass.result
+      }
+      env {
+        name = "ADMIN_JWT_SECRET"
+        value = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
+      }
+      env {
+        name = "JWT_SECRET"
+        value = base64encode(random_password.strapi-jwt-secret[each.key].result)
+      }
+      env {
+        name = "APP_KEYS"
+        value = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
+      }
+      env {
+        name = "API_TOKEN_SALT"
+        value = base64encode(random_password.api-token-salt[each.key].result)
+      }
+      env {
+        name = "TRANSFER_TOKEN_SALT"
+        value = base64encode(random_password.transfer-token-salt[each.key].result)
+      }
     }
   }
 }

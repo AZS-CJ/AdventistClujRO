@@ -223,7 +223,7 @@ resource "azurerm_service_plan" "web-sites-service-plan" {
   location            = azurerm_resource_group.common.location
   resource_group_name = azurerm_resource_group.common.name
 
-  os_type     = ""
+  os_type     = "Linux"
   sku_name    = "B1"
 }
 

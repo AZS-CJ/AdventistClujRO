@@ -33,6 +33,6 @@ jobs:
           
       - name: docker push
         run: |
-          docker push --all-tags azscjacr.azurecr.io/azscjstrapi:${{ github.run_number }}
+          docker push --all-tags azscjacr.azurecr.io/azscjstrapi
       
     

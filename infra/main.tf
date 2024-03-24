@@ -161,7 +161,7 @@ resource "azurerm_container_app" "strapi" {
       liveness_probe {
         path = "/api/under-construction"
         port = 80
-        transport = HTTP
+        transport = "HTTP"
       }
       env {
         name = "DATABASE_CLIENT"

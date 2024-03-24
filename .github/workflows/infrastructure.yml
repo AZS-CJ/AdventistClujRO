@@ -44,6 +44,7 @@ jobs:
       - name: Terraform Init with Upgrade
         run: terraform init -upgrade
         if: ${{ inputs.TFUpgrade }}
+        working-directory: ./infra
         
       - name: Terraform Init
         run: terraform init

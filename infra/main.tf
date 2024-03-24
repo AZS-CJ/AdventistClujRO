@@ -135,12 +135,19 @@ resource "azurerm_user_assigned_identity" "strapi-apps-identity" {
   location            = azurerm_resource_group.common.location
 }
 
+resource "azurerm_role_assignment" "acr-container-apps" {
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = azurerm_user_assigned_identity.strapi-apps-identity.principal_id
+}
+
 resource "azurerm_container_app" "strapi" {
   for_each                     = var.environments
   name                         = "cms-${each.key}-app"
   container_app_environment_id = azurerm_container_app_environment.platform.id
   resource_group_name          = azurerm_resource_group.common.name
   revision_mode                = "Single"
+  depends_on = [ azurerm_role_assignment.acr-container-apps ]
 
   identity {
     type = "UserAssigned"
@@ -209,13 +216,6 @@ resource "azurerm_container_app" "strapi" {
       }
     }
   }
-}
-
-resource "azurerm_role_assignment" "acr-container-apps" {
-  for_each             = var.environments
-  role_definition_name = "AcrPull"
-  scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_user_assigned_identity.strapi-apps-identity.principal_id
 }
 
 resource "azurerm_service_plan" "web-sites-service-plan" {

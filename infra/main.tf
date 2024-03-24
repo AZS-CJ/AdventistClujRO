@@ -215,7 +215,7 @@ resource "azurerm_role_assignment" "acr-container-apps" {
   for_each             = var.environments
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_user_assigned_identity.strapi-apps-identity.id
+  principal_id         = azurerm_user_assigned_identity.strapi-apps-identity.principal_id
 }
 
 resource "azurerm_service_plan" "web-sites-service-plan" {

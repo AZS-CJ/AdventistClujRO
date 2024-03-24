@@ -129,25 +129,12 @@ resource "azurerm_container_app_environment" "platform" {
   }
 }
 
-resource "azurerm_user_assigned_identity" "strapi-apps-identity" {
-  name                = "strapi-apps-identity"
-  resource_group_name = azurerm_resource_group.common.name
-  location            = azurerm_resource_group.common.location
-}
-
-resource "azurerm_role_assignment" "acr-container-apps" {
-  role_definition_name = "AcrPull"
-  scope                = azurerm_container_registry.acr.id
-  principal_id         = azurerm_user_assigned_identity.strapi-apps-identity.principal_id
-}
-
 resource "azurerm_container_app" "strapi" {
   for_each                     = var.environments
   name                         = "cms-${each.key}-app"
   container_app_environment_id = azurerm_container_app_environment.platform.id
   resource_group_name          = azurerm_resource_group.common.name
   revision_mode                = "Single"
-  depends_on = [ azurerm_role_assignment.acr-container-apps ]
 
   secret {
     name = "adminpassword"

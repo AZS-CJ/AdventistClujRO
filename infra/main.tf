@@ -9,7 +9,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.33.0"
+      version = "3.97.1"
     }
   }
 }
@@ -122,8 +122,8 @@ resource "azurerm_container_app_environment" "platform" {
 
 resource "azurerm_user_assigned_identity" "strapi-apps-identity" {
   name                = "strapi-apps-identity"
-  resource_group_name = azurerm_resource_group.common
-  location            = azurerm_resource_group.location
+  resource_group_name = azurerm_resource_group.common.name
+  location            = azurerm_resource_group.common.location
 }
 
 resource "azurerm_container_app" "strapi" {

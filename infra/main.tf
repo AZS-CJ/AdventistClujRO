@@ -142,7 +142,7 @@ resource "azurerm_container_app" "strapi" {
   }
 
   registry {
-    server = azurerm_container_registry.acr.name
+    server = azurerm_container_registry.acr.login_server
     username = azurerm_container_registry.acr.admin_username
     password_secret_name = "adminpassword"
   }

@@ -154,11 +154,6 @@ resource "azurerm_container_app" "strapi" {
     value = azurerm_container_registry.acr.admin_password
   }
 
-  identity {
-    type = "UserAssigned"
-    identity_ids = [azurerm_user_assigned_identity.strapi-apps-identity.id]
-  }
-
   registry {
     server = azurerm_container_registry.acr.name
     username = azurerm_container_registry.acr.admin_username

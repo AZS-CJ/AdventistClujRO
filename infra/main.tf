@@ -66,13 +66,22 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
 #   end_ip_address      = "255.255.255.255"
 # }
 
-// Website specific resources
-resource "azurerm_application_insights" "AZSClujAppInisghts" {
+
+resource "azurerm_log_analytics_workspace" "log-analytics-workspace-common" {
+  name                = "log-analytics-workspace-common"
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
+resource "azurerm_application_insights" "AppInsights" {
   for_each            = var.environments
   name                = "aiazscj-${each.key}"
   location            = azurerm_resource_group.website[each.key].location
   resource_group_name = azurerm_resource_group.website[each.key].name
-  application_type    = "Node.JS"
+  workspace_id        = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
+  application_type    = "web"
 }
 
 resource "azurerm_storage_account" "cms-storage" {
@@ -110,7 +119,7 @@ resource "azurerm_container_app_environment" "platform" {
   name                       = "AzsPlatform-Environment"
   location                   = azurerm_resource_group.common.location
   resource_group_name        = azurerm_resource_group.common.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.example.id
+  log_analytics_workspace_id = azurerm_application_insights.workspace_id.id
 
   workload_profile {
     name                  = "Default"
@@ -182,10 +191,6 @@ resource "azurerm_linux_web_app" "webhost" {
       node_version = "16-lts"
     }
     use_32_bit_worker = false
-    cors {
-      allowed_origins     = []
-      support_credentials = false
-    }
   }
 
   app_settings = {
@@ -272,10 +277,6 @@ resource "azurerm_linux_web_app" "strapi" {
   site_config {
     use_32_bit_worker = false
     health_check_path = "/api/under-construction"
-    cors {
-      allowed_origins     = []
-      support_credentials = false
-    }
     container_registry_use_managed_identity = true
   }
 

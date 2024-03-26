@@ -151,6 +151,7 @@ resource "azurerm_container_app" "strapi" {
     target_port = "80"
     traffic_weight {
       percentage = 100
+      latest_revision = true
     }
     transport = "http"
   }

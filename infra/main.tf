@@ -154,6 +154,7 @@ resource "azurerm_container_app" "strapi" {
       latest_revision = true
     }
     transport = "http"
+    external_enabled = true
   }
 
   template {

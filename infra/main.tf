@@ -164,7 +164,7 @@ resource "azurerm_container_app" "strapi" {
       }
       env {
         name = "DATABASE_HOST"
-        value = "azurerm_mysql_flexible_server.cms-db.fqdn"
+        value = azurerm_mysql_flexible_server.cms-db.fqdn
       }
       env {
         name = "DATABASE_PORT"

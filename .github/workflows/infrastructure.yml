@@ -11,11 +11,6 @@ on:
         description: 'Log level'     
         required: true
         default: 'warning'
-      TFUpgrade:
-        description: 'Enable upgrade for Terraform Init'
-        required: true
-        type: boolean
-        default: false
 
 jobs:
   terraform:
@@ -40,16 +35,10 @@ jobs:
       - name: Terraform Version
         run: terraform version
         working-directory: ./infra
-
-      - name: Terraform Init with Upgrade
-        run: terraform init -upgrade
-        if: ${{ inputs.TFUpgrade }}
-        working-directory: ./infra
         
       - name: Terraform Init
         run: terraform init
         working-directory: ./infra
-        if: ${{ !inputs.TFUpgrade }}
 
       - name: Terraform Plan
         run: terraform plan

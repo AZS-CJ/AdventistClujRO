@@ -147,6 +147,14 @@ resource "azurerm_container_app" "strapi" {
     password_secret_name = "adminpassword"
   }
 
+  ingress {
+    target_port = "80"
+    traffic_weight {
+      percentage = 100
+    }
+    transport = "http"
+  }
+
   template {
     container {
       name   = "strapi"

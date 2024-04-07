@@ -122,7 +122,7 @@ resource "azurerm_container_app_environment" "platform" {
 
 resource "azurerm_container_app_environment_storage" "environment-storage" {
   for_each                     = var.sites
-  name                         = "environment-storage-${each.value.name}"
+  name                         = "envst${lower(each.value.name)}"
   container_app_environment_id = azurerm_container_app_environment.platform.id
   account_name                 = azurerm_storage_account.cms-storage-site[each.value.name].name
   share_name                   = azurerm_storage_share.cms-storage-share-site[each.value.name].name
@@ -217,7 +217,7 @@ resource "azurerm_container_app" "strapi-container" {
   template {
     volume {
       name         = "strapiuploads"
-      storage_name = azurerm_storage_share.cms-storage-share-site[each.value.name].name
+      storage_name = azurerm_container_app_environment_storage.environment-storage.name
       storage_type = "AzureFile"
     }
     container {

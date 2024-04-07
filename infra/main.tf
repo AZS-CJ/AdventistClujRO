@@ -76,26 +76,6 @@ resource "azurerm_log_analytics_workspace" "log-analytics-workspace-common" {
   retention_in_days   = 30
 }
 
-resource "azurerm_container_app_environment" "platform" {
-  name                       = "AzsPlatform-Environment"
-  location                   = azurerm_resource_group.common.location
-  resource_group_name        = azurerm_resource_group.common.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
-
-  workload_profile {
-    name                  = "Consumption"
-    workload_profile_type = "Consumption"
-    maximum_count         = 4
-    minimum_count         = 0
-  }
-}
-
-resource "azurerm_resource_group" "site-rg" {
-  for_each = var.sites
-  name     = "${each.value.name}-rg"
-  location = "Germany West Central"
-}
-
 resource "azurerm_storage_account" "cms-storage-site" {
   for_each            = var.sites
   name                = "strapisa${each.value.name}"
@@ -124,6 +104,36 @@ resource "azurerm_storage_share_directory" "strapi-uploads" {
   for_each         = var.sites
   name             = "uploads"
   storage_share_id = azurerm_storage_share.cms-storage-share-site[each.value.name].id
+}
+
+resource "azurerm_container_app_environment" "platform" {
+  name                       = "AzsPlatform-Environment"
+  location                   = azurerm_resource_group.common.location
+  resource_group_name        = azurerm_resource_group.common.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
+
+  workload_profile {
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+    maximum_count         = 4
+    minimum_count         = 0
+  }
+}
+
+resource "azurerm_container_app_environment_storage" "environment-storage" {
+  for_each = var.sites
+  name                         = "environment-storage-${var.value.name}"
+  container_app_environment_id = azurerm_container_app_environment.platform.id
+  account_name                 = azurerm_storage_account.cms-storage-site.name
+  share_name                   = azurerm_storage_share.cms-storage-share-site.name
+  access_key                   = azurerm_storage_account.cms-storage-site.primary_access_key
+  access_mode                  = "ReadWrite"
+}
+
+resource "azurerm_resource_group" "site-rg" {
+  for_each = var.sites
+  name     = "${each.value.name}-rg"
+  location = "Germany West Central"
 }
 
 resource "random_password" "strapi-site-admin-jwt-secret" {

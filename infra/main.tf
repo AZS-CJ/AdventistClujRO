@@ -405,7 +405,7 @@ resource "azurerm_app_service_custom_hostname_binding" "strapi_test_hostname_bin
   resource_group_name = azurerm_resource_group.website["test"].name
 }
 
-resource "azurerm_dns_zone" "azscj-zone" {
+resource "azurerm_dns_zone" "azsplatform-zone" {
   name                = "azsplatform.ro"
   resource_group_name = azurerm_resource_group.common.name
 }

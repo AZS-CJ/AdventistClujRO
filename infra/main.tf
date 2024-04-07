@@ -121,12 +121,12 @@ resource "azurerm_container_app_environment" "platform" {
 }
 
 resource "azurerm_container_app_environment_storage" "environment-storage" {
-  for_each = var.sites
+  for_each                     = var.sites
   name                         = "environment-storage-${var.value.name}"
   container_app_environment_id = azurerm_container_app_environment.platform.id
-  account_name                 = azurerm_storage_account.cms-storage-site.name
-  share_name                   = azurerm_storage_share.cms-storage-share-site.name
-  access_key                   = azurerm_storage_account.cms-storage-site.primary_access_key
+  account_name                 = azurerm_storage_account.cms-storage-site[each.value.name].name
+  share_name                   = azurerm_storage_share.cms-storage-share-site[each.value.name].name
+  access_key                   = azurerm_storage_account.cms-storage-site[each.value.name].primary_access_key
   access_mode                  = "ReadWrite"
 }
 

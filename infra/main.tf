@@ -406,6 +406,11 @@ resource "azurerm_app_service_custom_hostname_binding" "strapi_test_hostname_bin
 }
 
 resource "azurerm_dns_zone" "azscj-zone" {
+  name                = "azsplatform.ro"
+  resource_group_name = azurerm_resource_group.common.name
+}
+
+resource "azurerm_dns_zone" "azscj-zone" {
   name                = "adventistcluj.ro"
   resource_group_name = azurerm_resource_group.common.name
 }

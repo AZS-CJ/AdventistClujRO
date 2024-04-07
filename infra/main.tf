@@ -217,7 +217,7 @@ resource "azurerm_container_app" "strapi-container" {
   template {
     volume {
       name         = "strapiuploads"
-      storage_name = azurerm_container_app_environment_storage.environment-storage.name
+      storage_name = azurerm_container_app_environment_storage.environment-storage[each.value.name].name
       storage_type = "AzureFile"
     }
     container {

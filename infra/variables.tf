@@ -10,6 +10,23 @@ variable "environments" {
   }
 }
 
+variable "sites" {
+  type = map(object({
+    name       = string
+    domain     = string
+  }))
+  default = {
+    azsplatform = {
+      name       = "azsplatform"
+      domain     = "azsplatform.ro"
+    }
+    adventistcluj = {
+      name       = "adventistcluj"
+      domain     = "adventistcluj.ro"
+    }
+  }
+}
+
 variable "EMAIL_ADDRESS_TEST" {
   type    = string
   default = ""

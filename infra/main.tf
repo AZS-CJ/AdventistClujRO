@@ -32,13 +32,6 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = true
 }
 
-resource "azurerm_resource_group" "website" {
-  for_each = var.environments
-  name     = "${var.website_name}-${each.key}-rg"
-  location = "Germany West Central"
-}
-
-// Common database
 resource "random_password" "admin-login-pass" {
   length  = 32
   special = true
@@ -56,6 +49,15 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
   zone                   = 1
 }
 
+resource "azurerm_mysql_flexible_database" "site-db" {
+  for_each            = var.sites
+  name                = "db-site-${each.value.name}"
+  resource_group_name = azurerm_resource_group.common.name
+  server_name         = azurerm_mysql_flexible_server.cms-db.name
+  charset             = "utf8"
+  collation           = "utf8_unicode_ci"
+}
+
 # Not yet available in the Azure provider, has to be done manually
 # after it's created by terraform
 # resource "azurerm_mysql_firewall_rule" "AllAccessRule" {
@@ -66,53 +68,12 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
 #   end_ip_address      = "255.255.255.255"
 # }
 
-
 resource "azurerm_log_analytics_workspace" "log-analytics-workspace-common" {
   name                = "log-analytics-workspace-common"
   location            = azurerm_resource_group.common.location
   resource_group_name = azurerm_resource_group.common.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
-}
-
-resource "azurerm_application_insights" "AppInsights" {
-  for_each            = var.environments
-  name                = "aiazscj-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  workspace_id        = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
-  application_type    = "web"
-}
-
-resource "azurerm_storage_account" "cms-storage" {
-  for_each            = var.environments
-  name                = "strapisa${each.key}"
-  resource_group_name = azurerm_resource_group.website[each.key].name
-
-  location            = azurerm_resource_group.common.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
-resource "azurerm_storage_share" "cms-storage-share" {
-  for_each             = var.environments
-  name                 = "strapish${each.key}"
-  storage_account_name = azurerm_storage_account.cms-storage[each.key].name
-  quota                = 5
-  acl {
-    id = "acl-file-share-strapi-uploads"
-
-    access_policy {
-      permissions = "rwdl"
-    }
-  }
-}
-
-resource "azurerm_storage_share_directory" "uploads" {
-  for_each             = var.environments
-  name                 = "uploads"
-  share_name           = azurerm_storage_share.cms-storage-share[each.key].name
-  storage_account_name = azurerm_storage_account.cms-storage[each.key].name
 }
 
 resource "azurerm_container_app_environment" "platform" {
@@ -129,88 +90,183 @@ resource "azurerm_container_app_environment" "platform" {
   }
 }
 
-resource "azurerm_container_app" "strapi" {
-  for_each                     = var.environments
+resource "azurerm_resource_group" "site-rg" {
+  for_each = var.sites
+  name     = "${each.value.name}-rg"
+  location = "Germany West Central"
+}
+
+resource "azurerm_storage_account" "cms-storage-site" {
+  for_each            = var.sites
+  name                = "strapisa${each.value.name}"
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+
+  location                 = azurerm_resource_group.common.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_share" "cms-storage-share-site" {
+  for_each             = var.sites
+  name                 = "strapish${each.value.name}"
+  storage_account_name = azurerm_storage_account.cms-storage-site[each.value.name].name
+  quota                = 5
+  acl {
+    id = "acl-file-share-strapi-uploads"
+
+    access_policy {
+      permissions = "rwdl"
+    }
+  }
+}
+
+resource "azurerm_storage_share_directory" "strapi-uploads" {
+  for_each         = var.sites
+  name             = "uploads"
+  storage_share_id = azurerm_storage_share.cms-storage-share-site[each.value.name].id
+}
+
+resource "random_password" "strapi-site-admin-jwt-secret" {
+  for_each = var.sites
+  length   = 32
+  special  = false
+}
+
+resource "random_password" "strapi-site-jwt-secret" {
+  for_each = var.sites
+  length   = 32
+  special  = false
+}
+
+resource "random_password" "strapi-site-app-key1" {
+  for_each = var.sites
+  length   = 16
+  special  = true
+}
+
+resource "random_password" "strapi-site-app-key2" {
+  for_each = var.sites
+  length   = 16
+  special  = true
+}
+
+resource "random_password" "strapi-site-app-key3" {
+  for_each = var.sites
+  length   = 16
+  special  = true
+}
+
+resource "random_password" "strapi-site-app-key4" {
+  for_each = var.sites
+  length   = 16
+  special  = true
+}
+
+resource "random_password" "strapi-site-api-token-salt" {
+  for_each = var.sites
+  length   = 16
+  special  = true
+}
+
+resource "random_password" "strapi-site-transfer-token-salt" {
+  for_each = var.sites
+  length   = 16
+  special  = true
+}
+
+resource "azurerm_container_app" "strapi-container" {
+  for_each                     = var.sites
   name                         = "cms-${each.key}-app"
   container_app_environment_id = azurerm_container_app_environment.platform.id
-  resource_group_name          = azurerm_resource_group.common.name
+  resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
   revision_mode                = "Single"
 
   secret {
-    name = "adminpassword"
+    name  = "adminpassword"
     value = azurerm_container_registry.acr.admin_password
   }
 
+  workload_profile_name = "Consumption"
+
   registry {
-    server = azurerm_container_registry.acr.login_server
-    username = azurerm_container_registry.acr.admin_username
+    server               = azurerm_container_registry.acr.login_server
+    username             = azurerm_container_registry.acr.admin_username
     password_secret_name = "adminpassword"
   }
 
   ingress {
     target_port = "80"
     traffic_weight {
-      percentage = 100
+      percentage      = 100
       latest_revision = true
     }
-    transport = "http"
+    transport        = "http"
     external_enabled = true
   }
 
   template {
+    volume {
+      name         = "StrapiUploads"
+      storage_name = azurerm_storage_share.cms-storage-share-site[each.value.name].name
+      storage_type = "AzureFile"
+    }
     container {
       name   = "strapi"
       image  = "${azurerm_container_registry.acr.login_server}/azscjstrapi:latest"
       cpu    = 0.25
       memory = "0.5Gi"
+      volume_mounts {
+        name = "StrapiUploads"
+        path = "/opt/app/public"
+      }
       liveness_probe {
-        path = "/api/under-construction"
-        port = 80
+        path      = "/api/under-construction"
+        port      = 80
         transport = "HTTP"
       }
       env {
-        name = "DATABASE_CLIENT"
+        name  = "DATABASE_CLIENT"
         value = "mysql"
       }
       env {
-        name = "DATABASE_HOST"
+        name  = "DATABASE_HOST"
         value = azurerm_mysql_flexible_server.cms-db.fqdn
       }
       env {
-        name = "DATABASE_PORT"
+        name  = "DATABASE_PORT"
         value = "3306"
       }
       env {
-        name = "DATABASE_NAME"
-        value = "cms-db-${each.key}"
+        name  = "DATABASE_NAME"
+        value = "db-site-${each.value.name}"
       }
       env {
-        name = "DATABASE_USERNAME"
+        name  = "DATABASE_USERNAME"
         value = "mysqladminuser"
       }
       env {
-        name = "DATABASE_PASSWORD"
+        name  = "DATABASE_PASSWORD"
         value = random_password.admin-login-pass.result
       }
       env {
-        name = "ADMIN_JWT_SECRET"
-        value = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
+        name  = "ADMIN_JWT_SECRET"
+        value = base64encode(random_password.strapi-site-admin-jwt-secret[each.value.name].result)
       }
       env {
-        name = "JWT_SECRET"
-        value = base64encode(random_password.strapi-jwt-secret[each.key].result)
+        name  = "JWT_SECRET"
+        value = base64encode(random_password.strapi-site-jwt-secret[each.value.name].result)
       }
       env {
-        name = "APP_KEYS"
-        value = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
+        name  = "APP_KEYS"
+        value = "${base64encode(random_password.strapi-site-app-key1[each.value.name].result)},${base64encode(random_password.strapi-site-app-key2[each.value.name].result)},${base64encode(random_password.strapi-site-app-key3[each.value.name].result)},${base64encode(random_password.strapi-site-app-key4[each.value.name].result)}"
       }
       env {
-        name = "API_TOKEN_SALT"
-        value = base64encode(random_password.api-token-salt[each.key].result)
+        name  = "API_TOKEN_SALT"
+        value = base64encode(random_password.strapi-site-api-token-salt[each.value.name].result)
       }
       env {
-        name = "TRANSFER_TOKEN_SALT"
-        value = base64encode(random_password.transfer-token-salt[each.key].result)
+        name  = "TRANSFER_TOKEN_SALT"
+        value = base64encode(random_password.strapi-site-transfer-token-salt[each.value.name].result)
       }
     }
   }
@@ -221,8 +277,28 @@ resource "azurerm_service_plan" "web-sites-service-plan" {
   location            = azurerm_resource_group.common.location
   resource_group_name = azurerm_resource_group.common.name
 
-  os_type     = "Linux"
-  sku_name    = "B1"
+  os_type  = "Linux"
+  sku_name = "B1"
+}
+
+####################################################################
+####################################################################
+####################################################################
+####################################################################
+# New schema above
+# Old schema below
+####################################################################
+####################################################################
+####################################################################
+####################################################################
+
+resource "azurerm_application_insights" "AppInsights" {
+  for_each            = var.environments
+  name                = "aiazscj-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  workspace_id        = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
+  application_type    = "web"
 }
 
 resource "azurerm_linux_web_app" "webhost" {
@@ -241,8 +317,8 @@ resource "azurerm_linux_web_app" "webhost" {
   }
 
   app_settings = {
-    "CMS_DB_HOST"   = "https://${azurerm_linux_web_app.strapi[each.key].default_hostname}"
-    "EMAIL_ADDRESS" = each.key == "test" ? var.EMAIL_ADDRESS_TEST : var.EMAIL_ADDRESS_PROD
+    "CMS_DB_HOST"    = "https://${azurerm_linux_web_app.strapi[each.key].default_hostname}"
+    "EMAIL_ADDRESS"  = each.key == "test" ? var.EMAIL_ADDRESS_TEST : var.EMAIL_ADDRESS_PROD
     "EMAIL_PASSWORD" = each.key == "test" ? var.EMAIL_PASSWORD_TEST : var.EMAIL_PASSWORD_PROD
   }
 
@@ -258,58 +334,104 @@ resource "azurerm_linux_web_app" "webhost" {
     http_logs {
       file_system {
         retention_in_days = 7
-        retention_in_mb = 35
+        retention_in_mb   = 35
       }
     }
   }
 }
 
-resource "random_password" "strapi-admin-jwt-secret" {
+resource "azurerm_storage_account" "cms-storage" {
   for_each            = var.environments
-  length = 32
-  special = false
+  name                = "strapisa${each.key}"
+  resource_group_name = azurerm_resource_group.website[each.key].name
+
+  location                 = azurerm_resource_group.common.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_resource_group" "website" {
+  for_each = var.environments
+  name     = "${var.website_name}-${each.key}-rg"
+  location = "Germany West Central"
+}
+
+resource "azurerm_storage_share" "cms-storage-share" {
+  for_each             = var.environments
+  name                 = "strapish${each.key}"
+  storage_account_name = azurerm_storage_account.cms-storage[each.key].name
+  quota                = 5
+  acl {
+    id = "acl-file-share-strapi-uploads"
+
+    access_policy {
+      permissions = "rwdl"
+    }
+  }
+}
+
+resource "azurerm_storage_account" "strapi-storage" {
+  for_each            = var.environments
+  name                = "strapisa${each.key}"
+  resource_group_name = azurerm_resource_group.website[each.key].name
+
+  location                 = azurerm_resource_group.common.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_share_directory" "uploads" {
+  for_each         = var.environments
+  name             = "uploads"
+  storage_share_id = azurerm_storage_share.cms-storage-share[each.key].id
+}
+
+resource "random_password" "strapi-admin-jwt-secret" {
+  for_each = var.environments
+  length   = 32
+  special  = false
 }
 
 resource "random_password" "strapi-jwt-secret" {
-  for_each            = var.environments
-  length = 32
-  special = false
+  for_each = var.environments
+  length   = 32
+  special  = false
 }
 
 resource "random_password" "strapi-app-key1" {
-  for_each            = var.environments
-  length = 16
-  special = true
+  for_each = var.environments
+  length   = 16
+  special  = true
 }
 
 resource "random_password" "strapi-app-key2" {
-  for_each            = var.environments
-  length = 16
-  special = true
+  for_each = var.environments
+  length   = 16
+  special  = true
 }
 
 resource "random_password" "strapi-app-key3" {
-  for_each            = var.environments
-  length = 16
-  special = true
+  for_each = var.environments
+  length   = 16
+  special  = true
 }
 
 resource "random_password" "strapi-app-key4" {
-  for_each            = var.environments
-  length = 16
-  special = true
+  for_each = var.environments
+  length   = 16
+  special  = true
 }
 
 resource "random_password" "api-token-salt" {
-  for_each            = var.environments
-  length = 16
-  special = true
+  for_each = var.environments
+  length   = 16
+  special  = true
 }
 
 resource "random_password" "transfer-token-salt" {
-  for_each            = var.environments
-  length = 16
-  special = true
+  for_each = var.environments
+  length   = 16
+  special  = true
 }
 
 // Strapi
@@ -322,8 +444,8 @@ resource "azurerm_linux_web_app" "strapi" {
   https_only          = true
 
   site_config {
-    use_32_bit_worker = false
-    health_check_path = "/api/under-construction"
+    use_32_bit_worker                       = false
+    health_check_path                       = "/api/under-construction"
     container_registry_use_managed_identity = true
   }
 
@@ -353,18 +475,18 @@ resource "azurerm_linux_web_app" "strapi" {
     http_logs {
       file_system {
         retention_in_days = 7
-        retention_in_mb = 35
+        retention_in_mb   = 35
       }
     }
   }
 
   storage_account {
-     access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
-     name         = "strapibinary"
-     account_name = azurerm_storage_account.cms-storage[each.key].name
-     share_name   = azurerm_storage_share.cms-storage-share[each.key].name
-     type         = "AzureFiles"
-     mount_path   = "/opt/app/public"
+    access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
+    name         = "strapibinary"
+    account_name = azurerm_storage_account.cms-storage[each.key].name
+    share_name   = azurerm_storage_share.cms-storage-share[each.key].name
+    type         = "AzureFiles"
+    mount_path   = "/opt/app/public"
   }
 }
 
@@ -428,7 +550,7 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-naked-verif" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  
+
   record {
     value = azurerm_linux_web_app.webhost["prod"].custom_domain_verification_id
   }
@@ -447,7 +569,7 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-www-verif" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  
+
   record {
     value = azurerm_linux_web_app.webhost["prod"].custom_domain_verification_id
   }
@@ -466,7 +588,7 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-test-verif" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  
+
   record {
     value = azurerm_linux_web_app.webhost["test"].custom_domain_verification_id
   }
@@ -485,7 +607,7 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-cms-verify" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  
+
   record {
     value = azurerm_linux_web_app.strapi["prod"].custom_domain_verification_id
   }
@@ -504,7 +626,7 @@ resource "azurerm_dns_txt_record" "adventistclujro-prod-cms-test-verify" {
   zone_name           = azurerm_dns_zone.azscj-zone.name
   resource_group_name = azurerm_resource_group.common.name
   ttl                 = 300
-  
+
   record {
     value = azurerm_linux_web_app.strapi["test"].custom_domain_verification_id
   }

@@ -176,7 +176,7 @@ resource "random_password" "strapi-site-transfer-token-salt" {
 
 resource "azurerm_container_app" "strapi-container" {
   for_each                     = var.sites
-  name                         = "cms-${each.key}-app"
+  name                         = "cms-${each.value.name}-app"
   container_app_environment_id = azurerm_container_app_environment.platform.id
   resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
   revision_mode                = "Single"
@@ -206,7 +206,7 @@ resource "azurerm_container_app" "strapi-container" {
 
   template {
     volume {
-      name         = "StrapiUploads"
+      name         = "strapiuploads"
       storage_name = azurerm_storage_share.cms-storage-share-site[each.value.name].name
       storage_type = "AzureFile"
     }
@@ -216,7 +216,7 @@ resource "azurerm_container_app" "strapi-container" {
       cpu    = 0.25
       memory = "0.5Gi"
       volume_mounts {
-        name = "StrapiUploads"
+        name = "strapiuploads"
         path = "/opt/app/public"
       }
       liveness_probe {

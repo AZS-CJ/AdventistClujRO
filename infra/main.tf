@@ -380,16 +380,6 @@ resource "azurerm_storage_share" "cms-storage-share" {
   }
 }
 
-resource "azurerm_storage_account" "strapi-storage" {
-  for_each            = var.environments
-  name                = "strapisa${each.key}"
-  resource_group_name = azurerm_resource_group.website[each.key].name
-
-  location                 = azurerm_resource_group.common.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
 resource "azurerm_storage_share_directory" "uploads" {
   for_each         = var.environments
   name             = "uploads"

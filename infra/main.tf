@@ -122,7 +122,7 @@ resource "azurerm_container_app_environment" "platform" {
 
 resource "azurerm_container_app_environment_storage" "environment-storage" {
   for_each                     = var.sites
-  name                         = "environment-storage-${var.value.name}"
+  name                         = "environment-storage-${each.value.name}"
   container_app_environment_id = azurerm_container_app_environment.platform.id
   account_name                 = azurerm_storage_account.cms-storage-site[each.value.name].name
   share_name                   = azurerm_storage_share.cms-storage-share-site[each.value.name].name

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "footer",
     "pluralName": "footers",
-    "displayName": "Footer"
+    "displayName": "Footer",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -24,6 +25,10 @@
       "required": true
     },
     "youtubeLink": {
+      "type": "string",
+      "required": true
+    },
+    "churchName": {
       "type": "string",
       "required": true
     }

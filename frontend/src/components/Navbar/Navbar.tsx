@@ -2,15 +2,21 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
 import menuButton from '../../assets/mobile_menu_toggle.svg'
-import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
 import { getLiveStatus } from '../../api/homePage'
 
 import './Navbar.scss'
+import { NavbarType } from '../../data/navbar'
+import { getNavbar } from '../../api/navbar'
 
 interface LiveState {
   isLive: boolean
   url: string
+}
+
+interface NavbarState {
+  navbar: NavbarType
+  loading: boolean
 }
 
 function Navbar(props) {
@@ -18,6 +24,15 @@ function Navbar(props) {
   const { openSidebar, hideSidebar, sidebarOpen } = useNavigationContext()
   const location = useLocation()
   const [liveState, setLiveState] = useState<LiveState>({ isLive: false, url: '' })
+  const [navbarRequest, setNavbarRequest] = useState<NavbarState>({ navbar: {}, loading: true })
+  let toastTimeout
+
+  useEffect(() => {
+    getNavbar().then((navbar: NavbarType) => setNavbarRequest({ navbar, loading: false }))
+    return () => {
+      clearTimeout(toastTimeout)
+    }
+  }, [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
@@ -76,7 +91,7 @@ function Navbar(props) {
       <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
         <div className="navbar-brand">
           <Link className="brand-name" to="/">
-            <img className="church-name" src={churchName} alt="Church Name" />
+            <img className="church-name" src={navbarRequest.navbar.logoUrl} alt="Church Name" />
           </Link>
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>

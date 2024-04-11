@@ -68,7 +68,7 @@ function Contact() {
         <div className="line">
           <p className="section">Adresă:</p>
           <p className="value">
-            Strada Moților 47 <br className="mobile-br" /> Cluj-Napoca | România
+            {contactRequest.contact.address}
           </p>
         </div>
       </div>

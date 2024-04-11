@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LINKS } from '../../util/constants'
+import { FooterType } from '../../data/footer'
 
 import './Footer.scss'
+import { getFooter } from '../../api/footer'
+
+interface FooterState {
+  footer: FooterType
+  loading: boolean
+}
+
 function Footer() {
+  const [footerRequest, setFooterRequest] = useState<FooterState>({ footer: {}, loading: true })
+  
+
+  let toastTimeout
+
+  useEffect(() => {
+    getFooter().then((footer: FooterType) => setFooterRequest({ footer, loading: false }))
+    return () => {
+      clearTimeout(toastTimeout)
+    }
+  }, [])
+
   return (
     <footer className={`page-footer font-small blue`}>
       <div className="container-fluid my-menu">
@@ -11,15 +31,15 @@ function Footer() {
             <div className="social-media">
               <p>Social Media:</p>
               <div className="media-links">
-                <a className="button" href={LINKS.YOUTUBE} target="_blank">
+                <a className="button" href={footerRequest.footer.youtubeLink} target="_blank">
                   <i className="bi bi-youtube" />
                   <span className="icon-text">YouTube</span>
                 </a>
-                <a className="button" href={LINKS.FACEBOOK} target="_blank">
+                <a className="button" href={footerRequest.footer.facebookLink} target="_blank">
                   <i className="bi bi-facebook" />
                   <span className="icon-text">Facebook</span>
                 </a>
-                <a className="button" href={LINKS.INSTAGRAM} target="_blank">
+                <a className="button" href={footerRequest.footer.instagramLink} target="_blank">
                   <div className="instagram-icon-container">
                     <h3>
                       <i className="bi bi-instagram" />
@@ -30,9 +50,9 @@ function Footer() {
               </div>
             </div>
             <div className="footer-copyright">
-              © {new Date().getFullYear()} Biserica Adventistă de Ziua a Șaptea "Speranța" Cluj-Napoca &nbsp;
+              © {new Date().getFullYear()} {footerRequest.footer.churchName} &nbsp;
               <a className="address-link" href="https://goo.gl/maps/G9tndGkL8TA7hpsV8" target="_blank">
-                Strada Moților 47 Cluj-Napoca | România
+                {footerRequest.footer.address} | România
               </a>
             </div>
           </div>

@@ -54,19 +54,17 @@ resource "azurerm_mysql_flexible_database" "site-db" {
   name                = "db-site-${each.value.name}"
   resource_group_name = azurerm_resource_group.common.name
   server_name         = azurerm_mysql_flexible_server.cms-db.name
-  charset             = "utf8"
-  collation           = "utf8_unicode_ci"
+  charset             = "utf8mb4"
+  collation           = "utf8mb4_0900_ai_ci"
 }
 
-# Not yet available in the Azure provider, has to be done manually
-# after it's created by terraform
-# resource "azurerm_mysql_firewall_rule" "AllAccessRule" {
-#   name                = "AllAccessRule"
-#   resource_group_name = azurerm_resource_group.common.name
-#   server_name         = azurerm_mysql_flexible_server.cms-db.name
-#   start_ip_address    = "0.0.0.0"
-#   end_ip_address      = "255.255.255.255"
-# }
+resource "azurerm_mysql_flexible_server_firewall_rule" "AllAccessRule" {
+  name                = "AllAccessRule"
+  resource_group_name = azurerm_resource_group.common.name
+  server_name         = azurerm_mysql_flexible_server.cms-db.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "255.255.255.255"
+}
 
 resource "azurerm_log_analytics_workspace" "log-analytics-workspace-common" {
   name                = "log-analytics-workspace-common"
@@ -228,11 +226,6 @@ resource "azurerm_container_app" "strapi-container" {
       volume_mounts {
         name = "strapiuploads"
         path = "/opt/app/public"
-      }
-      liveness_probe {
-        path      = "/api/under-construction"
-        port      = 80
-        transport = "HTTP"
       }
       env {
         name  = "DATABASE_CLIENT"

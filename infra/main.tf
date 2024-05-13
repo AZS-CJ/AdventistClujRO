@@ -275,13 +275,36 @@ resource "azurerm_container_app" "strapi-container" {
   }
 }
 
-resource "azurerm_service_plan" "web-sites-service-plan" {
-  name                = "${var.website_name}-ServicePlan"
-  location            = azurerm_resource_group.common.location
+resource "azurerm_dns_zone" "dnszone" {
+  for_each            = var.sites
+  name                = each.value.domain
   resource_group_name = azurerm_resource_group.common.name
+}
 
-  os_type  = "Linux"
-  sku_name = "B1"
+resource "azurerm_dns_cname_record" "strapi-dns-records" {
+  for_each            = var.sites
+  name                = each.value.domain
+  zone_name           = azurerm_dns_zone.dnszone[each.value.name].name
+  resource_group_name = azurerm_resource_group.common.name
+  ttl                 = 3600
+  record              = azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn
+}
+
+resource "null_resource" "configure-hostname" {
+  for_each = var.sites
+  provisioner "local-exec" {
+    command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name]} --name ${azurerm_container_app.strapi-container[each.value.name]} --hostname ${each.value.domain}"
+    on_failure = continue
+  }
+
+  provisioner "local-exec" {
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name]} --name ${azurerm_container_app.strapi-container[each.value.name]} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
+    on_failure = continue
+  }
+
+  lifecycle {
+    replace_triggered_by = [azurerm_container_app.strapi-container]
+  }
 }
 
 ####################################################################
@@ -294,6 +317,15 @@ resource "azurerm_service_plan" "web-sites-service-plan" {
 ####################################################################
 ####################################################################
 ####################################################################
+
+resource "azurerm_service_plan" "web-sites-service-plan" {
+  name                = "${var.website_name}-ServicePlan"
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
+
+  os_type  = "Linux"
+  sku_name = "B1"
+}
 
 resource "azurerm_application_insights" "AppInsights" {
   for_each            = var.environments
@@ -518,11 +550,6 @@ resource "azurerm_app_service_custom_hostname_binding" "strapi_test_hostname_bin
   hostname            = "cms-test.adventistcluj.ro"
   app_service_name    = azurerm_linux_web_app.strapi["test"].name
   resource_group_name = azurerm_resource_group.website["test"].name
-}
-
-resource "azurerm_dns_zone" "azsplatform-zone" {
-  name                = "azsplatform.ro"
-  resource_group_name = azurerm_resource_group.common.name
 }
 
 resource "azurerm_dns_zone" "azscj-zone" {

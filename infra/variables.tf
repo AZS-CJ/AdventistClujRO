@@ -10,19 +10,40 @@ variable "environments" {
   }
 }
 
+variable "only_platform_enabled" {
+  type = bool
+  default = true
+}
+
 variable "sites" {
   type = map(object({
-    name       = string
-    domain     = string
+    name   = string
+    domain = string
   }))
   default = {
     azsplatform = {
-      name       = "azsplatform"
-      domain     = "azsplatform.ro"
+      name   = "azsplatform"
+      domain = "azsplatform.ro"
+      enable = true
     }
     adventistcluj = {
-      name       = "adventistcluj"
-      domain     = "adventistcluj.ro"
+      name   = "adventistcluj"
+      domain = "adventistcluj.ro"
+      enable = false
+    }
+  }
+}
+
+variable "only_platform" {
+  type = map(object({
+    name   = string
+    domain = string
+  }))
+  default = {
+    azsplatform = {
+      name   = "azsplatform"
+      domain = "azsplatform.ro"
+      enable = true
     }
   }
 }

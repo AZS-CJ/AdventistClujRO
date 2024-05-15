@@ -275,11 +275,11 @@ resource "azurerm_container_app" "strapi-container" {
   }
 }
 
-# resource "azurerm_dns_zone" "site-dns-zone" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   name                = each.value.domain
-#   resource_group_name = azurerm_resource_group.common.name
-# }
+resource "azurerm_dns_zone" "site-dns-zone" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = each.value.domain
+  resource_group_name = azurerm_resource_group.common.name
+}
 
 # resource "azurerm_dns_cname_record" "site-naked" {
 #   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
@@ -340,43 +340,43 @@ resource "azurerm_container_app" "strapi-container" {
 #   }
 # }
 
-# resource "azurerm_dns_cname_record" "cms" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   name                = each.value.domain
-#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-#   ttl                 = 3600
-#   record              = azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn
-# }
+resource "azurerm_dns_cname_record" "cms" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = each.value.domain
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 3600
+  record              = azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn
+}
 
-# resource "azurerm_dns_txt_record" "cms-verification" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   name                = "asuid"
-#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-#   ttl                 = 300
+resource "azurerm_dns_txt_record" "cms-verification" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = "asuid"
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
 
-#   record {
-#     value = azurerm_container_app.strapi-container[each.value.name].custom_domain_verification_id
-#   }
-# }
+  record {
+    value = azurerm_container_app.strapi-container[each.value.name].custom_domain_verification_id
+  }
+}
 
-# resource "null_resource" "configure-hostname" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   provisioner "local-exec" {
-#     command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain}"
-#     on_failure = continue
-#   }
+resource "null_resource" "configure-hostname" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  provisioner "local-exec" {
+    command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain}"
+    on_failure = continue
+  }
 
-#   provisioner "local-exec" {
-#     command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
-#     on_failure = continue
-#   }
+  provisioner "local-exec" {
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
+    on_failure = continue
+  }
 
-#   lifecycle {
-#     replace_triggered_by = [azurerm_container_app.strapi-container]
-#   }
-# }
+  lifecycle {
+    replace_triggered_by = [azurerm_container_app.strapi-container]
+  }
+}
 
 ####################################################################
 ####################################################################

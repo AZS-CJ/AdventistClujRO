@@ -293,12 +293,12 @@ resource "azurerm_dns_cname_record" "strapi-dns-records" {
 resource "null_resource" "configure-hostname" {
   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
   provisioner "local-exec" {
-    command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name]} --name ${azurerm_container_app.strapi-container[each.value.name]} --hostname ${each.value.domain}"
+    command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname ${each.value.domain}"
     on_failure = continue
   }
 
   provisioner "local-exec" {
-    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name]} --name ${azurerm_container_app.strapi-container[each.value.name]} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name]} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
     on_failure = continue
   }
 

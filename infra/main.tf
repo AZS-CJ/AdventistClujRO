@@ -298,7 +298,7 @@ resource "null_resource" "configure-hostname" {
   }
 
   provisioner "local-exec" {
-    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name]} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
     on_failure = continue
   }
 

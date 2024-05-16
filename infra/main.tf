@@ -374,7 +374,7 @@ resource "null_resource" "strapi-hostname" {
   }
 
   lifecycle {
-    replace_triggered_by = [azurerm_container_app.strapi-container]
+    replace_triggered_by = [azurerm_container_app.strapi-container, azurerm_dns_cname_record.cms, azurerm_dns_txt_record.cms-verification]
   }
 }
 

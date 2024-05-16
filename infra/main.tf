@@ -351,7 +351,7 @@ resource "azurerm_dns_cname_record" "cms" {
 
 resource "azurerm_dns_txt_record" "cms-verification" {
   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = "asuid"
+  name                = "asuid.cms"
   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 300
@@ -369,7 +369,7 @@ resource "null_resource" "strapi-hostname" {
   }
 
   provisioner "local-exec" {
-    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain} --environment ${azurerm_container_app_environment.platform.name} --validation-method CNAME"
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain} --environment ${azurerm_container_app_environment.platform.name}"
     on_failure = continue
   }
 

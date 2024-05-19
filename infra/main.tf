@@ -369,7 +369,7 @@ resource "null_resource" "strapi-dns" {
   }
 
   provisioner "local-exec" {
-    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain} --environment ${azurerm_container_app_environment.platform.name}"
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain}"
     on_failure = fail
   }
 

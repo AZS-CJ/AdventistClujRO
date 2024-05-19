@@ -365,7 +365,7 @@ resource "null_resource" "strapi-dns" {
   for_each = var.only_platform_enabled ? var.only_platform : var.sites
   provisioner "local-exec" {
     command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain}"
-    on_failure = succeed
+    on_failure = continue
   }
 
   provisioner "local-exec" {

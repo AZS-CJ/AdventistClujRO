@@ -1,4 +1,4 @@
-name: Strapi Image Build
+name: Strapi - Image Build
 
 on:
   push:

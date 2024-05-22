@@ -1,4 +1,4 @@
-name: Strapi - Deploy Test
+name: Strapi - Deploy AZSPlatform
 
 on:
   push:

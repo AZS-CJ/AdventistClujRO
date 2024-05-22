@@ -1,4 +1,4 @@
-name: WebApp - Prod
+name: Web - Deploy Prods
 
 on:
   push:

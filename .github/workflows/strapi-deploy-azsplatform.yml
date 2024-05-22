@@ -15,9 +15,11 @@ on:
 
 jobs:
   deploy:
-    uses: ./.github/workflows/strapi-common.yml
+    uses: ./.github/workflows/deploy-template.yml
     with:
-      webAppSuffix: test
+      containerAppName: cms-azsplatform-app
+      imageName: azsstrapi
+      resourceGroup: cms-azsplatform-app
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
       publishProfile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}

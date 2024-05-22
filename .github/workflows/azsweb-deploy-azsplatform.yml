@@ -15,11 +15,11 @@ on:
 
 jobs:
   build-and-deploy:
-    uses: ./.github/workflows/webApp-common.yml
+    uses: ./.github/workflows/deploy-template.yml
     with:
-      webAppName: adventistclujro-test
-      webAppPackagePath: './backend'
-      nodeVersion: '16.x'
+      containerAppName: cms-azsplatform-app
+      imageName: azsstrapi
+      resourceGroup: cms-azsplatform-app
     secrets:
       publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}
       googleAnalytics: ${{ secrets.GOOGLE_ANALYTICS_TEST_ENV }}

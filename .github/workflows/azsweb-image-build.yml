@@ -2,7 +2,9 @@ name: Strapi Image Build
 
 on:
   push:
-    branches: [ main ]
+    branches:
+    - main
+    - containerApps
     paths:
     - ./backend
     - ./frontend

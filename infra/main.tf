@@ -338,13 +338,13 @@ resource "azurerm_dns_zone" "site-dns-zone" {
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
 
-resource "azurerm_dns_cname_record" "site-naked" {
+resource "azurerm_dns_a_record" "site-naked" {
   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
   name                = each.value.domain
   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 3600
-  record              = azurerm_container_app.web-container[each.value.name].ingress[0].fqdn
+  records             = [azurerm_container_app_environment.platform.static_ip_address]
 }
 
 resource "azurerm_dns_txt_record" "site-naked-verification" {

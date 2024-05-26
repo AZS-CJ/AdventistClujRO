@@ -220,7 +220,7 @@ resource "azurerm_container_app" "strapi-container" {
     }
     container {
       name   = "strapi"
-      image  = "${azurerm_container_registry.acr.login_server}/azscjstrapi:latest"
+      image  = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
       cpu    = 0.5
       memory = "1Gi"
       volume_mounts {
@@ -392,7 +392,7 @@ resource "null_resource" "web-hostnames" {
   }
 
   provisioner "local-exec" {
-    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname www.${each.value.domain} --environment ${azurerm_container_app_environment.platform.id} --validation-method CNAME"
+    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.id} --validation-method CNAME"
     on_failure = fail
   }
 

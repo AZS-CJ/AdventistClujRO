@@ -275,6 +275,63 @@ resource "azurerm_container_app" "strapi-container" {
   }
 }
 
+resource "azurerm_container_app" "web-container" {
+  for_each                     = var.sites
+  name                         = "web-${each.value.name}-app"
+  container_app_environment_id = azurerm_container_app_environment.platform.id
+  resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
+  revision_mode                = "Single"
+
+  secret {
+    name  = "adminpassword"
+    value = azurerm_container_registry.acr.admin_password
+  }
+
+  workload_profile_name = "Consumption"
+
+  registry {
+    server               = azurerm_container_registry.acr.login_server
+    username             = azurerm_container_registry.acr.admin_username
+    password_secret_name = "adminpassword"
+  }
+
+  ingress {
+    target_port = "80"
+    traffic_weight {
+      percentage      = 100
+      latest_revision = true
+    }
+    transport        = "http"
+    external_enabled = true
+  }
+
+  template {
+    volume {
+      name         = "strapiuploads"
+      storage_name = azurerm_container_app_environment_storage.environment-storage[each.value.name].name
+      storage_type = "AzureFile"
+    }
+    container {
+      name   = "strapi"
+      image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
+      cpu    = 0.25
+      memory = "0.5Gi"
+      env {
+        name  = "CMS_DB_HOST"
+        value = azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn
+      }
+      env {
+        name  = "EMAIL_ADDRESS"
+        value = ""
+      }
+      env {
+        name  = "EMAIL_PASSWORD"
+        value = ""
+      }
+    }
+  }
+}
+
 resource "azurerm_dns_zone" "site-dns-zone" {
   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
   name                = each.value.domain

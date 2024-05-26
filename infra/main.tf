@@ -221,7 +221,7 @@ resource "azurerm_container_app" "strapi-container" {
     container {
       name   = "strapi"
       image  = "${azurerm_container_registry.acr.login_server}/azscjstrapi:latest"
-      cpu    = 0.25
+      cpu    = 0.5
       memory = "0.5Gi"
       volume_mounts {
         name = "strapiuploads"
@@ -312,13 +312,13 @@ resource "azurerm_container_app" "web-container" {
       storage_type = "AzureFile"
     }
     container {
-      name   = "strapi"
+      name   = "web"
       image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
       cpu    = 0.25
       memory = "0.5Gi"
       env {
         name  = "CMS_DB_HOST"
-        value = azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn
+        value = "https://${azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn}"
       }
       env {
         name  = "EMAIL_ADDRESS"

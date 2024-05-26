@@ -338,26 +338,26 @@ resource "azurerm_dns_zone" "site-dns-zone" {
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
 
-# resource "azurerm_dns_cname_record" "site-naked" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   name                = each.value.domain
-#   zone_name           = azurerm_dns_zone.dnszone[each.value.name].name
-#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-#   ttl                 = 3600
-#   record              = azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn
-# }
+resource "azurerm_dns_cname_record" "site-naked" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = each.value.domain
+  zone_name           = azurerm_dns_zone.dnszone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 3600
+  record              = azurerm_container_app.web-container[each.value.name].ingress[0].fqdn
+}
 
-# resource "azurerm_dns_txt_record" "site-naked-verification" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   name                = "asuid"
-#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-#   ttl                 = 300
+resource "azurerm_dns_txt_record" "site-naked-verification" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = "asuid"
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
 
-#   record {
-#     value = azurerm_container_app.strapi-container[each.value.name].custom_domain_verification_id
-#   }
-# }
+  record {
+    value = azurerm_container_app.web-container[each.value.name].custom_domain_verification_id
+  }
+}
 
 # resource "azurerm_dns_cname_record" "site-www" {
 #   for_each            = var.only_platform_enabled ? var.only_platform : var.sites

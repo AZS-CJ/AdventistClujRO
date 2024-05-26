@@ -399,7 +399,7 @@ resource "null_resource" "web-hostnames" {
   lifecycle {
     replace_triggered_by = [
       azurerm_container_app.web-container,
-      azurerm_dns_cname_record.site-naked,
+      azurerm_dns_a_record.site-naked,
       azurerm_dns_txt_record.site-naked-verification,
       azurerm_dns_cname_record.site-www,
       azurerm_dns_txt_record.site-www-verification

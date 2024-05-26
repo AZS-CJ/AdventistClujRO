@@ -222,7 +222,7 @@ resource "azurerm_container_app" "strapi-container" {
       name   = "strapi"
       image  = "${azurerm_container_registry.acr.login_server}/azscjstrapi:latest"
       cpu    = 0.5
-      memory = "1.0Gi"
+      memory = "1Gi"
       volume_mounts {
         name = "strapiuploads"
         path = "/opt/app/public"
@@ -315,7 +315,7 @@ resource "azurerm_container_app" "web-container" {
       name   = "web"
       image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
       cpu    = 0.5
-      memory = "1.0Gi"
+      memory = "1Gi"
       env {
         name  = "CMS_DB_HOST"
         value = "https://${azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn}"
@@ -380,7 +380,7 @@ resource "azurerm_dns_txt_record" "site-www-verification" {
   }
 }
 
-resource "null_resource" "configure-hostname" {
+resource "null_resource" "web-hostnames" {
   for_each = var.only_platform_enabled ? var.only_platform : var.sites
   provisioner "local-exec" {
     command    = "az extension add --name containerapp --upgrade"
@@ -388,7 +388,7 @@ resource "null_resource" "configure-hostname" {
   }
   provisioner "local-exec" {
     command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname ${each.value.domain}"
-    on_failure = fail
+    on_failure = continue
   }
 
   provisioner "local-exec" {
@@ -428,7 +428,7 @@ resource "azurerm_dns_txt_record" "cms-verification" {
   }
 }
 
-resource "null_resource" "strapi-dns" {
+resource "null_resource" "strapi-hostnames" {
   for_each = var.only_platform_enabled ? var.only_platform : var.sites
   provisioner "local-exec" {
     command    = "az extension add --name containerapp --upgrade"
@@ -436,7 +436,7 @@ resource "null_resource" "strapi-dns" {
   }
   provisioner "local-exec" {
     command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.strapi-container[each.value.name].name} --hostname cms.${each.value.domain}"
-    on_failure = fail
+    on_failure = continue
   }
 
   provisioner "local-exec" {

@@ -275,137 +275,137 @@ resource "azurerm_container_app" "strapi-container" {
   }
 }
 
-resource "azurerm_container_app" "web-container" {
-  for_each                     = var.sites
-  name                         = "web-${each.value.name}-app"
-  container_app_environment_id = azurerm_container_app_environment.platform.id
-  resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
-  revision_mode                = "Single"
+# resource "azurerm_container_app" "web-container" {
+#   for_each                     = var.sites
+#   name                         = "web-${each.value.name}-app"
+#   container_app_environment_id = azurerm_container_app_environment.platform.id
+#   resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
+#   revision_mode                = "Single"
 
-  secret {
-    name  = "adminpassword"
-    value = azurerm_container_registry.acr.admin_password
-  }
+#   secret {
+#     name  = "adminpassword"
+#     value = azurerm_container_registry.acr.admin_password
+#   }
 
-  workload_profile_name = "Consumption"
+#   workload_profile_name = "Consumption"
 
-  registry {
-    server               = azurerm_container_registry.acr.login_server
-    username             = azurerm_container_registry.acr.admin_username
-    password_secret_name = "adminpassword"
-  }
+#   registry {
+#     server               = azurerm_container_registry.acr.login_server
+#     username             = azurerm_container_registry.acr.admin_username
+#     password_secret_name = "adminpassword"
+#   }
 
-  ingress {
-    target_port = "80"
-    traffic_weight {
-      percentage      = 100
-      latest_revision = true
-    }
-    transport        = "http"
-    external_enabled = true
-  }
+#   ingress {
+#     target_port = "80"
+#     traffic_weight {
+#       percentage      = 100
+#       latest_revision = true
+#     }
+#     transport        = "http"
+#     external_enabled = true
+#   }
 
-  template {
-    volume {
-      name         = "strapiuploads"
-      storage_name = azurerm_container_app_environment_storage.environment-storage[each.value.name].name
-      storage_type = "AzureFile"
-    }
-    container {
-      name   = "web"
-      image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
-      cpu    = 0.5
-      memory = "1Gi"
-      env {
-        name  = "CMS_DB_HOST"
-        value = "https://${azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn}"
-      }
-      env {
-        name  = "EMAIL_ADDRESS"
-        value = ""
-      }
-      env {
-        name  = "EMAIL_PASSWORD"
-        value = ""
-      }
-    }
-  }
-}
+#   template {
+#     volume {
+#       name         = "strapiuploads"
+#       storage_name = azurerm_container_app_environment_storage.environment-storage[each.value.name].name
+#       storage_type = "AzureFile"
+#     }
+#     container {
+#       name   = "web"
+#       image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
+#       cpu    = 0.5
+#       memory = "1Gi"
+#       env {
+#         name  = "CMS_DB_HOST"
+#         value = "https://${azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn}"
+#       }
+#       env {
+#         name  = "EMAIL_ADDRESS"
+#         value = ""
+#       }
+#       env {
+#         name  = "EMAIL_PASSWORD"
+#         value = ""
+#       }
+#     }
+#   }
+# }
 
-resource "azurerm_dns_zone" "site-dns-zone" {
-  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = each.value.domain
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-}
+# resource "azurerm_dns_zone" "site-dns-zone" {
+#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+#   name                = each.value.domain
+#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+# }
 
-resource "azurerm_dns_cname_record" "site-naked" {
-  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = each.value.domain
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-  ttl                 = 3600
-  record              = azurerm_container_app.web-container[each.value.name].ingress[0].fqdn
-}
+# resource "azurerm_dns_cname_record" "site-naked" {
+#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+#   name                = each.value.domain
+#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+#   ttl                 = 3600
+#   record              = azurerm_container_app.web-container[each.value.name].ingress[0].fqdn
+# }
 
-resource "azurerm_dns_txt_record" "site-naked-verification" {
-  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = "asuid"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-  ttl                 = 300
+# resource "azurerm_dns_txt_record" "site-naked-verification" {
+#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+#   name                = "asuid"
+#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+#   ttl                 = 300
 
-  record {
-    value = azurerm_container_app.web-container[each.value.name].custom_domain_verification_id
-  }
-}
+#   record {
+#     value = azurerm_container_app.web-container[each.value.name].custom_domain_verification_id
+#   }
+# }
 
-resource "azurerm_dns_cname_record" "site-www" {
-  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = "www"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-  ttl                 = 300
-  record              = azurerm_container_app.web-container[each.value.name].ingress[0].fqdn
-}
+# resource "azurerm_dns_cname_record" "site-www" {
+#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+#   name                = "www"
+#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+#   ttl                 = 300
+#   record              = azurerm_container_app.web-container[each.value.name].ingress[0].fqdn
+# }
 
-resource "azurerm_dns_txt_record" "site-www-verification" {
-  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = "asuid.www"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-  ttl                 = 300
+# resource "azurerm_dns_txt_record" "site-www-verification" {
+#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+#   name                = "asuid.www"
+#   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+#   ttl                 = 300
 
-  record {
-    value = azurerm_container_app.web-container[each.value.name].custom_domain_verification_id
-  }
-}
+#   record {
+#     value = azurerm_container_app.web-container[each.value.name].custom_domain_verification_id
+#   }
+# }
 
-resource "null_resource" "web-hostnames" {
-  for_each = var.only_platform_enabled ? var.only_platform : var.sites
-  provisioner "local-exec" {
-    command    = "az extension add --name containerapp --upgrade"
-    on_failure = fail
-  }
-  provisioner "local-exec" {
-    command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname ${each.value.domain}"
-    on_failure = continue
-  }
+# resource "null_resource" "web-hostnames" {
+#   for_each = var.only_platform_enabled ? var.only_platform : var.sites
+#   provisioner "local-exec" {
+#     command    = "az extension add --name containerapp --upgrade"
+#     on_failure = fail
+#   }
+#   provisioner "local-exec" {
+#     command    = "az containerapp hostname add --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname ${each.value.domain}"
+#     on_failure = continue
+#   }
 
-  provisioner "local-exec" {
-    command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.id} --validation-method TXT"
-    on_failure = fail
-  }
+#   provisioner "local-exec" {
+#     command    = "az containerapp hostname bind --resource-group ${azurerm_resource_group.site-rg[each.value.name].name} --name ${azurerm_container_app.web-container[each.value.name].name} --hostname ${each.value.domain} --environment ${azurerm_container_app_environment.platform.id} --validation-method TXT"
+#     on_failure = fail
+#   }
 
-  lifecycle {
-    replace_triggered_by = [
-      azurerm_container_app.web-container,
-      azurerm_dns_cname_record.site-naked,
-      azurerm_dns_txt_record.site-naked-verification,
-      azurerm_dns_cname_record.site-www,
-      azurerm_dns_txt_record.site-www-verification
-    ]
-  }
-}
+#   lifecycle {
+#     replace_triggered_by = [
+#       azurerm_container_app.web-container,
+#       azurerm_dns_cname_record.site-naked,
+#       azurerm_dns_txt_record.site-naked-verification,
+#       azurerm_dns_cname_record.site-www,
+#       azurerm_dns_txt_record.site-www-verification
+#     ]
+#   }
+# }
 
 resource "azurerm_dns_cname_record" "cms" {
   for_each            = var.only_platform_enabled ? var.only_platform : var.sites

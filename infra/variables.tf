@@ -31,6 +31,11 @@ variable "sites" {
       domain = "adventistcluj.ro"
       enable = false
     }
+    brasovadventist = {
+      name   = "brasovadventist"
+      domain = "brasovadventist.ro"
+      enable = true
+    }
   }
 }
 
@@ -43,6 +48,11 @@ variable "only_platform" {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
+      enable = true
+    }
+    brasovadventist = {
+      name   = "brasovadventist"
+      domain = "brasovadventist.ro"
       enable = true
     }
   }

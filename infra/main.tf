@@ -340,7 +340,7 @@ resource "azurerm_dns_zone" "site-dns-zone" {
 
 resource "azurerm_dns_a_record" "site-naked" {
   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-  name                = each.value.domain
+  name                = "@"
   zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 3600

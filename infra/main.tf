@@ -332,11 +332,11 @@ resource "azurerm_container_app" "strapi-container" {
 #   }
 # }
 
-# resource "azurerm_dns_zone" "site-dns-zone" {
-#   for_each            = var.only_platform_enabled ? var.only_platform : var.sites
-#   name                = each.value.domain
-#   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-# }
+resource "azurerm_dns_zone" "site-dns-zone" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = each.value.domain
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+}
 
 # resource "azurerm_dns_cname_record" "site-naked" {
 #   for_each            = var.only_platform_enabled ? var.only_platform : var.sites

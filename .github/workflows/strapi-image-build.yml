@@ -33,8 +33,11 @@ jobs:
       - name: docker build
         working-directory: ./cmsstrapi
         run: |
-          docker build -t azscjacr.azurecr.io/azsstrapi:${{ github.run_number }} .
-          docker image tag azscjacr.azurecr.io/azsstrapi:${{ github.run_number }} azscjacr.azurecr.io/azsstrapi:latest
+          docker build -t azscjacr.azurecr.io/azsstrapi:latest .
+          # The sleep is needed so that each version is latest when deployed.
+          # 
+          sleep 5
+          docker image tag azscjacr.azurecr.io/azsstrapi:latest azscjacr.azurecr.io/azsstrapi:${{ github.run_number }}
           
       - name: docker push
         run: |

@@ -35,7 +35,6 @@ jobs:
         working-directory: .
         run: |
           docker build -t azscjacr.azurecr.io/azsweb:${{ github.run_number }} -f web.dockerfile .
-          docker image tag azscjacr.azurecr.io/azsweb:${{ github.run_number }} azscjacr.azurecr.io/azsweb:latest
           
       - name: docker push
         run: |

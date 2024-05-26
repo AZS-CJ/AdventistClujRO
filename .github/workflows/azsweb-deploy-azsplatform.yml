@@ -15,7 +15,7 @@ on:
         default: 'warning'
 
 jobs:
-  build-and-deploy:
+  set-image-tag:
     uses: ./.github/workflows/deploy-template.yml
     with:
       containerAppName: cms-azsplatform-app

@@ -222,7 +222,7 @@ resource "azurerm_container_app" "strapi-container" {
       name   = "strapi"
       image  = "${azurerm_container_registry.acr.login_server}/azscjstrapi:latest"
       cpu    = 0.5
-      memory = "0.5Gi"
+      memory = "1.0Gi"
       volume_mounts {
         name = "strapiuploads"
         path = "/opt/app/public"
@@ -314,8 +314,8 @@ resource "azurerm_container_app" "web-container" {
     container {
       name   = "web"
       image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
-      cpu    = 0.25
-      memory = "0.5Gi"
+      cpu    = 0.5
+      memory = "1.0Gi"
       env {
         name  = "CMS_DB_HOST"
         value = "https://${azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn}"

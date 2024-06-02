@@ -383,7 +383,7 @@ resource "azurerm_dns_txt_record" "site-www-verification" {
 resource "null_resource" "web-hostnames" {
   for_each = var.only_platform_enabled ? var.only_platform : var.sites
   provisioner "local-exec" {
-    command    = "az extension add --name containerapp --upgrade"
+    command    = "az extension add --name containerapp --upgrade --allow-preview true"
     on_failure = fail
   }
   provisioner "local-exec" {

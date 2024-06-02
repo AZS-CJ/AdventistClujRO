@@ -13,7 +13,7 @@ COPY /frontend .
 
 RUN yarn build
 
-FROM node:16-slim as run
+FROM node:16-alpine as run
 
 WORKDIR /app
 

@@ -221,8 +221,8 @@ resource "azurerm_container_app" "strapi-container" {
     container {
       name   = "strapi"
       image  = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
-      cpu    = 0.5
-      memory = "1Gi"
+      cpu    = 1
+      memory = "2Gi"
       volume_mounts {
         name = "strapiuploads"
         path = "/opt/app/public"

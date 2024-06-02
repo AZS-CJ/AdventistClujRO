@@ -296,7 +296,7 @@ resource "azurerm_container_app" "web-container" {
   }
 
   ingress {
-    target_port = "80"
+    target_port = "1337"
     traffic_weight {
       percentage      = 100
       latest_revision = true

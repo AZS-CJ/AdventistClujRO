@@ -1,5 +1,5 @@
 {
-  "/contact": {
+  "/contact-email": {
     "get": {
       "responses": {
         "200": {
@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactListResponse"
+                "$ref": "#/components/schemas/ContactEmailListResponse"
               }
             }
           }
@@ -64,7 +64,7 @@
         }
       },
       "tags": [
-        "Contact"
+        "Contact-email"
       ],
       "parameters": [
         {
@@ -169,7 +169,7 @@
           }
         }
       ],
-      "operationId": "get/contact"
+      "operationId": "get/contact-email"
     },
     "put": {
       "responses": {
@@ -178,7 +178,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactResponse"
+                "$ref": "#/components/schemas/ContactEmailResponse"
               }
             }
           }
@@ -235,16 +235,16 @@
         }
       },
       "tags": [
-        "Contact"
+        "Contact-email"
       ],
       "parameters": [],
-      "operationId": "put/contact",
+      "operationId": "put/contact-email",
       "requestBody": {
         "required": true,
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/ContactRequest"
+              "$ref": "#/components/schemas/ContactEmailRequest"
             }
           }
         }
@@ -315,10 +315,10 @@
         }
       },
       "tags": [
-        "Contact"
+        "Contact-email"
       ],
       "parameters": [],
-      "operationId": "delete/contact"
+      "operationId": "delete/contact-email"
     }
   }
 }

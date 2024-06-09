@@ -27,13 +27,17 @@
 1. Create `feature` branch from `main`
 2. When you finished implementing, or you need to test it on Staging, push the branch
 3. Merge the branch to `staging` branch, and push `staging`
-4. Run `WebApp - Test` Action on Github, using `staging` branch to deploy your changes to [https://test.adventistcluj.ro/](https://test.adventistcluj.ro/)
-5. If you also did some changes on cms then run `Strapi Image Build` Action, then `Strapi - Deploy Test` Action, using `staging` branch
-6. If you need some more changes to the feature, then work again on the feature branch and merge again to staging, then run the corresponding Actions again
-6. When you finished the feature and is tested by you and by someone else, create a PR from `feature` branch to `main`
-7. After Code Review merge the PR
-8. Run `WebApp - Prod` Action on Github, using `main` branch to deploy to [https://adventistcluj.ro/](https://adventistcluj.ro/)
-9. If you also did some changes on cms then run `Strapi Image Build` Action, then `Strapi - Desploy Prod` Action, using `main` branch
+4. To deploy your changes to [https://cms.azsplatform.ro/](https://cms.azsplatform.ro/) run below actions using your `branch-name` or `staging`:
+   - Run `Web - Image Build` to build a new image.
+   - Run `Web - Deploy AZSPlatform` to deploy the newly built image.
+5. If you also did some changes on CMS then run:
+   - Run `Strapi - Image Build` to build a new image.
+   - Run `Strapi - Deploy AZSPlatform` to deploy the newly built image.
+6. If you need some more changes to the feature, then work again on the feature branch and merge again to staging, then run the corresponding Actions again.
+6. When you finished the feature and is tested by you and by someone else, create a PR from `feature` branch to `main`.
+7. After Code Review merge the PR.
+8. To deploy the web app to production instances: run `Web - Deploy Prods` Action, using `main` branch.
+9. To deploy to CMS to production instances: run `Strapi - Deploy Prods` Action, using `main` branch.
 
 ### Learn More
 

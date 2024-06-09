@@ -27,10 +27,10 @@
 1. Create `feature` branch from `main`
 2. When you finished implementing, or you need to test it on Staging, push the branch
 3. Merge the branch to `staging` branch, and push `staging`
-4. To deploy your changes to [https://cms.azsplatform.ro/](https://cms.azsplatform.ro/) run below actions using your `branch-name` or `staging`:
+4. To deploy your changes to [https://azsplatform.ro/](https://azsplatform.ro/) run below actions using your `branch-name` or `staging`:
    - Run `Web - Image Build` to build a new image.
    - Run `Web - Deploy AZSPlatform` to deploy the newly built image.
-5. If you also did some changes on CMS then run:
+5. If you also did some changes to [https://cms.azsplatform.ro/](https://cms.azsplatform.ro/) then run:
    - Run `Strapi - Image Build` to build a new image.
    - Run `Strapi - Deploy AZSPlatform` to deploy the newly built image.
 6. If you need some more changes to the feature, then work again on the feature branch and merge again to staging, then run the corresponding Actions again.

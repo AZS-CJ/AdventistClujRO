@@ -72,8 +72,8 @@ function About() {
   }
 
   const backgroundFilterClass = () => {
-    // period with id 1 is the oldest; and the higher the id, the more recent the event
-    switch (selectedPeriod?.id) {
+    // period with order 1 is the oldest; and the higher the order, the more recent the event
+    switch (selectedPeriod?.order) {
       case 1:
         return 'sec19'
       case 2:

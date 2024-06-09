@@ -200,6 +200,12 @@ resource "random_password" "api-token-salt" {
   special = true
 }
 
+resource "random_password" "transfer-token-salt" {
+  for_each            = var.environments
+  length = 16
+  special = true
+}
+
 // Strapi
 resource "azurerm_linux_web_app" "strapi" {
   for_each            = var.environments
@@ -220,16 +226,17 @@ resource "azurerm_linux_web_app" "strapi" {
   }
 
   app_settings = {
-    "DATABASE_CLIENT"   = "mysql"
-    "DATABASE_HOST"     = azurerm_mysql_flexible_server.cms-db.fqdn
-    "DATABASE_PORT"     = "3306"
-    "DATABASE_NAME"     = "cms-db-${each.key}"
-    "DATABASE_USERNAME" = "mysqladminuser"
-    "DATABASE_PASSWORD" = random_password.admin-login-pass.result
-    "ADMIN_JWT_SECRET"  = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
-    "JWT_SECRET"        = base64encode(random_password.strapi-jwt-secret[each.key].result)
-    "APP_KEYS"          = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
-    "API_TOKEN_SALT"    = base64encode(random_password.api-token-salt[each.key].result)
+    "DATABASE_CLIENT"     = "mysql"
+    "DATABASE_HOST"       = azurerm_mysql_flexible_server.cms-db.fqdn
+    "DATABASE_PORT"       = "3306"
+    "DATABASE_NAME"       = "cms-db-${each.key}"
+    "DATABASE_USERNAME"   = "mysqladminuser"
+    "DATABASE_PASSWORD"   = random_password.admin-login-pass.result
+    "ADMIN_JWT_SECRET"    = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
+    "JWT_SECRET"          = base64encode(random_password.strapi-jwt-secret[each.key].result)
+    "APP_KEYS"            = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
+    "API_TOKEN_SALT"      = base64encode(random_password.api-token-salt[each.key].result)
+    "TRANSFER_TOKEN_SALT" = base64encode(random_password.transfer-token-salt[each.key].result)
   }
 
   identity {

@@ -1,4 +1,4 @@
-name: Strapi - Image Build
+name: Web - Image Build
 
 on:
   push:
@@ -6,7 +6,8 @@ on:
     - main
     - containerApps
     paths:
-    - ./cmsstrapi
+    - ./backend
+    - ./frontend
   workflow_dispatch:
     inputs:
       logLevel:
@@ -28,13 +29,12 @@ jobs:
           username: ${{ secrets.AZURE_ACR_USER }}
           password: ${{ secrets.AZURE_ACR_PASSWORD }}
       - name: docker build
-        working-directory: ./cmsstrapi
+        working-directory: .
         run: |
-          docker build -t azscjacr.azurecr.io/azsstrapi:latest .
-          docker image tag azscjacr.azurecr.io/azsstrapi:latest azscjacr.azurecr.io/azsstrapi:${{ github.run_number }}
+          docker build -t azscjacr.azurecr.io/azsweb:${{ github.run_number }} -f web.dockerfile .
           
       - name: docker push
         run: |
-          docker push --all-tags azscjacr.azurecr.io/azsstrapi
+          docker push --all-tags azscjacr.azurecr.io/azsweb
       
     

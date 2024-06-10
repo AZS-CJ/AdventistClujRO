@@ -26,11 +26,16 @@ jobs:
       TF_VAR_EMAIL_PASSWORD_PROD: ${{secrets.EMAIL_PASSWORD_PROD}}
 
     steps:
-      - uses: actions/checkout@v3
-    
-      - uses: hashicorp/setup-terraform@v1
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
         with:
-          terraform_version: 1.3.5
+          creds: '{"clientId":"${{ secrets.AZURE_SP_ID }}","clientSecret":"${{ secrets.AZURE_SP_SECRET }}","subscriptionId":"${{ secrets.AZ_SP_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZ_SP_TENANT_ID }}"}'
+          enable-AzPSSession: true
+        
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.7.4
 
       - name: Terraform Version
         run: terraform version

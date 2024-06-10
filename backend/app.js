@@ -118,7 +118,7 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms-test.adventistcluj.ro';
+const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms.azsplatform.ro';
 
 app.use('/api', function(req, res) {
   var url = urlJoin(cmsDbHost, 'api', req.url);

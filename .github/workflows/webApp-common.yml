@@ -56,3 +56,4 @@ jobs:
         app-name: ${{ inputs.webAppName }}
         publish-profile: ${{ secrets.publishProfile }}
         package: ${{ inputs.webAppPackagePath }}
+

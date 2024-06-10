@@ -1,9 +1,10 @@
-name: WebApp - Prod
+name: Web - Deploy Prods
 
 on:
   push:
     branches:
     - main
+    - containerApps
     paths:
     - ./frontend
   workflow_dispatch:

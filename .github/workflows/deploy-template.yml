@@ -1,0 +1,47 @@
+name: Strapi - common
+
+on:
+  workflow_call:
+    inputs:
+      imageName:
+        type: string
+        required: true
+      containerAppName:
+        type: string
+        required: true
+      resourceGroup:
+        type: string
+        required: true
+    secrets:
+      azCliCreds:
+        required: true
+      publishProfile:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.azCliCreds }}
+
+    - name: Get latest tag
+      id: latestTag
+      run: |
+        tag=$(az acr repository show-tags -n azscjacr --repository ${{ inputs.imageName }} --top 2 --orderby time_desc --query "[?!contains(@, 'latest')]" -o tsv)
+        echo "Latest tag found: ${tag}"
+        echo "tag=${tag}" >> $GITHUB_ENV
+
+
+    - name: Set image to container app
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        acrName: azscjacr
+        containerAppName: ${{ inputs.containerAppName }}
+        resourceGroup: ${{ inputs.resourceGroup }}
+        imageToDeploy: azscjacr.azurecr.io/${{ inputs.imageName }}:${{ env.tag }}

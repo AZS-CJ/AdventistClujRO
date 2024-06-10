@@ -19,7 +19,7 @@ jobs:
     with:
       containerAppName: cms-azsplatform-app
       imageName: azsstrapi
-      resourceGroup: cms-azsplatform-app
+      resourceGroup: azsplatform-app
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
       publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}

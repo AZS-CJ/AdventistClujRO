@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - main
-    - containerApps
     paths:
     - ./backend
     - ./frontend

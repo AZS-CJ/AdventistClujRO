@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - main
-    - containerApps
     paths:
     - ./frontend
   workflow_dispatch:
@@ -22,5 +21,6 @@ jobs:
       imageName: azsstrapi
       resourceGroup: cms-azsplatform-app
     secrets:
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
       publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}
       googleAnalytics: ${{ secrets.GOOGLE_ANALYTICS_TEST_ENV }}

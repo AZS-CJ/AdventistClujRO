@@ -23,4 +23,3 @@ jobs:
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
       publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}
-      googleAnalytics: ${{ secrets.GOOGLE_ANALYTICS_TEST_ENV }}

@@ -47,13 +47,18 @@ const getLiveStatus = async () => {
     } else {
       // Nobody triggered this so we go ahead and do it as part
       // of the current call.
+      //TODO call cms for youtube live link
+      
+      //if link != null then
       uniquePromise = queryYoutube();
       await uniquePromise;
-
+      //else default response
+      
       // Make sure we reset this to null so that next calls won't
       // believe there is still an unfinished promise.
       uniquePromise = null;
     }
+    //TODO test caching 1min
     cache.lastDateTimeQuery = now;
   }
   const response = {

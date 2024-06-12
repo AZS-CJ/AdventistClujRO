@@ -1,3 +1,4 @@
 export type NavbarType = {
-  logoUrl?: string
+  logoUrl?: string,
+  youtubeLiveLink?: string
 }

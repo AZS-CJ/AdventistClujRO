@@ -96,7 +96,7 @@ function Navbar(props) {
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>
 
-        <div className={`live-btn ${liveState.isLive ? 'live' : ''}`} onClick={openLive}>
+        <div className={`${liveState.url ? 'live-btn' : ''} ${liveState.isLive ? 'live' : ''}`} onClick={openLive}>
           <i className="bi bi-play-circle"></i>
           LIVE
         </div>

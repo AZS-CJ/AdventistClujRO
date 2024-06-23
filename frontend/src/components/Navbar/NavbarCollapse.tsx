@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigationContext } from '../../contexts/navigation'
+import { useGeneralContext } from '../../contexts/generalState'
 import { LINKS } from '../../util/constants'
 import logo from '../../assets/logo.svg'
 
@@ -7,6 +8,8 @@ import './NavbarCollapse.scss'
 
 function NavbarCollapse(props) {
   const { sidebarOpen, hideSidebar } = useNavigationContext()
+  const { churchInfo } = useGeneralContext()
+
   return (
     <div className="menu-window">
       <div className={`close-nav ${sidebarOpen ? 'show' : 'hide'}`} id="navbarBtn" onClick={hideSidebar}>
@@ -20,7 +23,7 @@ function NavbarCollapse(props) {
             {/*{renderLink('login', 'Log in')}*/}
             <div>
               <img className="nav-church-logo" src={logo} alt="Logo" />
-              <p>Biserica Adventistă de Ziua a Șaptea "Speranța" din Cluj-Napoca</p>
+              <p>{churchInfo.churchName}</p>
               {/*Will be implemented later*/}
               {/*<p className="sidebar-description">TO EDIT - O descriere mai mica despre Biserica</p>*/}
             </div>
@@ -51,15 +54,21 @@ function NavbarCollapse(props) {
             <div className="social-media">
               <div className="navbar-resources-title"> Social Media: </div>
               <div className="resources-list">
-                <a className="button" href={LINKS.YOUTUBE} target="_blank">
-                  YouTube
-                </a>
-                <a className="button" href={LINKS.FACEBOOK} target="_blank">
-                  Facebook
-                </a>
-                <a className="button" href={LINKS.INSTAGRAM} target="_blank">
-                  Instagram
-                </a>
+                {churchInfo.youtubeLink && (
+                  <a className="button" href={churchInfo.youtubeLink} target="_blank">
+                    YouTube
+                  </a>
+                )}
+                {churchInfo.facebookLink && (
+                  <a className="button" href={churchInfo.facebook} target="_blank">
+                    Facebook
+                  </a>
+                )}
+                {churchInfo.instagramLink && (
+                  <a className="button" href={churchInfo.instagramLink} target="_blank">
+                    Instagram
+                  </a>
+                )}
               </div>
             </div>
           </div>

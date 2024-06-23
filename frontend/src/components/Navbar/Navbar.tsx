@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
 import menuButton from '../../assets/mobile_menu_toggle.svg'
-import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
 import { getLiveStatus } from '../../api/homePage'
+import { useGeneralContext } from '../../contexts/generalState'
 
 import './Navbar.scss'
 
@@ -18,25 +18,29 @@ function Navbar(props) {
   const { openSidebar, hideSidebar, sidebarOpen } = useNavigationContext()
   const location = useLocation()
   const [liveState, setLiveState] = useState<LiveState>({ isLive: false, url: '' })
+  const { churchInfo } = useGeneralContext()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.pageYOffset > 0)
     window.removeEventListener('scroll', onScroll)
     window.addEventListener('scroll', onScroll, { passive: true })
 
-    requestLiveStatus()
-    const liveRequestInterval = setInterval(() => {
+    let liveRequestInterval
+    if (churchInfo.youtubeLiveLink) {
       requestLiveStatus()
-    }, 30000)
+      liveRequestInterval = setInterval(() => {
+        requestLiveStatus()
+      }, 30000)
+    }
 
     return () => {
-      clearInterval(liveRequestInterval)
+      if (liveRequestInterval) clearInterval(liveRequestInterval)
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
 
   const requestLiveStatus = () => {
-    getLiveStatus().then((result) => setLiveState(result))
+    getLiveStatus(churchInfo.youtubeLiveLink).then((result) => setLiveState(result))
   }
 
   const isActiveRoute = (route: string) => {
@@ -76,15 +80,18 @@ function Navbar(props) {
       <nav className={`navbar my-nav my-menu ${scrolled ? 'scrolled' : ''}`} ref={props.navbarRef}>
         <div className="navbar-brand">
           <Link className="brand-name" to="/">
-            <img className="church-name" src={churchName} alt="Church Name" />
+            <img className="church-name" src={churchInfo.nameLogoURL} alt="Church Name" />
           </Link>
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>
-
-        <div className={`live-btn ${liveState.isLive ? 'live' : ''}`} onClick={openLive}>
-          <i className="bi bi-play-circle"></i>
-          LIVE
-        </div>
+        {churchInfo.youtubeLiveLink ? (
+          <div className={`live-btn ${liveState.isLive ? 'live' : ''}`} onClick={openLive}>
+            <i className="bi bi-play-circle"></i>
+            LIVE
+          </div>
+        ) : (
+          ''
+        )}
 
         <div className="navbar-toggler" onClick={openSidebar}>
           <img className="menu-btn" src={menuButton} alt="Menu" />

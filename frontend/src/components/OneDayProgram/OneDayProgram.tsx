@@ -1,11 +1,13 @@
 import React from 'react'
 import { formatToLocalDate, formatToLocalDayName, getDayName, getNextDate, getSunsetForDay } from '../../util/functions'
 import { ProgramType } from '../../data/program'
-import { LINKS } from '../../util/constants'
+import { useGeneralContext } from '../../contexts/generalState'
 
 import './OneDayProgram.scss'
 
 const OneDayProgram = (props: { programs: ProgramType[]; dayNumber: number }) => {
+  const { churchInfo } = useGeneralContext()
+
   const getProgramsForDay = (dayNumber) => {
     return props.programs.filter((p) => p.day === getDayName(dayNumber)).sort((p1, p2) => p1.time.localeCompare(p2.time))
   }
@@ -29,7 +31,7 @@ const OneDayProgram = (props: { programs: ProgramType[]; dayNumber: number }) =>
     return (
       <span>
         &#40;
-        <a href={LINKS.YOUTUBE_LIVE} target="_blank">
+        <a href={churchInfo.youtubeLiveLink} target="_blank">
           LIVE
         </a>
         &#41;{' '}

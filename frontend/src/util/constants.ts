@@ -1,8 +1,5 @@
 export const LINKS = {
-  YOUTUBE: 'https://www.youtube.com/c/AdventistCluj',
   YOUTUBE_LIVE: 'https://www.youtube.com/c/AdventistCluj/streams',
-  FACEBOOK: 'https://www.facebook.com/BisericaSperantaCluj',
-  INSTAGRAM: 'https://www.instagram.com/adventistcluj',
   ADVENTIST: 'https://adventist.ro',
   SEMNELE: 'https://semneletimpului.ro',
   RESPIRO: 'https://respiro.ro',

@@ -67,8 +67,8 @@
 }
 
 @media (orientation: landscape) {
-  .contact-page .mobile-br {
-    display:none
+  .contact-page .contact-details .desktop-break {
+    display: inline-block !important;
   }
 }
 
@@ -94,6 +94,10 @@
 
       .section {
         width: 100%;
+      }
+
+      .desktop-break {
+        display: none;
       }
     }
 

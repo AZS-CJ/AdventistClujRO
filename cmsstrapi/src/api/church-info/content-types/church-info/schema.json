@@ -1,0 +1,56 @@
+{
+  "kind": "singleType",
+  "collectionName": "church_infos",
+  "info": {
+    "singularName": "church-info",
+    "pluralName": "church-infos",
+    "displayName": "Church-info",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "instagramLink": {
+      "type": "string",
+      "required": false
+    },
+    "facebookLink": {
+      "type": "string"
+    },
+    "youtubeLink": {
+      "type": "string"
+    },
+    "nameLogo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "youtubeLiveLink": {
+      "type": "string"
+    },
+    "tabTitle": {
+      "type": "string",
+      "required": true
+    },
+    "churchName": {
+      "type": "string",
+      "required": true
+    },
+    "locationMapLink": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

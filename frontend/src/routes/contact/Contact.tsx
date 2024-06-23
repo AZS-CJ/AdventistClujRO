@@ -32,7 +32,16 @@ const messageInitialState = {
 
 function Contact() {
   const { backgroundImages } = useGeneralContext()
-  const [contactRequest, setContactRequest] = useState<ContactState>({ contact: {}, loading: true })
+  const [contactRequest, setContactRequest] = useState<ContactState>({
+    contact: {
+      pastor: '',
+      phone: '',
+      email: '',
+      address: '',
+      mapsIframeSrc: ''
+    },
+    loading: true
+  })
   const [message, setMessage] = useState<Message>(messageInitialState)
   const [loading, setLoading] = useState<boolean>(false)
   const [showError, setShowError] = useState<boolean>(false)
@@ -68,7 +77,7 @@ function Contact() {
         <div className="line">
           <p className="section">Adresă:</p>
           <p className="value">
-            Strada Moților 47 <br className="mobile-br" /> Cluj-Napoca | România
+            {contactRequest.contact.address} <span className="desktop-break">|</span> România
           </p>
         </div>
       </div>
@@ -133,13 +142,7 @@ function Contact() {
       <div className="default-container">
         {renderContactDetails()}
         <Divider />
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2980.3008644078113!2d23.579282225268546!3d46.765918108266774!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47490fe788c415fb%3A0xd8c80481a5251003!2sBiserica%20Adventist%C4%83%20Speran%C8%9Ba!5e0!3m2!1sro!2sde!4v1673177154988!5m2!1sro!2sd"
-          height="432"
-          allowFullScreen={false}
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+        <iframe src={contactRequest.contact.mapsIframeSrc} height="432" allowFullScreen={false} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
         <Divider />
         {renderForm()}
       </div>

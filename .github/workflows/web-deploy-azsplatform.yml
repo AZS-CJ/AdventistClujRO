@@ -18,7 +18,7 @@ jobs:
     uses: ./.github/workflows/deploy-template.yml
     with:
       containerAppName: cms-azsplatform-app
-      imageName: azsstrapi
+      imageName: azsweb
       resourceGroup: azsplatform-rg
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}

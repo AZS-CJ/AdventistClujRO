@@ -31,7 +31,7 @@ function App() {
   }, [])
 
   return loading ? (
-    <div className="spinner-border" role="status" />
+    <div className=" spinner-border" role="status" />
   ) : (
     <>
       {isUnderConstruction ? (

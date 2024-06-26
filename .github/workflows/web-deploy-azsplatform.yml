@@ -17,7 +17,7 @@ jobs:
   set-image-tag:
     uses: ./.github/workflows/deploy-template.yml
     with:
-      containerAppName: cms-azsplatform-app
+      containerAppName: web-azsplatform-app
       imageName: azsweb
       resourceGroup: azsplatform-rg
     secrets:

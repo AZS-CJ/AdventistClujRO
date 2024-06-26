@@ -1,4 +1,4 @@
-name: Web - Deploy AZSPlatform
+name: Web - Deploy to AZSPlatform
 
 on:
   push:

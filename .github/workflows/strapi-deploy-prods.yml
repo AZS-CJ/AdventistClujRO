@@ -1,4 +1,4 @@
-name: Strapi - Deploy Prods
+name: Strapi - Deploy to Prods
 
 on:
   push:

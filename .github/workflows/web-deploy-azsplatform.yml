@@ -1,4 +1,4 @@
-name: Web - Deploy AZSPlatform
+name: Web - Deploy to AZSPlatform
 
 on:
   push:
@@ -17,8 +17,8 @@ jobs:
   set-image-tag:
     uses: ./.github/workflows/deploy-template.yml
     with:
-      containerAppName: cms-azsplatform-app
-      imageName: azsstrapi
+      containerAppName: web-azsplatform-app
+      imageName: azsweb
       resourceGroup: azsplatform-rg
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}

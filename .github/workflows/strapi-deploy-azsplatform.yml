@@ -1,4 +1,4 @@
-name: Strapi - Deploy AZSPlatform
+name: Strapi - Deploy to AZSPlatform
 
 on:
   push:

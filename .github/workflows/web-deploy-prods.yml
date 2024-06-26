@@ -1,4 +1,4 @@
-name: Web - Deploy Prods
+name: Web - Deploy to Prods
 
 on:
   push:

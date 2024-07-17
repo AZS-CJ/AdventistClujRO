@@ -1,5 +1,7 @@
 export type ChuchInfo = {
   tabTitle: string
+  faviconUrl: string
+  appDescription: string
   churchName: string
   nameLogoURL: string
   address: string

@@ -9,6 +9,8 @@ const getChurchInfo = async (): Promise<ChuchInfo> => {
       const attrs = response.data.data.attributes
       return {
         tabTitle: attrs.tabTitle,
+        faviconUrl: attrs.favicon.data?.attributes.url || '',
+        appDescription: attrs.description,
         churchName: attrs.churchName,
         nameLogoURL: attrs.nameLogo.data?.attributes.url || '',
         address: attrs.address,
@@ -21,7 +23,7 @@ const getChurchInfo = async (): Promise<ChuchInfo> => {
     })
     .catch((err) => {
       console.log('Error when loading church info ', err)
-      return { tabTitle: 'Biserica', churchName: '', nameLogoURL: '', address: '' }
+      return { tabTitle: 'Biserica', churchName: '', nameLogoURL: '', address: '', faviconUrl: '', appDescription: '' }
     })
 }
 

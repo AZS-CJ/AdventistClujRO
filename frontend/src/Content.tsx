@@ -18,7 +18,12 @@ function Content() {
         setBackgroundImages(bgImages)
         setCSSVariables(style)
         setChurchInfo(churchInfo)
+
         document.title = churchInfo.tabTitle
+        const link = document.getElementById('favicon') as HTMLLinkElement
+        if (link) link.href = churchInfo.faviconUrl
+        const metaDescription = document.querySelector('meta[name="description"]')
+        if (metaDescription) metaDescription.setAttribute('content', churchInfo.appDescription)
       })
       .finally(() => setLoading(false))
   }, [])

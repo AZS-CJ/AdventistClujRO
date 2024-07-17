@@ -51,6 +51,19 @@
     "locationMapLink": {
       "type": "string",
       "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "favicon": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

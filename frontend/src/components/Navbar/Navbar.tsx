@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
-import menuButton from '../../assets/mobile_menu_toggle.svg'
+import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
 import { getLiveStatus } from '../../api/homePage'
 import { useGeneralContext } from '../../contexts/generalState'
@@ -94,7 +94,7 @@ function Navbar(props) {
         )}
 
         <div className="navbar-toggler" onClick={openSidebar}>
-          <img className="menu-btn" src={menuButton} alt="Menu" />
+          <div className="menu-btn"></div>
         </div>
       </nav>
       <div className={`blur-content ${sidebarOpen && 'blurred'}`} />

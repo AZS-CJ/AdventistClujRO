@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useNavigationContext } from '../../contexts/navigation'
-import churchName from '../../assets/church_name_logo.svg'
 import NavbarCollapse from './NavbarCollapse'
 import { getLiveStatus } from '../../api/homePage'
 import { useGeneralContext } from '../../contexts/generalState'

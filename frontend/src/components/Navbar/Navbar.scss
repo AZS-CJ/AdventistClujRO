@@ -103,6 +103,14 @@
   .navbar-toggler {
     display: none;
   }
+
+  .menu-btn {
+    background-color: var(--second-primary-color);
+    -webkit-mask: url(../../assets/mobile_menu_toggle.svg) no-repeat right;
+    mask: url(../../assets/mobile_menu_toggle.svg) no-repeat right;
+    height: 1.2rem;
+    width: 1.4rem;
+  }
 }
 
 // when the sidebar menu is opened

@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const { sendEmail } = require('./email')
 const winston = require('winston')
 const expressWinston = require('express-winston')
+const { getLiveStatus } = require('./liveDirect');
 require('dotenv').config()
 
 // because url-join knows only ESM (or only import statements) we 
@@ -117,7 +118,7 @@ function normalizePort(val) {
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms-test.adventistcluj.ro';
+const cmsDbHost = process.env.CMS_DB_HOST || 'https://cms.azsplatform.ro';
 
 app.use('/api', function(req, res) {
   var url = urlJoin(cmsDbHost, 'api', req.url);
@@ -128,6 +129,12 @@ app.use('/uploads', function(req, res) {
   var url = urlJoin(cmsDbHost, 'uploads', req.url);
   req.pipe(request({ qs:req.query, uri: url })).pipe(res);
 });
+
+app.get('/live', async function(req, res) {
+  const youtubeLiveLink = req.query.youtubeLink;
+  const liveStatus = await getLiveStatus(youtubeLiveLink);
+  res.send(liveStatus);
+})
 
 app.post('/email', async(req, res) => {
     sendEmail(req.body, (error) => {

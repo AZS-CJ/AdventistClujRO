@@ -1,0 +1,39 @@
+name: Web - Image Build
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - ./backend
+    - ./frontend
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: docker login
+        uses: docker/login-action@v3
+        with:
+          registry: azscjacr.azurecr.io
+          username: ${{ secrets.AZURE_ACR_USER }}
+          password: ${{ secrets.AZURE_ACR_PASSWORD }}
+      - name: docker build
+        working-directory: .
+        run: |
+          docker build -t azscjacr.azurecr.io/azsweb:${{ github.run_number }} -f web.dockerfile .
+          
+      - name: docker push
+        run: |
+          docker push --all-tags azscjacr.azurecr.io/azsweb
+      
+    

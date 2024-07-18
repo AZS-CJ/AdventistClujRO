@@ -1,0 +1,25 @@
+name: Web - Deploy to AZSPlatform
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - ./frontend
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+
+jobs:
+  set-image-tag:
+    uses: ./.github/workflows/deploy-template.yml
+    with:
+      containerAppName: web-azsplatform-app
+      imageName: azsweb
+      resourceGroup: azsplatform-rg
+    secrets:
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
+      publishProfile: ${{ secrets.AZURE_WEBAPP_TEST_PUBLISH_PROFILE }}

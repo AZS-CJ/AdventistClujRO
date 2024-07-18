@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import InfoSection from '../../components/InfoSection/InfoSection'
 import { Link } from 'react-router-dom'
-import { useNavigationContext } from '../../contexts/navigation'
-import getHomePageContent from '../../api/homePage'
+import { getHomePageContent } from '../../api/homePage'
 import getProgram from '../../api/program'
 import { ProgramType } from '../../data/program'
 import OneDayProgram from '../../components/OneDayProgram/OneDayProgram'
 import { getDayName } from '../../util/functions'
 import { useGeneralContext } from '../../contexts/generalState'
 import EventsCarousel from './EventsCarousel'
+import DesignLines from '../../components/DesignLines/DesignLines'
 
 import './Home.scss'
 
@@ -21,7 +21,6 @@ interface ContentState {
 
 function Home(props) {
   const [historyOpen, setHistoryOpen] = useState<boolean>(false)
-  const { setActiveRoute } = useNavigationContext()
   const [content, setContent] = useState<ContentState>({ title: '', description: '', aboutUs: '', loading: true })
   const [program, setProgram] = useState<ProgramType[]>([])
   const { backgroundImages } = useGeneralContext()
@@ -78,9 +77,7 @@ function Home(props) {
             <span className="bold-title">{content.title}</span>
             <div className="parag">{content.description}</div>
             <div className="default-red-button">
-              <Link to="/program" onClick={() => setActiveRoute('program')}>
-                AFLĂ PROGRAMUL
-              </Link>
+              <Link to="/program">AFLĂ PROGRAMUL</Link>
             </div>
           </div>
           <div className="scroll-arrow" onClick={scrollDownBtn}>
@@ -89,10 +86,7 @@ function Home(props) {
         </div>
         <InfoSection title="Despre noi" ctaText="Află istoricul bisericii" ctaURL="/despre">
           <div className={`description ${historyOpen ? 'open' : 'closed'}`}>
-            <div className="design-lines">
-              <div className="shorter" />
-              <div className="longer" />
-            </div>
+            <DesignLines />
             <div className="text">{content.aboutUs}</div>
             <div className="moreButton" onClick={() => setHistoryOpen(true)}>
               Citește mai mult

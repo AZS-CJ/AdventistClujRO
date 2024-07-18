@@ -130,3 +130,11 @@ export const getUrlFromTitle = (title: string) => {
   result = result.replace(/[^a-z\-]/g, '')
   return result
 }
+
+export function setCSSVariables(style) {
+  const root = document.documentElement
+  root.style.setProperty('--primary-color', style.primaryColor)
+  root.style.setProperty('--second-primary-color', style.secondPrimaryColor)
+  root.style.setProperty('--accent-color', style.accentColor)
+  root.style.setProperty('--second-accent-color', style.secondAccentColor)
+}

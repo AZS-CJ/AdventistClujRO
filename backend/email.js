@@ -1,13 +1,13 @@
 const path = require('path');
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
-const axios = require('axios');
+const undici = require('undici');
 require('dotenv').config()
 
 
 const fetchEmailConfig = async () => {
     try {
-      const response = await axios.get(`${process.env.CMS_DB_HOST}/api/contact-email`);
+      const response = await undici.request(`${process.env.CMS_DB_HOST}/api/contact-email`);
       const config = response.data.data.attributes;
       return {
         email: config.email,

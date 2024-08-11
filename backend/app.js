@@ -131,7 +131,8 @@ app.use('/uploads', function(req, res) {
 });
 
 app.get('/live', async function(req, res) {
-  const liveStatus = await getLiveStatus();
+  const youtubeLiveLink = req.query.youtubeLink;
+  const liveStatus = await getLiveStatus(youtubeLiveLink);
   res.send(liveStatus);
 })
 

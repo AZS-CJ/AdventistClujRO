@@ -20,8 +20,8 @@ var uniquePromise = null;
 
 // The 'magic' query happens here where we get the youtube page
 // as plain html. If the live is on then the canonical link is different.
-const queryYoutube = async () => {
-  const answer = await undici.request('https://www.youtube.com/@AdventistCluj/live');
+const queryYoutube = async (youtubeLiveLink) => {
+  const answer = await undici.request(youtubeLiveLink);
   const plainText = await answer.body.text();
   const html = htmlParser.parse(plainText);
   const urlTag = html.querySelector('link[rel=canonical]');
@@ -30,7 +30,7 @@ const queryYoutube = async () => {
   cache.url = url;
 }
 
-const getLiveStatus = async () => {
+const getLiveStatus = async (youtubeLiveLink) => {
 
   // Take the current date and time and compute the time passed.
   const now = Date.now();
@@ -47,7 +47,7 @@ const getLiveStatus = async () => {
     } else {
       // Nobody triggered this so we go ahead and do it as part
       // of the current call.
-      uniquePromise = queryYoutube();
+      uniquePromise = queryYoutube(youtubeLiveLink);
       await uniquePromise;
 
       // Make sure we reset this to null so that next calls won't

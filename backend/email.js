@@ -1,12 +1,22 @@
 const path = require('path');
 const nodemailer = require('nodemailer')
 const hbs = require('nodemailer-express-handlebars')
+const undici = require('undici');
 require('dotenv').config()
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user: process.env.EMAIL_ADDRESS, pass: process.env.EMAIL_PASSWORD }
-});
+
+const fetchEmailConfig = async () => {
+    try {
+      const response = await undici.request(`${process.env.CMS_DB_HOST}/api/contact-email`);
+      const config = response.data.data.attributes;
+      return {
+        email: config.email,
+        password: config.password
+      };
+    } catch (error) {
+      throw new Error('Could not fetch email configuration');
+    }
+  };
 
 const handlebarOptions = {
     viewEngine:  {
@@ -18,18 +28,26 @@ const handlebarOptions = {
     extName: ".handlebars"
 }
 
-transporter.use('compile', hbs(handlebarOptions))
+const sendEmail = async (params, callback) => {
+    try {
+        const { email, password } = await fetchEmailConfig();
+        const transporter = nodemailer.createTransport({
+            service: 'gmail', auth: { user: email, pass: password }
+        });
+        transporter.use('compile', hbs(handlebarOptions));
 
-const sendEmail = (params, callback) => {
-    const mailOptions = {
-        from: process.env.EMAIL_ADDRESS,
-        to: process.env.EMAIL_ADDRESS,
-        subject: params.title,
-        template: 'email',
-        context: params
-    };
+        const mailOptions = {
+            from: email,
+            to: email,
+            subject: params.title,
+            template: 'email',
+            context: params
+        };
 
-    transporter.sendMail(mailOptions, callback);
+        transporter.sendMail(mailOptions, callback);
+    } catch (error) {
+        callback(error);
+    }
 }
 
 module.exports = { sendEmail }

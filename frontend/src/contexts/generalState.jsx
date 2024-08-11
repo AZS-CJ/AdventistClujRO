@@ -5,7 +5,8 @@ const GeneralContext = createContext([{}, () => {}])
 
 const GeneralProvider = ({ children }) => {
   const [generalState, setGeneralState] = useState({
-    backgroundImages: { home: '' }
+    backgroundImages: { home: '' },
+    churchInfo: { tabTitle: 'Biserica', churchName: '', nameLogoURL: '', address: '' }
   })
   return <GeneralContext.Provider value={[generalState, setGeneralState]}>{children}</GeneralContext.Provider>
 }
@@ -14,12 +15,24 @@ const useGeneralContext = () => {
   const [genState, setGenState] = useContext(GeneralContext)
 
   const setBackgroundImages = (imgs) => {
-    setGenState(() => ({ backgroundImages: imgs }))
+    setGenState((prevState) => ({
+      ...prevState,
+      backgroundImages: imgs
+    }))
+  }
+
+  const setChurchInfo = (churchInfo) => {
+    setGenState((prevState) => ({
+      ...prevState,
+      churchInfo
+    }))
   }
 
   return {
     setBackgroundImages,
-    backgroundImages: genState.backgroundImages
+    backgroundImages: genState.backgroundImages,
+    setChurchInfo,
+    churchInfo: genState.churchInfo
   }
 }
 

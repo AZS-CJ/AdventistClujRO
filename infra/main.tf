@@ -234,6 +234,54 @@ resource "azurerm_role_assignment" "acr-for-linux-web-app-strapi" {
   principal_id         = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].identity.0.principal_id
 }
 
+resource "azurerm_linux_web_app" "linux-web-app-strapi" {
+  for_each            = var.sites
+  name                = "webapp-frontend-${each.value.name}"
+  location            = azurerm_resource_group.site-rg[each.value.name].location
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
+  https_only          = true
+
+  site_config {
+    use_32_bit_worker                       = false
+    health_check_path                       = "/"
+    container_registry_use_managed_identity = true
+
+    application_stack {
+      docker_image_name = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
+      docker_registry_url = "https://${azurerm_container_registry.acr.login_server}"
+    }
+  }
+
+  app_settings = {
+    "CMS_DB_HOST": "https://${azurerm_linux_web_app.linux-web-app-frontend[each.value.nme].default_hostname}"
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  logs {
+    application_logs {
+      file_system_level = "Information"
+    }
+
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 35
+      }
+    }
+  }
+}
+
+resource "azurerm_role_assignment" "acr-for-linux-web-app-frontend" {
+  for_each             = var.sites
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].identity.0.principal_id
+}
+
 // Done so far
 
 resource "azurerm_container_app" "strapi-container" {

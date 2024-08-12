@@ -229,6 +229,13 @@ resource "azurerm_linux_web_app" "linux-web-app-strapi" {
   }
 }
 
+resource "azurerm_role_assignment" "acr" {
+  for_each             = var.sites
+  role_definition_name = "AcrPull"
+  scope                = azurerm_container_registry.acr.id
+  principal_id         = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].identity.0.principal_id
+}
+
 // Done so far
 
 resource "azurerm_container_app" "strapi-container" {

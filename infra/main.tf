@@ -179,6 +179,13 @@ resource "azurerm_linux_web_app" "linux-web-app-strapi" {
     use_32_bit_worker                       = false
     health_check_path                       = "/api/under-construction"
     container_registry_use_managed_identity = true
+
+    application_stack {
+      docker_image_name = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
+      docker_registry_username = azurerm_container_registry.acr.admin_username
+      docker_registry_password = azurerm_container_registry.acr.admin_password
+      docker_registry_url = azurerm_container_registry.acr.login_server
+    }
   }
 
   app_settings = {

@@ -227,7 +227,7 @@ resource "azurerm_linux_web_app" "linux-web-app-strapi" {
   }
 }
 
-resource "azurerm_role_assignment" "acr" {
+resource "azurerm_role_assignment" "acr-for-linux-web-app-strapi" {
   for_each             = var.sites
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id

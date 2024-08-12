@@ -181,7 +181,7 @@ resource "azurerm_linux_web_app" "linux-web-app-strapi" {
     container_registry_use_managed_identity = true
 
     application_stack {
-      docker_image_name = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
+      docker_image_name   = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
       docker_registry_url = "https://${azurerm_container_registry.acr.login_server}"
     }
   }
@@ -248,13 +248,13 @@ resource "azurerm_linux_web_app" "linux-web-app-frontend" {
     container_registry_use_managed_identity = true
 
     application_stack {
-      docker_image_name = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
+      docker_image_name   = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
       docker_registry_url = "https://${azurerm_container_registry.acr.login_server}"
     }
   }
 
   app_settings = {
-    "CMS_DB_HOST": "https://${azurerm_linux_web_app.linux-web-app-strapi[each.value.name].default_hostname}"
+    "CMS_DB_HOST" : "https://${azurerm_linux_web_app.linux-web-app-strapi[each.value.name].default_hostname}"
   }
 
   identity {
@@ -280,6 +280,86 @@ resource "azurerm_role_assignment" "acr-for-linux-web-app-frontend" {
   role_definition_name = "AcrPull"
   scope                = azurerm_container_registry.acr.id
   principal_id         = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].identity.0.principal_id
+}
+
+data "dns_a_record_set" "app_ip_address" {
+  for_each = var.sites
+  host     = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].default_hostname
+}
+
+resource "azurerm_dns_a_record" "dns_a" {
+  for_each = var.sites
+  target_resource_id = data.dns_a_record_set.app_ip_address.addrs[0]
+}
+
+resource "azurerm_dns_zone" "site-dns-zone" {
+  for_each            = var.sites
+  count               = each.value.enableDomain ? 1 : 0
+  name                = each.value.domain
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+}
+
+resource "azurerm_dns_a_record" "site-naked" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = "@"
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 3600
+  records             = data.dns_a_record_set.app_ip_address.addrs
+  # The ip has to be put manually for now
+  # https://github.com/Azure/azure-rest-api-specs/issues/27377
+  # https://github.com/hashicorp/terraform-provider-azurerm/issues/14642
+}
+
+resource "azurerm_dns_txt_record" "site-naked-verification" {
+  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+  name                = "asuid"
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
+
+  record {
+    value = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].custom_domain_verification_id
+  }
+}
+
+resource "azurerm_dns_cname_record" "site-www" {
+  for_each            = var.sites
+  count               = each.value.enableDomain ? 1 : 0
+  name                = "www"
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
+  record              = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].ingress[0].fqdn
+}
+
+resource "azurerm_dns_txt_record" "site-www-verification" {
+  for_each            = var.sites
+  count               = each.value.enableDomain ? 1 : 0
+  name                = "asuid.www"
+  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
+
+  record {
+    value = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].custom_domain_verification_id
+  }
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
+  for_each            = var.sites
+  count               = each.value.enableDomain ? 1 : 0
+  hostname            = each.value.domain
+  app_service_name    = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "www_hostname_binding" {
+  for_each            = var.sites
+  count               = each.value.enableDomain ? 1 : 0
+  hostname            = "www.${each.value.name}"
+  app_service_name    = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
 
 // Done so far

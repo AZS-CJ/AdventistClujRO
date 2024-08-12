@@ -24,17 +24,17 @@ variable "sites" {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
-      enable = true
+      enableDomain = true
     }
     adventistcluj = {
       name   = "adventistcluj"
       domain = "adventistcluj.ro"
-      enable = false
+      enableDomain = false
     }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
-      enable = true
+      enableDomain = false
     }
   }
 }
@@ -45,11 +45,6 @@ variable "only_platform" {
     domain = string
   }))
   default = {
-    azsplatform = {
-      name   = "azsplatform"
-      domain = "azsplatform.ro"
-      enable = true
-    }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"

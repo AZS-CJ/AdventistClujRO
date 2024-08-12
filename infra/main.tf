@@ -37,6 +37,14 @@ resource "random_password" "admin-login-pass" {
   special = true
 }
 
+resource "azurerm_log_analytics_workspace" "log-analytics-workspace-common" {
+  name                = "log-analytics-workspace-common"
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
 resource "azurerm_mysql_flexible_server" "cms-db" {
   name                   = "cms-db"
   resource_group_name    = azurerm_resource_group.common.name
@@ -47,6 +55,15 @@ resource "azurerm_mysql_flexible_server" "cms-db" {
   sku_name               = "B_Standard_B1s"
   version                = "8.0.21"
   zone                   = 1
+}
+
+resource "azurerm_service_plan" "web-sites-service-plan" {
+  name                = "${var.website_name}-ServicePlan"
+  location            = azurerm_resource_group.common.location
+  resource_group_name = azurerm_resource_group.common.name
+
+  os_type  = "Linux"
+  sku_name = "B1"
 }
 
 resource "azurerm_mysql_flexible_database" "site-db" {
@@ -66,12 +83,10 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "AllAccessRule" {
   end_ip_address      = "255.255.255.255"
 }
 
-resource "azurerm_log_analytics_workspace" "log-analytics-workspace-common" {
-  name                = "log-analytics-workspace-common"
-  location            = azurerm_resource_group.common.location
-  resource_group_name = azurerm_resource_group.common.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
+resource "azurerm_resource_group" "site-rg" {
+  for_each = var.sites
+  name     = "${each.value.name}-rg"
+  location = "Germany West Central"
 }
 
 resource "azurerm_storage_account" "cms-storage-site" {
@@ -79,7 +94,7 @@ resource "azurerm_storage_account" "cms-storage-site" {
   name                = "strapisa${each.value.name}"
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 
-  location                 = azurerm_resource_group.common.location
+  location                 = azurerm_resource_group.site-rg[each.value.name].location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
@@ -102,36 +117,6 @@ resource "azurerm_storage_share_directory" "strapi-uploads" {
   for_each         = var.sites
   name             = "uploads"
   storage_share_id = azurerm_storage_share.cms-storage-share-site[each.value.name].id
-}
-
-resource "azurerm_container_app_environment" "platform" {
-  name                       = "AzsPlatform-Environment"
-  location                   = azurerm_resource_group.common.location
-  resource_group_name        = azurerm_resource_group.common.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
-
-  workload_profile {
-    name                  = "Consumption"
-    workload_profile_type = "Consumption"
-    maximum_count         = 4
-    minimum_count         = 0
-  }
-}
-
-resource "azurerm_container_app_environment_storage" "environment-storage" {
-  for_each                     = var.sites
-  name                         = "envst${lower(each.value.name)}"
-  container_app_environment_id = azurerm_container_app_environment.platform.id
-  account_name                 = azurerm_storage_account.cms-storage-site[each.value.name].name
-  share_name                   = azurerm_storage_share.cms-storage-share-site[each.value.name].name
-  access_key                   = azurerm_storage_account.cms-storage-site[each.value.name].primary_access_key
-  access_mode                  = "ReadWrite"
-}
-
-resource "azurerm_resource_group" "site-rg" {
-  for_each = var.sites
-  name     = "${each.value.name}-rg"
-  location = "Germany West Central"
 }
 
 resource "random_password" "strapi-site-admin-jwt-secret" {
@@ -181,6 +166,63 @@ resource "random_password" "strapi-site-transfer-token-salt" {
   length   = 16
   special  = true
 }
+
+resource "azurerm_linux_web_app" "linux-web-app-strapi" {
+  for_each            = var.sites
+  name                = "webapp-cms-${each.value.name}"
+  location            = azurerm_resource_group.site-rg[each.value.name].location
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
+  https_only          = true
+
+  site_config {
+    use_32_bit_worker                       = false
+    health_check_path                       = "/api/under-construction"
+    container_registry_use_managed_identity = true
+  }
+
+  app_settings = {
+    "DATABASE_CLIENT"     = "mysql"
+    "DATABASE_HOST"       = azurerm_mysql_flexible_server.cms-db.fqdn
+    "DATABASE_PORT"       = "3306"
+    "DATABASE_NAME"       = "db-site-${each.value.name}"
+    "DATABASE_USERNAME"   = "mysqladminuser"
+    "DATABASE_PASSWORD"   = random_password.admin-login-pass.result
+    "ADMIN_JWT_SECRET"    = base64encode(random_password.strapi-site-admin-jwt-secret[each.value.name].result)
+    "JWT_SECRET"          = base64encode(random_password.strapi-site-jwt-secret[each.value.name].result)
+    "APP_KEYS"            = "${base64encode(random_password.strapi-site-app-key1[each.value.name].result)},${base64encode(random_password.strapi-site-app-key2[each.value.name].result)},${base64encode(random_password.strapi-site-app-key3[each.value.name].result)},${base64encode(random_password.strapi-site-app-key4[each.value.name].result)}"
+    "API_TOKEN_SALT"      = base64encode(random_password.strapi-site-api-token-salt[each.value.name].result)
+    "TRANSFER_TOKEN_SALT" = base64encode(random_password.strapi-site-transfer-token-salt[each.value.name].result)
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  logs {
+    application_logs {
+      file_system_level = "Information"
+    }
+
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 35
+      }
+    }
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.cms-storage-site[each.value.name].primary_access_key
+    name         = "strapibinary"
+    account_name = azurerm_storage_account.cms-storage-site[each.value.name].name
+    share_name   = azurerm_storage_share.cms-storage-share-site[each.value.name].name
+    type         = "AzureFiles"
+    mount_path   = "/opt/app/public"
+  }
+}
+
+// Done so far
 
 resource "azurerm_container_app" "strapi-container" {
   for_each                     = var.sites
@@ -464,13 +506,28 @@ resource "null_resource" "strapi-hostnames" {
 ####################################################################
 ####################################################################
 
-resource "azurerm_service_plan" "web-sites-service-plan" {
-  name                = "${var.website_name}-ServicePlan"
-  location            = azurerm_resource_group.common.location
-  resource_group_name = azurerm_resource_group.common.name
+resource "azurerm_container_app_environment_storage" "environment-storage" {
+  for_each                     = var.sites
+  name                         = "envst${lower(each.value.name)}"
+  container_app_environment_id = azurerm_container_app_environment.platform.id
+  account_name                 = azurerm_storage_account.cms-storage-site[each.value.name].name
+  share_name                   = azurerm_storage_share.cms-storage-share-site[each.value.name].name
+  access_key                   = azurerm_storage_account.cms-storage-site[each.value.name].primary_access_key
+  access_mode                  = "ReadWrite"
+}
 
-  os_type  = "Linux"
-  sku_name = "B1"
+resource "azurerm_container_app_environment" "platform" {
+  name                       = "AzsPlatform-Environment"
+  location                   = azurerm_resource_group.common.location
+  resource_group_name        = azurerm_resource_group.common.name
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
+
+  workload_profile {
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+    maximum_count         = 4
+    minimum_count         = 0
+  }
 }
 
 resource "azurerm_application_insights" "AppInsights" {
@@ -551,6 +608,61 @@ resource "azurerm_storage_share" "cms-storage-share" {
   }
 }
 
+resource "azurerm_linux_web_app" "strapi" {
+  for_each            = var.environments
+  name                = "${var.website_name}-strapi-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
+  https_only          = true
+
+  site_config {
+    use_32_bit_worker                       = false
+    health_check_path                       = "/api/under-construction"
+    container_registry_use_managed_identity = true
+  }
+
+  app_settings = {
+    "DATABASE_CLIENT"     = "mysql"
+    "DATABASE_HOST"       = azurerm_mysql_flexible_server.cms-db.fqdn
+    "DATABASE_PORT"       = "3306"
+    "DATABASE_NAME"       = "cms-db-${each.key}"
+    "DATABASE_USERNAME"   = "mysqladminuser"
+    "DATABASE_PASSWORD"   = random_password.admin-login-pass.result
+    "ADMIN_JWT_SECRET"    = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
+    "JWT_SECRET"          = base64encode(random_password.strapi-jwt-secret[each.key].result)
+    "APP_KEYS"            = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
+    "API_TOKEN_SALT"      = base64encode(random_password.api-token-salt[each.key].result)
+    "TRANSFER_TOKEN_SALT" = base64encode(random_password.transfer-token-salt[each.key].result)
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  logs {
+    application_logs {
+      file_system_level = "Information"
+    }
+
+    http_logs {
+      file_system {
+        retention_in_days = 7
+        retention_in_mb   = 35
+      }
+    }
+  }
+
+  storage_account {
+    access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
+    name         = "strapibinary"
+    account_name = azurerm_storage_account.cms-storage[each.key].name
+    share_name   = azurerm_storage_share.cms-storage-share[each.key].name
+    type         = "AzureFiles"
+    mount_path   = "/opt/app/public"
+  }
+}
+
 resource "azurerm_storage_share_directory" "uploads" {
   for_each         = var.environments
   name             = "uploads"
@@ -606,60 +718,6 @@ resource "random_password" "transfer-token-salt" {
 }
 
 // Strapi
-resource "azurerm_linux_web_app" "strapi" {
-  for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
-  https_only          = true
-
-  site_config {
-    use_32_bit_worker                       = false
-    health_check_path                       = "/api/under-construction"
-    container_registry_use_managed_identity = true
-  }
-
-  app_settings = {
-    "DATABASE_CLIENT"     = "mysql"
-    "DATABASE_HOST"       = azurerm_mysql_flexible_server.cms-db.fqdn
-    "DATABASE_PORT"       = "3306"
-    "DATABASE_NAME"       = "cms-db-${each.key}"
-    "DATABASE_USERNAME"   = "mysqladminuser"
-    "DATABASE_PASSWORD"   = random_password.admin-login-pass.result
-    "ADMIN_JWT_SECRET"    = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
-    "JWT_SECRET"          = base64encode(random_password.strapi-jwt-secret[each.key].result)
-    "APP_KEYS"            = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
-    "API_TOKEN_SALT"      = base64encode(random_password.api-token-salt[each.key].result)
-    "TRANSFER_TOKEN_SALT" = base64encode(random_password.transfer-token-salt[each.key].result)
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  logs {
-    application_logs {
-      file_system_level = "Information"
-    }
-
-    http_logs {
-      file_system {
-        retention_in_days = 7
-        retention_in_mb   = 35
-      }
-    }
-  }
-
-  storage_account {
-    access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
-    name         = "strapibinary"
-    account_name = azurerm_storage_account.cms-storage[each.key].name
-    share_name   = azurerm_storage_share.cms-storage-share[each.key].name
-    type         = "AzureFiles"
-    mount_path   = "/opt/app/public"
-  }
-}
 
 resource "azurerm_role_assignment" "acr" {
   for_each             = var.environments

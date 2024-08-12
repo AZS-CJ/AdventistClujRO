@@ -11,7 +11,7 @@ variable "environments" {
 }
 
 variable "only_platform_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 

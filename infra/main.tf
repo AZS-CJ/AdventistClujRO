@@ -234,7 +234,7 @@ resource "azurerm_role_assignment" "acr-for-linux-web-app-strapi" {
   principal_id         = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].identity.0.principal_id
 }
 
-resource "azurerm_linux_web_app" "linux-web-app-strapi" {
+resource "azurerm_linux_web_app" "linux-web-app-frontend" {
   for_each            = var.sites
   name                = "webapp-frontend-${each.value.name}"
   location            = azurerm_resource_group.site-rg[each.value.name].location
@@ -254,7 +254,7 @@ resource "azurerm_linux_web_app" "linux-web-app-strapi" {
   }
 
   app_settings = {
-    "CMS_DB_HOST": "https://${azurerm_linux_web_app.linux-web-app-frontend[each.value.nme].default_hostname}"
+    "CMS_DB_HOST": "https://${azurerm_linux_web_app.linux-web-app-strapi[each.value.name].default_hostname}"
   }
 
   identity {

@@ -25,6 +25,7 @@ variable "sites" {
       name   = "azsplatform"
       domain = "azsplatform.ro"
       enableDomain = true
+      ip_web = ""
     }
     adventistcluj = {
       name   = "adventistcluj"
@@ -35,6 +36,21 @@ variable "sites" {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
       enableDomain = false
+    }
+  }
+}
+
+variable "sites-verifications" {
+  type = map(object({
+    name   = string
+    domain = string
+  }))
+  default = {
+    azsplatform = {
+      name   = "azsplatform"
+      domain = "azsplatform.ro"
+      enableDomain = true
+      ip_web = "51.116.145.35"
     }
   }
 }

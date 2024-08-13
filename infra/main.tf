@@ -63,7 +63,7 @@ resource "azurerm_service_plan" "web-sites-service-plan" {
   resource_group_name = azurerm_resource_group.common.name
 
   os_type  = "Linux"
-  sku_name = "B1"
+  sku_name = "B2"
 }
 
 resource "azurerm_mysql_flexible_database" "site-db" {

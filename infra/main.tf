@@ -340,6 +340,17 @@ resource "azurerm_dns_txt_record" "website-www-verification" {
   depends_on = [ azurerm_dns_zone.website-dns-zone ]
 }
 
+resource "azurerm_dns_cname_record" "website-cms" {
+  for_each            = var.sites-verifications
+  name                = "www"
+  zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
+  record              = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].default_hostname
+
+  depends_on = [ azurerm_dns_zone.website-dns-zone ]
+}
+
 resource "azurerm_dns_txt_record" "cms-webhost-verification" {
   for_each            = var.sites-verifications
   name                = "asuid.cms"
@@ -348,7 +359,7 @@ resource "azurerm_dns_txt_record" "cms-webhost-verification" {
   ttl                 = 300
 
   record {
-    value = azurerm_container_app.strapi-container[each.value.name].custom_domain_verification_id
+    value = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].custom_domain_verification_id
   }
 }
 

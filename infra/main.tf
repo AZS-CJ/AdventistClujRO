@@ -181,7 +181,7 @@ resource "azurerm_linux_web_app" "linux-web-app-strapi" {
     container_registry_use_managed_identity = true
 
     application_stack {
-      docker_image_name   = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
+      docker_image_name = "azsstrapi:latest"
       docker_registry_url = "https://${azurerm_container_registry.acr.login_server}"
     }
   }
@@ -248,7 +248,7 @@ resource "azurerm_linux_web_app" "linux-web-app-frontend" {
     container_registry_use_managed_identity = true
 
     application_stack {
-      docker_image_name   = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
+      docker_image_name   = "azsweb:latest"
       docker_registry_url = "https://${azurerm_container_registry.acr.login_server}"
     }
   }

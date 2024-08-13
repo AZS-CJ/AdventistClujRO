@@ -283,7 +283,7 @@ resource "azurerm_role_assignment" "acr-for-linux-web-app-frontend" {
 }
 
 resource "azurerm_dns_zone" "website-dns-zone" {
-  for_each            = var.sites
+  for_each            = var.sites-verifications
   name                = each.value.domain
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
@@ -340,6 +340,18 @@ resource "azurerm_dns_txt_record" "website-www-verification" {
   depends_on = [ azurerm_dns_zone.website-dns-zone ]
 }
 
+resource "azurerm_dns_txt_record" "cms-webhost-verification" {
+  for_each            = var.sites-verifications
+  name                = "asuid.cms"
+  zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+  ttl                 = 300
+
+  record {
+    value = azurerm_container_app.strapi-container[each.value.name].custom_domain_verification_id
+  }
+}
+
 resource "azurerm_app_service_custom_hostname_binding" "webhostname_binding" {
   for_each            = var.sites-verifications
   hostname            = each.value.domain
@@ -387,6 +399,8 @@ resource "azurerm_app_service_custom_hostname_binding" "cms_webhostname_binding"
   hostname            = "cms.${each.value.domain}"
   app_service_name    = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+
+  depends_on = [ azurerm_dns_txt_record.cms-webhost-verification ]
 }
 
 resource "azurerm_app_service_managed_certificate" "cms_webhost_managed_certificate" {

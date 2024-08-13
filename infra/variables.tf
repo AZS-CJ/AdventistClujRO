@@ -32,11 +32,13 @@ variable "sites" {
       name   = "adventistcluj"
       domain = "adventistcluj.ro"
       enableDomain = false
+      ipweb = ""
     }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
       enableDomain = false
+      ipweb = ""
     }
   }
 }

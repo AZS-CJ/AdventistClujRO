@@ -374,7 +374,7 @@ resource "azurerm_app_service_custom_hostname_binding" "webhostname_binding" {
 
 resource "azurerm_app_service_custom_hostname_binding" "www_webhostname_binding" {
   for_each            = var.sites-verifications
-  hostname            = "www.${each.value.name}"
+  hostname            = "www.${each.value.domain}"
   app_service_name    = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 

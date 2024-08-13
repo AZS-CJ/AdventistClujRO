@@ -19,13 +19,14 @@ variable "sites" {
   type = map(object({
     name   = string
     domain = string
+    ipweb  = string
   }))
   default = {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
       enableDomain = true
-      ip_web = ""
+      ip_web = "51.116.145.35"
     }
     adventistcluj = {
       name   = "adventistcluj"
@@ -44,13 +45,14 @@ variable "sites-verifications" {
   type = map(object({
     name   = string
     domain = string
+    ipweb  = string
   }))
   default = {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
       enableDomain = true
-      ip_web = "51.116.145.35"
+      ipweb = "51.116.145.35"
     }
   }
 }

@@ -282,29 +282,28 @@ resource "azurerm_role_assignment" "acr-for-linux-web-app-frontend" {
   principal_id         = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].identity.0.principal_id
 }
 
-resource "azurerm_dns_zone" "site-dns-zone" {
+resource "azurerm_dns_zone" "website-dns-zone" {
   for_each            = var.sites
-  count               = each.value.enableDomain ? 1 : 0
   name                = each.value.domain
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
 
-resource "azurerm_dns_a_record" "site-naked" {
-  for_each            = var.sites
+resource "azurerm_dns_a_record" "website-naked" {
+  for_each            = var.sites-verifications
   name                = "@"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 3600
-  records             = each.value.ip_web
+  records             = ["${each.value.ipweb}"]
   # The ip has to be put manually for now
   # https://github.com/Azure/azure-rest-api-specs/issues/27377
   # https://github.com/hashicorp/terraform-provider-azurerm/issues/14642
 }
 
-resource "azurerm_dns_txt_record" "site-naked-verification" {
-  for_each            = var.only_platform_enabled ? var.only_platform : var.sites
+resource "azurerm_dns_txt_record" "website-naked-verification" {
+  for_each            = var.sites
   name                = "asuid"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 300
 
@@ -313,19 +312,19 @@ resource "azurerm_dns_txt_record" "site-naked-verification" {
   }
 }
 
-resource "azurerm_dns_cname_record" "site-www" {
+resource "azurerm_dns_cname_record" "website-www" {
   for_each            = var.sites
   name                = "www"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 300
-  record              = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].ingress[0].fqdn
+  record              = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].default_hostname
 }
 
-resource "azurerm_dns_txt_record" "site-www-verification" {
+resource "azurerm_dns_txt_record" "website-www-verification" {
   for_each            = var.sites
   name                = "asuid.www"
-  zone_name           = azurerm_dns_zone.site-dns-zone[each.value.name].name
+  zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 300
 
@@ -334,14 +333,14 @@ resource "azurerm_dns_txt_record" "site-www-verification" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "hostname_binding" {
+resource "azurerm_app_service_custom_hostname_binding" "webhostname_binding" {
   for_each            = var.sites-verifications
   hostname            = each.value.domain
   app_service_name    = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "www_hostname_binding" {
+resource "azurerm_app_service_custom_hostname_binding" "www_webhostname_binding" {
   for_each            = var.sites-verifications
   hostname            = "www.${each.value.name}"
   app_service_name    = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].name

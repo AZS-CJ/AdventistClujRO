@@ -12,7 +12,7 @@ jobs:
   set-image-tag:
     uses: ./.github/workflows/deploy-template.yml
     with:
-      imageName: azscjacr.azurecr.io/azsweb
+      imageName: azsweb
       webAppName: webapp-frontend-azsplatform
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}

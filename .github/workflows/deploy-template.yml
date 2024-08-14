@@ -40,4 +40,4 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ inputs.webAppName }}
-        images: '${{ inputs.imageName }}:${{ steps.latestTag.outputs.tag }}'
+        images: 'azscjacr.azurecr.io/${{ inputs.imageName }}:${{ steps.latestTag.outputs.tag }}'

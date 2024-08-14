@@ -12,7 +12,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/deploy-template.yml
     with:
-      imageName: azscjacr.azurecr.io/azsstrapi
+      imageName: azsstrapi
       webAppName: webapp-cms-azsplatform
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}

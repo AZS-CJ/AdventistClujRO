@@ -288,6 +288,7 @@ resource "azurerm_dns_zone" "website-dns-zone" {
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 }
 
+// Apex
 resource "azurerm_dns_a_record" "website-naked" {
   for_each            = var.sites-verifications
   name                = "@"
@@ -315,6 +316,30 @@ resource "azurerm_dns_txt_record" "website-naked-verification" {
   depends_on = [ azurerm_dns_zone.website-dns-zone ]
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "webhostname_binding" {
+  for_each            = var.sites-verifications
+  hostname            = each.value.domain
+  app_service_name    = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+
+  depends_on = [ azurerm_dns_a_record.website-naked ]
+}
+
+resource "azurerm_app_service_managed_certificate" "website-managed_certificate" {
+  for_each = var.sites-verifications
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.webhostname_binding[each.value.name].id
+}
+
+resource "azurerm_app_service_certificate_binding" "website-managed_certificate_binding" {
+  for_each = var.sites-verifications
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.webhostname_binding[each.value.name].id
+  certificate_id      = azurerm_app_service_managed_certificate.website-managed_certificate[each.value.name].id
+  ssl_state           = "SniEnabled"
+
+  depends_on = [ azurerm_dns_txt_record.website-naked-verification ]
+}
+
+// www
 resource "azurerm_dns_cname_record" "website-www" {
   for_each            = var.sites-verifications
   name                = "www"
@@ -340,9 +365,33 @@ resource "azurerm_dns_txt_record" "website-www-verification" {
   depends_on = [ azurerm_dns_zone.website-dns-zone ]
 }
 
+resource "azurerm_app_service_custom_hostname_binding" "www_webhostname_binding" {
+  for_each            = var.sites-verifications
+  hostname            = "www.${each.value.domain}"
+  app_service_name    = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].name
+  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
+
+  depends_on = [ azurerm_dns_cname_record.website-www ]
+}
+
+resource "azurerm_app_service_managed_certificate" "www_website_managed_certificate" {
+  for_each = var.sites-verifications
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.www_webhostname_binding[each.value.name].id
+}
+
+resource "azurerm_app_service_certificate_binding" "www_web_managed_certificate_binding" {
+  for_each = var.sites-verifications
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.www_webhostname_binding[each.value.name].id
+  certificate_id      = azurerm_app_service_managed_certificate.www_website_managed_certificate[each.value.name].id
+  ssl_state           = "SniEnabled"
+
+  depends_on = [ azurerm_dns_txt_record.website-www-verification ]
+}
+
+// cms
 resource "azurerm_dns_cname_record" "website-cms" {
   for_each            = var.sites-verifications
-  name                = "www"
+  name                = "cms"
   zone_name           = azurerm_dns_zone.website-dns-zone[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
   ttl                 = 300
@@ -363,55 +412,13 @@ resource "azurerm_dns_txt_record" "cms-webhost-verification" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "webhostname_binding" {
-  for_each            = var.sites-verifications
-  hostname            = each.value.domain
-  app_service_name    = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].name
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-
-  depends_on = [ azurerm_dns_a_record.website-naked ]
-}
-
-resource "azurerm_app_service_custom_hostname_binding" "www_webhostname_binding" {
-  for_each            = var.sites-verifications
-  hostname            = "www.${each.value.domain}"
-  app_service_name    = azurerm_linux_web_app.linux-web-app-frontend[each.value.name].name
-  resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
-
-  depends_on = [ azurerm_dns_txt_record.website-www-verification ]
-}
-
-resource "azurerm_app_service_managed_certificate" "website-managed_certificate" {
-  for_each = var.sites-verifications
-  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.webhostname_binding[each.value.name].id
-}
-
-resource "azurerm_app_service_certificate_binding" "website-managed_certificate_binding" {
-  for_each = var.sites-verifications
-  hostname_binding_id = azurerm_app_service_custom_hostname_binding.webhostname_binding[each.value.name].id
-  certificate_id      = azurerm_app_service_managed_certificate.website-managed_certificate[each.value.name].id
-  ssl_state           = "SniEnabled"
-}
-
-resource "azurerm_app_service_managed_certificate" "www_website_managed_certificate" {
-  for_each = var.sites-verifications
-  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.www_webhostname_binding[each.value.name].id
-}
-
-resource "azurerm_app_service_certificate_binding" "www_web_managed_certificate_binding" {
-  for_each = var.sites-verifications
-  hostname_binding_id = azurerm_app_service_custom_hostname_binding.www_webhostname_binding[each.value.name].id
-  certificate_id      = azurerm_app_service_managed_certificate.www_website_managed_certificate[each.value.name].id
-  ssl_state           = "SniEnabled"
-}
-
 resource "azurerm_app_service_custom_hostname_binding" "cms_webhostname_binding" {
   for_each            = var.sites-verifications
   hostname            = "cms.${each.value.domain}"
   app_service_name    = azurerm_linux_web_app.linux-web-app-strapi[each.value.name].name
   resource_group_name = azurerm_resource_group.site-rg[each.value.name].name
 
-  depends_on = [ azurerm_dns_txt_record.cms-webhost-verification ]
+  depends_on = [ azurerm_dns_cname_record.website-cms  ]
 }
 
 resource "azurerm_app_service_managed_certificate" "cms_webhost_managed_certificate" {
@@ -426,6 +433,8 @@ resource "azurerm_app_service_certificate_binding" "cms_webhost_managed_certific
   hostname_binding_id = azurerm_app_service_custom_hostname_binding.cms_webhostname_binding[each.value.name].id
   certificate_id      = azurerm_app_service_managed_certificate.cms_webhost_managed_certificate[each.value.name].id
   ssl_state           = "SniEnabled"
+
+  depends_on = [ azurerm_dns_txt_record.cms-webhost-verification ]
 }
 
 // Done so far

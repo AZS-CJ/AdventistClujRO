@@ -1,11 +1,6 @@
 name: Web - Deploy to Prods
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./frontend
   workflow_dispatch:
     inputs:
       logLevel:

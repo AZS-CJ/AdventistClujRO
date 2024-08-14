@@ -1,11 +1,6 @@
 name: Strapi - Deploy to Prods
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:

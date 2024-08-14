@@ -1,11 +1,6 @@
 name: Strapi - Deploy to AZSPlatform
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:

@@ -24,15 +24,15 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.azCliCreds }}
-
+    
+    # Take the top 2 to make sure the tag 'latest' is coming in, as well as last number.
+    # Then query to remove the tag 'latest'.
+    # Then take the first item from the array, in case we have two numbers and no tag with 'latest'.
     - name: Get latest tag
       id: latestTag
       run: |
-        # Take the top 2 to make sure the tag 'latest' is coming in, as well as last number.
-        # Then query to remove the tag 'latest'.
-        # Then take the first item from the array, in case we have two numbers and no tag with 'latest'.
         $arr=$(az acr repository show-tags -n azscjacr --repository ${{ inputs.imageName }} --top 2 --orderby time_desc --query "[?!contains(@, 'latest')]" -o tsv) 
-        tag=$arr[0]
+        tag=$($arr[0])
         echo "Latest tag found: ${tag}"
         echo "tag=${tag}" >> "$GITHUB_OUTPUT"
 

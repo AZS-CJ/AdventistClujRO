@@ -31,7 +31,7 @@ jobs:
     - name: Get latest tag
       id: latestTag
       run: |
-        arr=$(az acr repository show-tags -n azscjacr --repository ${{ inputs.imageName }} --top 2 --orderby time_desc --query "[?!contains(@, 'latest')]" -o tsv) 
+        arr=($(az acr repository show-tags -n azscjacr --repository ${{ inputs.imageName }} --top 2 --orderby time_desc --query "[?!contains(@, 'latest')]" -o tsv))
         tag=${arr[0]}
         echo "Latest tag found: ${tag}"
         echo "tag=${tag}" >> "$GITHUB_OUTPUT"

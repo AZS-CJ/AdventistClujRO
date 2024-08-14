@@ -417,6 +417,8 @@ resource "azurerm_app_service_custom_hostname_binding" "cms_webhostname_binding"
 resource "azurerm_app_service_managed_certificate" "cms_webhost_managed_certificate" {
   for_each = var.sites-verifications
   custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.cms_webhostname_binding[each.value.name].id
+
+  depends_on = [ azurerm_app_service_custom_hostname_binding.cms_webhostname_binding ]
 }
 
 resource "azurerm_app_service_certificate_binding" "cms_webhost_managed_certificate_binding" {

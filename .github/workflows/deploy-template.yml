@@ -9,13 +9,8 @@ on:
       webAppName:
         type: string
         required: true
-      resourceGroup:
-        type: string
-        required: true
     secrets:
       azCliCreds:
-        required: true
-      publishProfile:
         required: true
 
 jobs:

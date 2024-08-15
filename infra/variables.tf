@@ -56,12 +56,6 @@ variable "sites-verifications" {
       enableDomain = true
       ipweb = "51.116.145.35"
     }
-    brasovadventist = {
-      name   = "brasovadventist"
-      domain = "brasovadventist.ro"
-      enableDomain = false
-      ipweb = "51.116.145.35"
-    }
   }
 }
 

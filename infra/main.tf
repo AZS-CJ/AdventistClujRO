@@ -437,158 +437,16 @@ resource "azurerm_app_service_certificate_binding" "cms_webhost_managed_certific
   depends_on = [ azurerm_dns_txt_record.cms-webhost-verification ]
 }
 
+resource "azurerm_application_insights" "AppInsights" {
+  for_each            = var.environments
+  name                = "aiazscj-${each.key}"
+  location            = azurerm_resource_group.website[each.key].location
+  resource_group_name = azurerm_resource_group.website[each.key].name
+  workspace_id        = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
+  application_type    = "web"
+}
+
 // Done so far
-
-resource "azurerm_container_app" "strapi-container" {
-  for_each                     = var.sites
-  name                         = "cms-${each.value.name}-app"
-  container_app_environment_id = azurerm_container_app_environment.platform.id
-  resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
-  revision_mode                = "Single"
-
-  secret {
-    name  = "adminpassword"
-    value = azurerm_container_registry.acr.admin_password
-  }
-
-  workload_profile_name = "Consumption"
-
-  registry {
-    server               = azurerm_container_registry.acr.login_server
-    username             = azurerm_container_registry.acr.admin_username
-    password_secret_name = "adminpassword"
-  }
-
-  ingress {
-    target_port = "1337"
-    traffic_weight {
-      percentage      = 100
-      latest_revision = true
-    }
-    transport        = "http"
-    external_enabled = true
-  }
-
-  template {
-    volume {
-      name         = "strapiuploads"
-      storage_name = azurerm_container_app_environment_storage.environment-storage[each.value.name].name
-      storage_type = "AzureFile"
-    }
-    container {
-      name   = "strapi"
-      image  = "${azurerm_container_registry.acr.login_server}/azsstrapi:latest"
-      cpu    = 1
-      memory = "2Gi"
-      volume_mounts {
-        name = "strapiuploads"
-        path = "/opt/app/public"
-      }
-      env {
-        name  = "DATABASE_CLIENT"
-        value = "mysql"
-      }
-      env {
-        name  = "DATABASE_HOST"
-        value = azurerm_mysql_flexible_server.cms-db.fqdn
-      }
-      env {
-        name  = "DATABASE_PORT"
-        value = "3306"
-      }
-      env {
-        name  = "DATABASE_NAME"
-        value = "db-site-${each.value.name}"
-      }
-      env {
-        name  = "DATABASE_USERNAME"
-        value = "mysqladminuser"
-      }
-      env {
-        name  = "DATABASE_PASSWORD"
-        value = random_password.admin-login-pass.result
-      }
-      env {
-        name  = "ADMIN_JWT_SECRET"
-        value = base64encode(random_password.strapi-site-admin-jwt-secret[each.value.name].result)
-      }
-      env {
-        name  = "JWT_SECRET"
-        value = base64encode(random_password.strapi-site-jwt-secret[each.value.name].result)
-      }
-      env {
-        name  = "APP_KEYS"
-        value = "${base64encode(random_password.strapi-site-app-key1[each.value.name].result)},${base64encode(random_password.strapi-site-app-key2[each.value.name].result)},${base64encode(random_password.strapi-site-app-key3[each.value.name].result)},${base64encode(random_password.strapi-site-app-key4[each.value.name].result)}"
-      }
-      env {
-        name  = "API_TOKEN_SALT"
-        value = base64encode(random_password.strapi-site-api-token-salt[each.value.name].result)
-      }
-      env {
-        name  = "TRANSFER_TOKEN_SALT"
-        value = base64encode(random_password.strapi-site-transfer-token-salt[each.value.name].result)
-      }
-    }
-  }
-}
-
-resource "azurerm_container_app" "web-container" {
-  for_each                     = var.sites
-  name                         = "web-${each.value.name}-app"
-  container_app_environment_id = azurerm_container_app_environment.platform.id
-  resource_group_name          = azurerm_resource_group.site-rg[each.value.name].name
-  revision_mode                = "Single"
-
-  secret {
-    name  = "adminpassword"
-    value = azurerm_container_registry.acr.admin_password
-  }
-
-  workload_profile_name = "Consumption"
-
-  registry {
-    server               = azurerm_container_registry.acr.login_server
-    username             = azurerm_container_registry.acr.admin_username
-    password_secret_name = "adminpassword"
-  }
-
-  ingress {
-    target_port = "80"
-    traffic_weight {
-      percentage      = 100
-      latest_revision = true
-    }
-    transport        = "http"
-    external_enabled = true
-  }
-
-  template {
-    volume {
-      name         = "strapiuploads"
-      storage_name = azurerm_container_app_environment_storage.environment-storage[each.value.name].name
-      storage_type = "AzureFile"
-    }
-    container {
-      name   = "web"
-      image  = "${azurerm_container_registry.acr.login_server}/azsweb:latest"
-      cpu    = 0.5
-      memory = "1Gi"
-      env {
-        name  = "CMS_DB_HOST"
-        value = "https://${azurerm_container_app.strapi-container[each.value.name].ingress[0].fqdn}"
-      }
-      env {
-        name  = "EMAIL_ADDRESS"
-        value = ""
-      }
-      env {
-        name  = "EMAIL_PASSWORD"
-        value = ""
-      }
-    }
-  }
-}
-
 
 
 
@@ -612,38 +470,6 @@ resource "azurerm_container_app" "web-container" {
 ####################################################################
 ####################################################################
 
-resource "azurerm_container_app_environment_storage" "environment-storage" {
-  for_each                     = var.sites
-  name                         = "envst${lower(each.value.name)}"
-  container_app_environment_id = azurerm_container_app_environment.platform.id
-  account_name                 = azurerm_storage_account.cms-storage-site[each.value.name].name
-  share_name                   = azurerm_storage_share.cms-storage-share-site[each.value.name].name
-  access_key                   = azurerm_storage_account.cms-storage-site[each.value.name].primary_access_key
-  access_mode                  = "ReadWrite"
-}
-
-resource "azurerm_container_app_environment" "platform" {
-  name                       = "AzsPlatform-Environment"
-  location                   = azurerm_resource_group.common.location
-  resource_group_name        = azurerm_resource_group.common.name
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
-
-  workload_profile {
-    name                  = "Consumption"
-    workload_profile_type = "Consumption"
-    maximum_count         = 4
-    minimum_count         = 0
-  }
-}
-
-resource "azurerm_application_insights" "AppInsights" {
-  for_each            = var.environments
-  name                = "aiazscj-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  workspace_id        = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
-  application_type    = "web"
-}
 
 resource "azurerm_linux_web_app" "webhost" {
   for_each            = var.environments

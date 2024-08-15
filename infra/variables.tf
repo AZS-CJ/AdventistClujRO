@@ -56,19 +56,11 @@ variable "sites-verifications" {
       enableDomain = true
       ipweb = "51.116.145.35"
     }
-  }
-}
-
-variable "only_platform" {
-  type = map(object({
-    name   = string
-    domain = string
-  }))
-  default = {
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
-      enable = true
+      enableDomain = false
+      ipweb = "51.116.145.35"
     }
   }
 }

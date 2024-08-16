@@ -1,11 +1,6 @@
 name: Strapi - Deploy to AZSPlatform
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:
@@ -17,9 +12,7 @@ jobs:
   deploy:
     uses: ./.github/workflows/deploy-template.yml
     with:
-      containerAppName: cms-azsplatform-app
       imageName: azsstrapi
-      resourceGroup: azsplatform-rg
+      webAppName: webapp-cms-azsplatform
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
-      publishProfile: ${{ secrets.AZURE_STRAPI_TEST_PUBLISH_PROFILE }}

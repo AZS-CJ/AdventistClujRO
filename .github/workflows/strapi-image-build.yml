@@ -1,11 +1,6 @@
 name: Strapi - Image Build
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:

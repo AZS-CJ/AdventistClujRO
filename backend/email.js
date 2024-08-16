@@ -8,12 +8,15 @@ require('dotenv').config()
 const fetchEmailConfig = async () => {
     try {
       const response = await undici.request(`${process.env.CMS_DB_HOST}/api/contact-email`);
-      const config = response.data.data.attributes;
+      const innerResponse = await response.body.text()
+      const innerResponseJson = JSON.parse(innerResponse)
+      const config = innerResponseJson.data.attributes;
       return {
         email: config.email,
         password: config.password
       };
     } catch (error) {
+      console.error(error);
       throw new Error('Could not fetch email configuration');
     }
   };

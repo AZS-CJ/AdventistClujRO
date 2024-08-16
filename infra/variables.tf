@@ -11,7 +11,7 @@ variable "environments" {
 }
 
 variable "only_platform_enabled" {
-  type = bool
+  type    = bool
   default = true
 }
 
@@ -19,41 +19,48 @@ variable "sites" {
   type = map(object({
     name   = string
     domain = string
+    ipweb  = string
   }))
   default = {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
-      enable = true
+      enableDomain = true
+      ipweb = "51.116.145.35"
     }
     adventistcluj = {
       name   = "adventistcluj"
       domain = "adventistcluj.ro"
-      enable = false
+      enableDomain = false
+      ipweb = ""
     }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
-      enable = true
+      enableDomain = false
+      ipweb = "51.116.145.35"
     }
   }
 }
 
-variable "only_platform" {
+variable "sites-verifications" {
   type = map(object({
     name   = string
     domain = string
+    ipweb  = string
   }))
   default = {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
-      enable = true
+      enableDomain = true
+      ipweb = "51.116.145.35"
     }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
-      enable = true
+      enableDomain = false
+      ipweb = "51.116.145.35"
     }
   }
 }

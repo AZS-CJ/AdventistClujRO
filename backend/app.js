@@ -139,6 +139,7 @@ app.get('/live', async function(req, res) {
 app.post('/email', async(req, res) => {
     sendEmail(req.body, (error) => {
         if (error) {
+            console.error(error)
             res.status(500)
             res.send(error)
         } else res.sendStatus(200)

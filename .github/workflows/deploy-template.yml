@@ -6,16 +6,11 @@ on:
       imageName:
         type: string
         required: true
-      containerAppName:
-        type: string
-        required: true
-      resourceGroup:
+      webAppName:
         type: string
         required: true
     secrets:
       azCliCreds:
-        required: true
-      publishProfile:
         required: true
 
 jobs:
@@ -29,19 +24,20 @@ jobs:
       uses: azure/login@v2
       with:
         creds: ${{ secrets.azCliCreds }}
-
+    
+    # Take the top 2 to make sure the tag 'latest' is coming in, as well as last number.
+    # Then query to remove the tag 'latest'.
+    # Then take the first item from the array, in case we have two numbers and no tag with 'latest'.
     - name: Get latest tag
       id: latestTag
       run: |
-        tag=$(az acr repository show-tags -n azscjacr --repository ${{ inputs.imageName }} --top 2 --orderby time_desc --query "[?!contains(@, 'latest')]" -o tsv)
+        arr=($(az acr repository show-tags -n azscjacr --repository ${{ inputs.imageName }} --top 2 --orderby time_desc --query "[?!contains(@, 'latest')]" -o tsv))
+        tag=${arr[0]}
         echo "Latest tag found: ${tag}"
-        echo "tag=${tag}" >> $GITHUB_ENV
-
+        echo "tag=${tag}" >> "$GITHUB_OUTPUT"
 
     - name: Set image to container app
-      uses: azure/container-apps-deploy-action@v1
+      uses: azure/webapps-deploy@v2
       with:
-        acrName: azscjacr
-        containerAppName: ${{ inputs.containerAppName }}
-        resourceGroup: ${{ inputs.resourceGroup }}
-        imageToDeploy: azscjacr.azurecr.io/${{ inputs.imageName }}:${{ env.tag }}
+        app-name: ${{ inputs.webAppName }}
+        images: 'azscjacr.azurecr.io/${{ inputs.imageName }}:${{ steps.latestTag.outputs.tag }}'

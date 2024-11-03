@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { reactPlugin } from './ApplicationInsights'
-import { AppInsightsContext } from '@microsoft/applicationinsights-react-js'
 import { NavigationProvider } from './contexts/navigation'
 import UnderConstruction from './pages/underConstruction/underConstruction'
 import underConstructionAPI from './api/underConstruction'
@@ -22,9 +20,9 @@ function App() {
       setIsUnderConstruction(underConstruction)
       setLoading(false)
 
-      const { REACT_APP_GOOGLE_ANALYTICS } = process.env
-      if (REACT_APP_GOOGLE_ANALYTICS) {
-        ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS as string)
+      const { NEXT_PUBLIC_GOOGLE_ANALYTICS } = process.env
+      if (NEXT_PUBLIC_GOOGLE_ANALYTICS) {
+        ReactGA.initialize(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS as string)
         ReactGA.send({ hitType: 'pageview', page: '/home' })
       }
     })()
@@ -39,9 +37,7 @@ function App() {
       ) : (
         <NavigationProvider>
           <GeneralProvider>
-            <AppInsightsContext.Provider value={reactPlugin}>
-              <Content />
-            </AppInsightsContext.Provider>
+            <Content />
           </GeneralProvider>
         </NavigationProvider>
       )}

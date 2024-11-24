@@ -457,46 +457,6 @@ resource "azurerm_application_insights" "AppInsights" {
 ####################################################################
 ####################################################################
 
-
-resource "azurerm_linux_web_app" "webhost" {
-  for_each            = var.environments
-  name                = "${var.website_name}-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
-  https_only          = true
-
-  site_config {
-    application_stack {
-      node_version = "16-lts"
-    }
-    use_32_bit_worker = false
-  }
-
-  app_settings = {
-    "CMS_DB_HOST"    = "https://${azurerm_linux_web_app.strapi[each.key].default_hostname}"
-    "EMAIL_ADDRESS"  = each.key == "test" ? var.EMAIL_ADDRESS_TEST : var.EMAIL_ADDRESS_PROD
-    "EMAIL_PASSWORD" = each.key == "test" ? var.EMAIL_PASSWORD_TEST : var.EMAIL_PASSWORD_PROD
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  logs {
-    application_logs {
-      file_system_level = "Information"
-    }
-
-    http_logs {
-      file_system {
-        retention_in_days = 7
-        retention_in_mb   = 35
-      }
-    }
-  }
-}
-
 resource "azurerm_storage_account" "cms-storage" {
   for_each            = var.environments
   name                = "strapisa${each.key}"
@@ -524,61 +484,6 @@ resource "azurerm_storage_share" "cms-storage-share" {
     access_policy {
       permissions = "rwdl"
     }
-  }
-}
-
-resource "azurerm_linux_web_app" "strapi" {
-  for_each            = var.environments
-  name                = "${var.website_name}-strapi-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  service_plan_id     = azurerm_service_plan.web-sites-service-plan.id
-  https_only          = true
-
-  site_config {
-    use_32_bit_worker                       = false
-    health_check_path                       = "/api/under-construction"
-    container_registry_use_managed_identity = true
-  }
-
-  app_settings = {
-    "DATABASE_CLIENT"     = "mysql"
-    "DATABASE_HOST"       = azurerm_mysql_flexible_server.cms-db.fqdn
-    "DATABASE_PORT"       = "3306"
-    "DATABASE_NAME"       = "cms-db-${each.key}"
-    "DATABASE_USERNAME"   = "mysqladminuser"
-    # "DATABASE_PASSWORD"   = random_password.admin-login-pass.result
-    # "ADMIN_JWT_SECRET"    = base64encode(random_password.strapi-admin-jwt-secret[each.key].result)
-    # "JWT_SECRET"          = base64encode(random_password.strapi-jwt-secret[each.key].result)
-    # "APP_KEYS"            = "${base64encode(random_password.strapi-app-key1[each.key].result)},${base64encode(random_password.strapi-app-key2[each.key].result)},${base64encode(random_password.strapi-app-key3[each.key].result)},${base64encode(random_password.strapi-app-key4[each.key].result)}"
-    # "API_TOKEN_SALT"      = base64encode(random_password.api-token-salt[each.key].result)
-    # "TRANSFER_TOKEN_SALT" = base64encode(random_password.transfer-token-salt[each.key].result)
-  }
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  logs {
-    application_logs {
-      file_system_level = "Information"
-    }
-
-    http_logs {
-      file_system {
-        retention_in_days = 7
-        retention_in_mb   = 35
-      }
-    }
-  }
-
-  storage_account {
-    access_key   = azurerm_storage_account.cms-storage[each.key].primary_access_key
-    name         = "strapibinary"
-    account_name = azurerm_storage_account.cms-storage[each.key].name
-    share_name   = azurerm_storage_share.cms-storage-share[each.key].name
-    type         = "AzureFiles"
-    mount_path   = "/opt/app/public"
   }
 }
 

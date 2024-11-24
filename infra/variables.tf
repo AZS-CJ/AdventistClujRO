@@ -25,19 +25,16 @@ variable "sites" {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
-      enableDomain = true
       ipweb = "51.116.145.35"
     }
     adventistcluj = {
       name   = "adventistcluj"
       domain = "adventistcluj.ro"
-      enableDomain = false
-      ipweb = ""
+      ipweb = "51.116.145.35"
     }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
-      enableDomain = false
       ipweb = "51.116.145.35"
     }
   }
@@ -53,13 +50,16 @@ variable "sites-verifications" {
     azsplatform = {
       name   = "azsplatform"
       domain = "azsplatform.ro"
-      enableDomain = true
+      ipweb = "51.116.145.35"
+    }
+    adventistcluj = {
+      name   = "adventistcluj"
+      domain = "adventistcluj.ro"
       ipweb = "51.116.145.35"
     }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"
-      enableDomain = false
       ipweb = "51.116.145.35"
     }
   }

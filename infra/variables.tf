@@ -52,11 +52,11 @@ variable "sites-verifications" {
       domain = "azsplatform.ro"
       ipweb = "51.116.145.35"
     }
-    # adventistcluj = {
-    #   name   = "adventistcluj"
-    #   domain = "adventistcluj.ro"
-    #   ipweb = "51.116.145.35"
-    # }
+    adventistcluj = {
+      name   = "adventistcluj"
+      domain = "adventistcluj.ro"
+      ipweb = "51.116.145.35"
+    }
     brasovadventist = {
       name   = "brasovadventist"
       domain = "brasovadventist.ro"

@@ -9,6 +9,13 @@ on:
         default: 'warning'
 
 jobs:
+  deploy-adventistcluj:
+    uses: ./.github/workflows/deploy-template.yml
+    with:
+      imageName: azsweb
+      webAppName: webapp-frontend-adventistcluj
+    secrets:
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
   deploy-brasovadventist:
     uses: ./.github/workflows/deploy-template.yml
     with:

@@ -437,15 +437,6 @@ resource "azurerm_app_service_certificate_binding" "cms_webhost_managed_certific
   depends_on = [ azurerm_dns_txt_record.cms-webhost-verification ]
 }
 
-resource "azurerm_application_insights" "AppInsights" {
-  for_each            = var.environments
-  name                = "aiazscj-${each.key}"
-  location            = azurerm_resource_group.website[each.key].location
-  resource_group_name = azurerm_resource_group.website[each.key].name
-  workspace_id        = azurerm_log_analytics_workspace.log-analytics-workspace-common.id
-  application_type    = "web"
-}
-
 ####################################################################
 ####################################################################
 ####################################################################

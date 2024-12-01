@@ -1,11 +1,6 @@
 name: Web - Deploy to Prods
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./frontend
   workflow_dispatch:
     inputs:
       logLevel:
@@ -14,12 +9,17 @@ on:
         default: 'warning'
 
 jobs:
-  build-and-deploy:
-    uses: ./.github/workflows/webApp-common.yml
+  deploy-adventistcluj:
+    uses: ./.github/workflows/deploy-template.yml
     with:
-      webAppName: adventistclujro-prod
-      webAppPackagePath: './backend'
-      nodeVersion: '16.x'
+      imageName: azsweb
+      webAppName: webapp-frontend-adventistcluj
     secrets:
-      publishProfile: ${{ secrets.AZURE_WEBAPP_PROD_PUBLISH_PROFILE }}
-      googleAnalytics: ${{ secrets.GOOGLE_ANALYTICS_PROD_ENV }}
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
+  deploy-brasovadventist:
+    uses: ./.github/workflows/deploy-template.yml
+    with:
+      imageName: azsweb
+      webAppName: webapp-frontend-brasovadventist
+    secrets:
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}

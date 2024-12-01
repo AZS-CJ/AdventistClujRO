@@ -1,11 +1,6 @@
 name: Strapi - Deploy to Prods
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./cmsstrapi
   workflow_dispatch:
     inputs:
       logLevel:
@@ -14,10 +9,17 @@ on:
         default: 'warning'
 
 jobs:
-  deploy:
-    uses: ./.github/workflows/strapi-common.yml
+  deploy-adventistcluj:
+    uses: ./.github/workflows/deploy-template.yml
     with:
-      webAppSuffix: prod
+      imageName: azsstrapi
+      webAppName: webapp-cms-adventistcluj
     secrets:
       azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}
-      publishProfile: ${{ secrets.AZURE_STRAPI_PROD_PUBLISH_PROFILE }}
+  deploy-brasovadventist:
+    uses: ./.github/workflows/deploy-template.yml
+    with:
+      imageName: azsstrapi
+      webAppName: webapp-cms-brasovadventist
+    secrets:
+      azCliCreds: ${{ secrets.AZURE_CLI_CREDS }}

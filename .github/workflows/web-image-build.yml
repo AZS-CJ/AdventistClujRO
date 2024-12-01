@@ -1,12 +1,6 @@
 name: Web - Image Build
 
 on:
-  push:
-    branches:
-    - main
-    paths:
-    - ./backend
-    - ./frontend
   workflow_dispatch:
     inputs:
       logLevel:
@@ -30,7 +24,8 @@ jobs:
       - name: docker build
         working-directory: .
         run: |
-          docker build -t azscjacr.azurecr.io/azsweb:${{ github.run_number }} -f web.dockerfile .
+          docker build -t azscjacr.azurecr.io/azsweb:latest -f web.dockerfile .
+          docker image tag azscjacr.azurecr.io/azsweb:latest azscjacr.azurecr.io/azsweb:${{ github.run_number }}
           
       - name: docker push
         run: |

@@ -7,7 +7,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ChurchInfoListResponse"
+                "$ref": "#/components/schemas/ChurchInfoResponse"
               }
             }
           }

@@ -25,7 +25,7 @@ function Navbar(props) {
     window.addEventListener('scroll', onScroll, { passive: true })
 
     let liveRequestInterval
-    if (churchInfo.youtubeLiveLink) {
+    if (churchInfo.youtubeChannelName) {
       requestLiveStatus()
       liveRequestInterval = setInterval(() => {
         requestLiveStatus()
@@ -39,7 +39,7 @@ function Navbar(props) {
   }, [])
 
   const requestLiveStatus = () => {
-    getLiveStatus(churchInfo.youtubeLiveLink).then((result) => setLiveState(result))
+    getLiveStatus(churchInfo.youtubeChannelName).then((result) => setLiveState(result))
   }
 
   const isActiveRoute = (route: string) => {

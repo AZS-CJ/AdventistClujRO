@@ -11,7 +11,7 @@ const cache = {
   isLive: false,
 
   // We check the live status maximum one time per minute
-  intervalForChecking: 60000 // ms
+  intervalForChecking: 6000 // ms
 };
 
 // The unique promise is needed so that concurrent api calls
@@ -21,13 +21,35 @@ var uniquePromise = null;
 // The 'magic' query happens here where we get the youtube page
 // as plain html. If the live is on then the canonical link is different.
 const queryYoutube = async (youtubeLiveLink) => {
-  const answer = await undici.request(youtubeLiveLink);
-  const plainText = await answer.body.text();
-  const html = htmlParser.parse(plainText);
-  const urlTag = html.querySelector('link[rel=canonical]');
-  const url = urlTag.getAttribute('href');
-  cache.isLive = url.includes('/watch?v=');
-  cache.url = url;
+
+  const API_KEY = '';
+  const CHANNEL_ID = 'AdventistCluj';
+
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&key=${API_KEY}`;
+
+  try {
+    const { statusCode, body, trailers, context } = await undici.request(url);
+
+    const data = await body.json();
+
+    if (statusCode !== 200) {
+      console.error(`API request failed with status: ${statusCode}`);
+      return;
+    }
+
+
+    if (data.items && data.items.length > 0) {
+      console.log('The channel is live!');
+      data.items.forEach(item => {
+        console.log(`Title: ${item.snippet.title}`);
+        console.log(`Video ID: ${item.id.videoId}`);
+      });
+    } else {
+      console.log('The channel is not live.');
+    }
+  } catch (error) {
+    console.error('Error occurred:', error);
+  }
 }
 
 const getLiveStatus = async (youtubeLiveLink) => {

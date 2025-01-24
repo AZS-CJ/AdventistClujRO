@@ -16,7 +16,7 @@ const getChurchInfo = async (): Promise<ChuchInfo> => {
         address: attrs.address,
         locationMapLink: attrs.locationMapLink,
         youtubeLink: attrs.youtubeLink,
-        youtubeLiveLink: attrs.youtubeLiveLink,
+        youtubeChannelName: attrs.youtubeChannelName,
         facebookLink: attrs.facebookLink,
         instagramLink: attrs.instagramLink
       }

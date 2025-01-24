@@ -11,9 +11,9 @@ const getHomePageContent = async () => {
     })
 }
 
-const getLiveStatus = async (youtubeLiveLink: string) => {
+const getLiveStatus = async (youtubeChannelName: string) => {
   return await axios
-    .get(`/live?youtubeLink=${youtubeLiveLink}`)
+    .get(`/live?youtubeChannelName=${youtubeChannelName}`)
     .then((response) => response.data)
     .catch((err) => {
       console.log('Error on get live status ', err)

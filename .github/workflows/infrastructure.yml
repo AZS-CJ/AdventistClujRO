@@ -16,10 +16,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_SP_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SP_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZ_SP_TENANT_ID }}
-      TF_VAR_EMAIL_ADDRESS_TEST: ${{secrets.EMAIL_ADDRESS_TEST}}
-      TF_VAR_EMAIL_PASSWORD_TEST: ${{secrets.EMAIL_PASSWORD_TEST}}
-      TF_VAR_EMAIL_ADDRESS_PROD: ${{secrets.EMAIL_ADDRESS_PROD}}
-      TF_VAR_EMAIL_PASSWORD_PROD: ${{secrets.EMAIL_PASSWORD_PROD}}
+      TF_VAR_YT_API_KEY: ${{ secrets.YT_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4

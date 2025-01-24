@@ -3,6 +3,10 @@ variable "website_name" {
   default = "adventistclujro"
 }
 
+variable "yt_api_key" {
+  type = string
+}
+
 variable "sites" {
   type = map(object({
     name   = string

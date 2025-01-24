@@ -64,8 +64,10 @@ const queryYoutube = async (channelFriendlyName) => {
     if (data.items && data.items.length > 0) {
       console.log('The channel is live!');
       cache.isLive = true;
-      cache.url = data.items[0].id.videoId;
+      cache.url = `https://www.youtube.com/watch?v=${data.items[0].id.videoId}`;
     } else {
+      cache.isLive = false;
+      cache.url = `https://www.youtube.com/@${channelFriendlyName}`
       console.log('The channel is not live.');
     }
   } catch (error) {

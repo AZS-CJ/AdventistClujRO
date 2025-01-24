@@ -3,7 +3,7 @@ variable "website_name" {
   default = "adventistclujro"
 }
 
-variable "yt_api_key" {
+variable "YT_API_KEY" {
   type = string
 }
 

@@ -83,7 +83,7 @@ function Navbar(props) {
           </Link>
         </div>
         <div className="navbar-nav desktop-nav">{renderMainLinks()}</div>
-        {churchInfo.youtubeLiveLink ? (
+        {churchInfo.youtubeChannelName ? (
           <div className={`live-btn ${liveState.isLive ? 'live' : ''}`} onClick={openLive}>
             <i className="bi bi-play-circle"></i>
             LIVE

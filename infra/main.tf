@@ -255,6 +255,7 @@ resource "azurerm_linux_web_app" "linux-web-app-frontend" {
 
   app_settings = {
     "CMS_DB_HOST" : "https://${azurerm_linux_web_app.linux-web-app-strapi[each.value.name].default_hostname}"
+    "YT_API_KEY": var.YT_API_KEY
   }
 
   identity {

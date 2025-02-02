@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-08-08T10:11:29.815Z"
+    "x-generation-date": "2025-01-24T11:41:45.399Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -28,7 +28,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:1337/api",
+      "url": "http://localhost:3002/api",
       "description": "Development server"
     }
   ],
@@ -8910,7 +8910,7 @@
                 ],
                 "example": "string or id"
               },
-              "youtubeLiveLink": {
+              "youtubeChannelName": {
                 "type": "string"
               },
               "tabTitle": {
@@ -9582,7 +9582,7 @@
                   }
                 }
               },
-              "youtubeLiveLink": {
+              "youtubeChannelName": {
                 "type": "string"
               },
               "tabTitle": {
@@ -11161,7 +11161,7 @@
                   }
                 }
               },
-              "youtubeLiveLink": {
+              "youtubeChannelName": {
                 "type": "string"
               },
               "tabTitle": {
@@ -12773,7 +12773,7 @@
                   }
                 }
               },
-              "youtubeLiveLink": {
+              "youtubeChannelName": {
                 "type": "string"
               },
               "tabTitle": {
@@ -14352,7 +14352,7 @@
                   }
                 }
               },
-              "youtubeLiveLink": {
+              "youtubeChannelName": {
                 "type": "string"
               },
               "tabTitle": {

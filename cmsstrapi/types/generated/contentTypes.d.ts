@@ -710,12 +710,54 @@ export interface ApiBackgroundBackground extends Schema.SingleType {
   };
 }
 
+export interface ApiChurchInfoChurchInfo extends Schema.SingleType {
+  collectionName: 'church_infos';
+  info: {
+    singularName: 'church-info';
+    pluralName: 'church-infos';
+    displayName: 'Church-info';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    address: Attribute.String & Attribute.Required;
+    instagramLink: Attribute.String;
+    facebookLink: Attribute.String;
+    youtubeLink: Attribute.String;
+    nameLogo: Attribute.Media & Attribute.Required;
+    youtubeChannelName: Attribute.String;
+    tabTitle: Attribute.String & Attribute.Required;
+    churchName: Attribute.String & Attribute.Required;
+    locationMapLink: Attribute.String & Attribute.Required;
+    description: Attribute.String;
+    favicon: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::church-info.church-info',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::church-info.church-info',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiContactContact extends Schema.SingleType {
   collectionName: 'contacts';
   info: {
     singularName: 'contact';
     pluralName: 'contacts';
     displayName: 'Contact';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -724,6 +766,8 @@ export interface ApiContactContact extends Schema.SingleType {
     pastor: Attribute.String & Attribute.Required;
     phone: Attribute.String & Attribute.Required;
     email: Attribute.Email & Attribute.Required;
+    address: Attribute.String & Attribute.Required;
+    mapsIframeSrc: Attribute.RichText & Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -735,6 +779,38 @@ export interface ApiContactContact extends Schema.SingleType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::contact.contact',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiContactEmailContactEmail extends Schema.SingleType {
+  collectionName: 'contact_emails';
+  info: {
+    singularName: 'contact-email';
+    pluralName: 'contact-emails';
+    displayName: 'Contact-Email';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    email: Attribute.Email & Attribute.Required;
+    password: Attribute.String & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contact-email.contact-email',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::contact-email.contact-email',
       'oneToOne',
       'admin::user'
     > &
@@ -1007,7 +1083,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::background.background': ApiBackgroundBackground;
+      'api::church-info.church-info': ApiChurchInfoChurchInfo;
       'api::contact.contact': ApiContactContact;
+      'api::contact-email.contact-email': ApiContactEmailContactEmail;
       'api::event.event': ApiEventEvent;
       'api::gallery.gallery': ApiGalleryGallery;
       'api::history.history': ApiHistoryHistory;
